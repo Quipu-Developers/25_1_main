@@ -11,8 +11,18 @@ import Recruit from "@/components/sections/Recruit";
 
 export default function MainPage() {
   const [navPosition, setNavPosition] = useState("bottom-0");
+  const [activeSection, setActiveSection] = useState<string | null>(null);
 
   useEffect(() => {
+    const sections = [
+      "home",
+      "about",
+      "activity",
+      "technique",
+      "interview",
+      "recruit",
+    ];
+
     const handleScroll = () => {
       const scrollY = window.scrollY;
       const homeSection = document.getElementById("home");
@@ -23,10 +33,26 @@ export default function MainPage() {
       } else {
         setNavPosition("fixed top-0");
       }
+
+      // 현재 섹션 감지
+      let currentSection = null;
+      for (let id of sections) {
+        const section = document.getElementById(id);
+        if (section) {
+          const { top, bottom } = section.getBoundingClientRect();
+          if (
+            top <= window.innerHeight * 0.5 &&
+            bottom >= window.innerHeight * 0.5
+          ) {
+            currentSection = id;
+            break;
+          }
+        }
+      }
+      setActiveSection(currentSection);
     };
 
     handleScroll();
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -35,7 +61,7 @@ export default function MainPage() {
     <div className="relative">
       <section id="home" className="relative h-full">
         <Home />
-        <Navbar position={navPosition} />
+        <Navbar position={navPosition} activeSection={activeSection} />
       </section>
       <section id="about" className="relative h-full">
         <About />
