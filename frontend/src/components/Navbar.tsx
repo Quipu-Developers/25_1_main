@@ -18,8 +18,10 @@ export default function Navbar({ position, activeSection }: Props) {
   };
 
   return (
-    <NavWrapper className={position}>
-      <NavContainer>
+    <nav
+      className={`w-full left-0 z-50 transition-all duration-300 ${position}`}
+    >
+      <div className="p-4 flex justify-around items-center gap-4 bg-[var(--background)]">
         {["home", "about", "activity", "technique", "interview", "recruit"].map(
           (section) => (
             <NavButton
@@ -31,30 +33,13 @@ export default function Navbar({ position, activeSection }: Props) {
             </NavButton>
           )
         )}
-      </NavContainer>
-    </NavWrapper>
+      </div>
+    </nav>
   );
 }
 
-const NavWrapper = styled.nav`
-  width: 100%;
-  left: 0;
-  z-index: 50;
-  font-family: var(--font-fira-code);
-  background: white;
-  transition: all 0.3s;
-`;
-
-const NavContainer = styled.div`
-  padding: 1rem;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  gap: 10px;
-`;
-
 const NavButton = styled.button<{ $isActive: boolean }>`
-  font-size: 1rem;
+  font-size: 16px;
   color: ${(props) => (props.$isActive ? "var(--point)" : "black")};
   transition: color 0.2s ease-in-out;
 
