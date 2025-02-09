@@ -36,7 +36,7 @@ export default function MainPage() {
 
       // 현재 섹션 감지
       let currentSection = null;
-      for (let id of sections) {
+      for (const id of sections) {
         const section = document.getElementById(id);
         if (section) {
           const { top, bottom } = section.getBoundingClientRect();
