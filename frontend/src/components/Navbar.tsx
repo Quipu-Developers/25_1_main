@@ -3,9 +3,10 @@ import styled from "styled-components";
 
 interface Props {
   position: string;
+  activeSection: string | null;
 }
 
-export default function Navbar({ position }: Props) {
+export default function Navbar({ position, activeSection }: Props) {
   const scrollToSection = (id: string) => {
     const section = document.getElementById(id);
     if (section) {
@@ -19,20 +20,17 @@ export default function Navbar({ position }: Props) {
   return (
     <NavWrapper className={position}>
       <NavContainer>
-        <NavButton onClick={() => scrollToSection("home")}>home!</NavButton>
-        <NavButton onClick={() => scrollToSection("about")}>about!</NavButton>
-        <NavButton onClick={() => scrollToSection("activity")}>
-          activity!
-        </NavButton>
-        <NavButton onClick={() => scrollToSection("technique")}>
-          technique!
-        </NavButton>
-        <NavButton onClick={() => scrollToSection("interview")}>
-          interview!
-        </NavButton>
-        <NavButton onClick={() => scrollToSection("recruit")}>
-          recruit!
-        </NavButton>
+        {["home", "about", "activity", "technique", "interview", "recruit"].map(
+          (section) => (
+            <NavButton
+              key={section}
+              onClick={() => scrollToSection(section)}
+              $isActive={activeSection === section}
+            >
+              {section}!
+            </NavButton>
+          )
+        )}
       </NavContainer>
     </NavWrapper>
   );
@@ -55,9 +53,9 @@ const NavContainer = styled.div`
   gap: 10px;
 `;
 
-const NavButton = styled.button`
+const NavButton = styled.button<{ $isActive: boolean }>`
   font-size: 1rem;
-  color: black;
+  color: ${(props) => (props.$isActive ? "var(--point)" : "black")};
   transition: color 0.2s ease-in-out;
 
   &:hover {
