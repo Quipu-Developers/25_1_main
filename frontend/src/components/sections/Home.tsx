@@ -8,17 +8,17 @@ export default function Home() {
   return (
     <div
       ref={svgRef}
-      className="flex items-center justify-center h-screen relative"
+      className="flex items-center justify-center relative h-[calc(var(--vh,1vh)*100)]"
     >
-      <div className="absolute w-full flex justify-between top-0 p-[15px] text-[#898989]">
+      <header className="absolute w-full flex justify-between top-0 p-[15px] text-[#898989]">
         <p>University of Seoul Computer Club</p>
         <p>QUIPU</p>
-      </div>
+      </header>
 
       <motion.svg
         width="80%"
         viewBox="-50 -50 768 757"
-        style={{ maxWidth: "600px", overflow: "visible" }}
+        className="max-w-[600px] overflow-visible"
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
         variants={{
