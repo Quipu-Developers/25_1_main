@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 
 interface Props {
   position: string;
@@ -16,45 +17,58 @@ export default function Navbar({ position }: Props) {
   };
 
   return (
-    <nav className={`w-full left-0 z-50 font-firaCode bg-white ${position}`}>
-      <div className="p-4 flex justify-around">
-        <button
-          onClick={() => scrollToSection("home")}
-          className="hover:text-[var(--point)]"
-        >
-          home!
-        </button>
-        <button
-          onClick={() => scrollToSection("about")}
-          className="hover:text-[var(--point)]"
-        >
-          about!
-        </button>
-        <button
-          onClick={() => scrollToSection("activity")}
-          className="hover:text-[var(--point)]"
-        >
+    <NavWrapper className={position}>
+      <NavContainer>
+        <NavButton onClick={() => scrollToSection("home")}>home!</NavButton>
+        <NavButton onClick={() => scrollToSection("about")}>about!</NavButton>
+        <NavButton onClick={() => scrollToSection("activity")}>
           activity!
-        </button>
-        <button
-          onClick={() => scrollToSection("technique")}
-          className="hover:text-[var(--point)]"
-        >
+        </NavButton>
+        <NavButton onClick={() => scrollToSection("technique")}>
           technique!
-        </button>
-        <button
-          onClick={() => scrollToSection("interview")}
-          className="hover:text-[var(--point)]"
-        >
+        </NavButton>
+        <NavButton onClick={() => scrollToSection("interview")}>
           interview!
-        </button>
-        <button
-          onClick={() => scrollToSection("recruit")}
-          className="hover:text-[var(--point)]"
-        >
+        </NavButton>
+        <NavButton onClick={() => scrollToSection("recruit")}>
           recruit!
-        </button>
-      </div>
-    </nav>
+        </NavButton>
+      </NavContainer>
+    </NavWrapper>
   );
 }
+
+const NavWrapper = styled.nav`
+  width: 100%;
+  left: 0;
+  z-index: 50;
+  font-family: var(--font-fira-code);
+  background: white;
+  transition: all 0.3s;
+`;
+
+const NavContainer = styled.div`
+  padding: 1rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+`;
+
+const NavButton = styled.button`
+  font-size: 1rem;
+  color: black;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: var(--point);
+  }
+
+  @media (max-width: 900px) {
+    &:nth-child(1),
+    &:nth-child(4),
+    &:nth-child(5) {
+      display: none;
+    }
+  }
+`;
