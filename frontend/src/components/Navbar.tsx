@@ -48,7 +48,7 @@ const NavButton = styled.button<{ $isActive: boolean }>`
   }
 
   @media (max-width: 900px) {
-    &:nth-child(1),
+    &:nth-child(2),
     &:nth-child(4),
     &:nth-child(5) {
       display: none;
