@@ -9,13 +9,16 @@ export default function About() {
   const containerRef = useRef(null);
   const titleRef = useRef(null);
   const logoRef = useRef(null);
-  const textRefs = [useRef(null), useRef(null), useRef(null)];
+
+  const textRef1 = useRef<HTMLParagraphElement | null>(null);
+  const textRef2 = useRef<HTMLParagraphElement | null>(null);
+  const textRef3 = useRef<HTMLParagraphElement | null>(null);
 
   const isTitleInView = useInView(titleRef, { once: false, amount: 0.9 });
   const isLogoInView = useInView(logoRef, { once: false, amount: 0.9 });
-  const isTextInView = textRefs.map((ref) =>
-    useInView(ref, { once: false, amount: 0.9 })
-  );
+  const isTextInView1 = useInView(textRef1, { once: false, amount: 0.9 });
+  const isTextInView2 = useInView(textRef2, { once: false, amount: 0.9 });
+  const isTextInView3 = useInView(textRef3, { once: false, amount: 0.9 });
 
   const [showTyping, setShowTyping] = useState(false);
 
@@ -75,19 +78,15 @@ export default function About() {
       </motion.svg>
 
       <div className="text-center space-y-2">
-        {[
-          "IT를 사랑하는 서울시립대 학생들이 모인 퀴푸는",
-          "“재밌지만 가볍지 않게, 제대로 배우자!”를 모토로 하여",
-          "다양한 활동과 도전을 통해 함께 성장하는 동아리입니다.",
-        ].map((text, index) => (
-          <motion.p
-            ref={textRefs[index]}
-            key={index}
-            {...useScrollAnimation(isTextInView[index])}
-          >
-            {text}
-          </motion.p>
-        ))}
+        <motion.p ref={textRef1} {...useScrollAnimation(isTextInView1)}>
+          IT를 사랑하는 서울시립대 학생들이 모인 퀴푸는
+        </motion.p>
+        <motion.p ref={textRef2} {...useScrollAnimation(isTextInView2)}>
+          “재밌지만 가볍지 않게, 제대로 배우자!”를 모토로 하여
+        </motion.p>
+        <motion.p ref={textRef3} {...useScrollAnimation(isTextInView3)}>
+          다양한 활동과 도전을 통해 함께 성장하는 동아리입니다.
+        </motion.p>
       </div>
     </div>
   );
