@@ -195,8 +195,8 @@ export default function Technique() {
         }
 
         // 위치 업데이트
-        beads[i].x += beads[i].vx * dt * 1.5;
-        beads[i].y += beads[i].vy * dt * 1.5;
+        beads[i].x += beads[i].vx * dt * 1.3;
+        beads[i].y += beads[i].vy * dt * 1.3;
       }
 
       // 벽 충돌 처리
@@ -260,7 +260,7 @@ export default function Technique() {
 
   return (
     <TechniqueSection className="min-h-screen w-full pt-[60px] flex flex-col items-center justify-center">
-      <h2 className="font-firaCode w-full text-5xl md:text-6xl lg:text-7xl text-right pr-8">
+      <h2 className="font-firaCode w-full text-5xl md:text-6xl lg:text-7xl text-right pr-8 pb-8">
         how we make
       </h2>
       <div
@@ -301,7 +301,6 @@ export default function Technique() {
   );
 }
 
-// styled-components로 정의한 구슬 컴포넌트 (위치는 transform으로 제어)
 const BeadDiv = styled.div<{ $size: number; $borderColor: string }>`
   position: absolute;
   left: 0;

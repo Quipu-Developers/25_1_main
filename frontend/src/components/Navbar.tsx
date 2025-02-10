@@ -89,6 +89,7 @@ const NavButton = styled.button<{ $isActive: boolean }>`
   font-size: 16px;
   color: ${(props) => (props.$isActive ? "var(--point)" : "black")};
   transition: color 0.2s ease-in-out;
+  letter-spacing: 0.5px;
 
   &:hover {
     color: var(--point);
