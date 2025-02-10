@@ -10,7 +10,7 @@ export default function Home() {
       ref={svgRef}
       className="flex items-center justify-center relative h-[calc(var(--vh,1vh)*100)]"
     >
-      <header className="absolute w-full flex justify-between top-0 p-[15px] text-[#898989]">
+      <header className="absolute w-full flex justify-between top-0 p-[15px] text-[#898989] text-[16px]">
         <p>University of Seoul Computer Club</p>
         <p>QUIPU</p>
       </header>
@@ -49,6 +49,7 @@ export default function Home() {
         {/* 가운데 파란색 선 애니메이션 */}
         <motion.use
           href={`/assets/logo.svg#bottom-part`}
+          fill="#6666FF"
           variants={{
             hidden: { opacity: 0, scaleX: 0 },
             visible: { opacity: [0, 1, 0.9, 1], scaleX: [0, 1.2, 1] },
