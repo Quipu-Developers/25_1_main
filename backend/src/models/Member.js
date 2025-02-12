@@ -1,4 +1,4 @@
-const {DataTypes} = require('sequelize');
+const { DataTypes } = require('sequelize');
 const Sequelize = require("sequelize");
 class Member extends Sequelize.Model {
     static initiate(sequelize) {
@@ -11,7 +11,7 @@ class Member extends Sequelize.Model {
                 }, // PK 용
                 name: {
                     type: DataTypes.STRING,
-                    allowNull: false,
+                    allowNull: false
                 }, // 이름
                 student_id: {
                     type: DataTypes.STRING,
@@ -28,19 +28,19 @@ class Member extends Sequelize.Model {
                 }, // 전화번호
                 // 원하는 활동
                 semina: {
-                    type: DataTypes.TEXT,
+                    type: DataTypes.BOOLEAN,
                     allowNull: false,
                 }, // 세미나
                 dev: {
-                    type: DataTypes.TEXT,
+                    type: DataTypes.BOOLEAN,
                     allowNull: false,
                 }, // 개발
                 study: {
-                    type: DataTypes.TEXT,
+                    type: DataTypes.BOOLEAN,
                     allowNull: false,
                 }, // 스터디
                 external: {
-                    type: DataTypes.TEXT,
+                    type: DataTypes.BOOLEAN,
                     allowNull: false,
                 }, // 대외활동
                 motivation_semina: {
@@ -67,7 +67,6 @@ class Member extends Sequelize.Model {
                     type: DataTypes.STRING,
                     allowNull: false,
                 }, // 깃허브 프로필 주소
-
             },
             {
                 sequelize,

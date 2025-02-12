@@ -15,7 +15,7 @@ fs
     })
     .forEach(file => { // 해당 파일의 모델 불러와서 init
         const model = require(path.join(__dirname, file));
-        console.log(file, model.name);
+        console.log(`[LOG] Sequelize: model ${model.name} init`);
         db[model.name] = model;
         model.initiate(sequelize);
     });
