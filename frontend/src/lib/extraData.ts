@@ -11,8 +11,8 @@ const extraItems: ActivityItem[] = [
       "서울의 대규모 축제나 행사에서 실시간 행사 정보와 혼잡도를 제공하는 서비스 개발 프로젝트.",
     date: "24.02.01",
     images: [
-      "https://yenaley.github.io/img/project/%EA%B8%B0%ED%9A%8D.jpg",
-      "https://yenaley.github.io/img/project/%EC%98%88%EB%8C%80%EB%B0%9C%ED%91%9C.jpg",
+      "https://zippy.b-cdn.net/와글와글_img9.jpeg",
+      "https://zippy.b-cdn.net/파아란코스_img1.jpeg",
     ],
   },
   {
@@ -21,8 +21,8 @@ const extraItems: ActivityItem[] = [
       "딥러닝 기술을 활용하여 데이터를 분석하고, 예측 모델을 구축하는 프로젝트 진행.",
     date: "24.01.25",
     images: [
-      "https://yenaley.github.io/img/project/%EC%98%88%EB%8C%80%EB%B0%9C%ED%91%9C.jpg",
-      "https://yenaley.github.io/img/project/%EC%99%B8%EC%A3%BC.png",
+      "https://zippy.b-cdn.net/탱크_img1.jpeg",
+      "https://zippy.b-cdn.net/파아란코스_img2.jpeg",
     ],
   },
 ];

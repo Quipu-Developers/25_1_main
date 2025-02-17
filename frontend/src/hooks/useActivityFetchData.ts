@@ -8,6 +8,7 @@ import { extraTitleData, extraData } from "@/lib/extraData";
 
 const TOOL_ICON_BASE_URL =
   "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 // 제목 데이터 매핑
 const titleDataMap: Record<string, ActivityTitle> = {
@@ -88,7 +89,7 @@ const useActivityFetchData = (
     } else {
       axios
         .get(
-          `http://localhost:5000/${dataType}?current_page=${currentPage}&items_per_page=${itemsPerPage}`
+          `${BASE_URL}/${dataType}?current_page=${currentPage}&items_per_page=${itemsPerPage}`
         )
         .then((response: { data: ResponseActivityContent }) => {
           setData({

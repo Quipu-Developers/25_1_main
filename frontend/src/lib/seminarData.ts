@@ -13,8 +13,8 @@ const items: ActivityItem[] = [
     date: "24.02.07",
     pdf_name: "github_principles.pdf",
     images: [
-      "https://yenaley.github.io/img/project/%EB%A3%B0%EB%A0%9B%EC%9D%B4%EB%B2%A4%ED%8A%B8.jpeg",
-      "https://yenaley.github.io/img/project/%ED%80%B4%ED%91%B8%EB%B0%B1%EC%98%A4%ED%94%BC%EC%8A%A42.png",
+      "https://zippy.b-cdn.net/포폴24_img1.png",
+      "https://zippy.b-cdn.net/링고커넥트_img10.png",
     ],
   },
   {
@@ -24,8 +24,8 @@ const items: ActivityItem[] = [
     date: "24.02.05",
     pdf_name: "database_intro.pdf",
     images: [
-      "https://yenaley.github.io/img/project/%EB%A3%B0%EB%A0%9B%EC%9D%B4%EB%B2%A4%ED%8A%B8.jpeg",
-      "https://yenaley.github.io/img/project/%ED%80%B4%ED%91%B8%EB%B0%B1%EC%98%A4%ED%94%BC%EC%8A%A42.png",
+      "https://zippy.b-cdn.net/룰렛24_img1.jpeg",
+      "https://zippy.b-cdn.net/포폴24_img1.png",
     ],
   },
   {
@@ -36,8 +36,8 @@ const items: ActivityItem[] = [
     date: "24.01.31",
     pdf_name: "stable_diffusion_network.pdf",
     images: [
-      "https://yenaley.github.io/img/project/%EB%A3%B0%EB%A0%9B%EC%9D%B4%EB%B2%A4%ED%8A%B8.jpeg",
-      "https://yenaley.github.io/img/project/%ED%80%B4%ED%91%B8%EB%B0%B1%EC%98%A4%ED%94%BC%EC%8A%A42.png",
+      "https://zippy.b-cdn.net/링고커넥트_img10.png",
+      "https://zippy.b-cdn.net/룰렛24_img1.jpeg",
     ],
   },
   {
@@ -48,8 +48,8 @@ const items: ActivityItem[] = [
     date: "24.01.13",
     pdf_name: "it_career_guide.pdf",
     images: [
-      "https://yenaley.github.io/img/project/%EB%A3%B0%EB%A0%9B%EC%9D%B4%EB%B2%A4%ED%8A%B8.jpeg",
-      "https://yenaley.github.io/img/project/%ED%80%B4%ED%91%B8%EB%B0%B1%EC%98%A4%ED%94%BC%EC%8A%A42.png",
+      "https://zippy.b-cdn.net/링고커넥트_img10.png",
+      "https://zippy.b-cdn.net/룰렛24_img1.jpeg",
     ],
   },
   {
@@ -60,8 +60,8 @@ const items: ActivityItem[] = [
     date: "24.01.10",
     pdf_name: "cloud_vs_onprem.pdf",
     images: [
-      "https://yenaley.github.io/img/project/%EB%A3%B0%EB%A0%9B%EC%9D%B4%EB%B2%A4%ED%8A%B8.jpeg",
-      "https://yenaley.github.io/img/project/%ED%80%B4%ED%91%B8%EB%B0%B1%EC%98%A4%ED%94%BC%EC%8A%A42.png",
+      "https://zippy.b-cdn.net/포폴24_img1.png",
+      "https://zippy.b-cdn.net/링고커넥트_img10.png",
     ],
   },
 ];

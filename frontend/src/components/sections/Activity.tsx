@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import useActivityFetchData from "@/hooks/useActivityFetchData";
 
@@ -22,6 +22,7 @@ const Activity = () => {
 
   const toggleType = (type: string) => {
     setExpanded((prev) => {
+      // 펼쳐질 때는 해당 타입만 true, 다른 타입은 false
       const newState: Record<string, boolean> = {
         study: false,
         seminar: false,
@@ -38,6 +39,7 @@ const Activity = () => {
       <h2 className="font-firaCode w-full text-5xl md:text-6xl lg:text-7xl text-left pr-8 pb-8">
         what we do
       </h2>
+
       {["study", "seminar", "development", "extra"].map((type) => (
         <div key={type} className="space-y-2">
           <button
@@ -63,6 +65,7 @@ const TypeSection = ({ type, expanded }: ActivityTypeSectionProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
+  // 커스텀 훅으로 데이터 가져오기
   const { data, loading } = useActivityFetchData(
     type,
     fetchParams[type].useHardcoded,
@@ -71,22 +74,42 @@ const TypeSection = ({ type, expanded }: ActivityTypeSectionProps) => {
     true
   );
 
+  // 만약 페이지나 데이터가 바뀌어서 items 길이가 줄어들면 selectedIndex를 0으로 재설정
+  useEffect(() => {
+    if (!loading && data && data.items) {
+      if (selectedIndex >= data.items.length) {
+        setSelectedIndex(0);
+      }
+    }
+  }, [loading, data, selectedIndex]);
+
+  // 펼쳐지지 않았다면(= expanded가 false), 내용 감춤
+  if (!expanded) {
+    return null;
+  }
+
   return (
-    <div className={expanded ? "" : "hidden"}>
+    <div>
       {loading && <p className="text-gray-500">Loading...</p>}
+
       {!loading && !data && <p className="text-gray-500">No data available.</p>}
+
       {!loading && data && (
         <div className="space-y-4">
           <div className="p-4 border rounded bg-gray-50">
-            <p>{data.titleData.description}</p>
+            <p>{data.titleData?.description}</p>
           </div>
 
-          {data.items.length > 0 && (
-            <SelectedItemDetail item={data.items[selectedIndex]} />
-          )}
+          {/* 선택된 아이템 디테일 표시 (selectedIndex가 범위 내인지 확인) */}
+          {data.items &&
+            data.items.length > 0 &&
+            selectedIndex < data.items.length && (
+              <SelectedItemDetail item={data.items[selectedIndex]} />
+            )}
 
+          {/* 아이템 목록 */}
           <div className="flex flex-col space-y-2">
-            {data.items.map((item, index) => (
+            {data.items?.map((item, index) => (
               <button
                 key={index}
                 onClick={() => setSelectedIndex(index)}
@@ -102,12 +125,16 @@ const TypeSection = ({ type, expanded }: ActivityTypeSectionProps) => {
             ))}
           </div>
 
+          {/* 페이지네이션 버튼 */}
           <div className="flex justify-center space-x-2">
             {Array.from({ length: data.total_pages }, (_, i) => (
               <PageButton
                 key={i}
                 $active={currentPage === i + 1}
-                onClick={() => setCurrentPage(i + 1)}
+                onClick={() => {
+                  setCurrentPage(i + 1);
+                  setSelectedIndex(0); // 페이지 이동 시 첫 아이템을 선택하도록 리셋
+                }}
               >
                 {i + 1}
               </PageButton>
@@ -123,6 +150,7 @@ const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
   return (
     <div className="flex border p-4 rounded">
       <div className="w-1/3">
+        {/* 이미지가 여러 장이면 캐러셀, 한 장이면 단일 이미지 표시 */}
         {item.images && item.images.length > 1 ? (
           <ImageCarousel images={item.images} />
         ) : item.images && item.images.length === 1 ? (

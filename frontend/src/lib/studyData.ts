@@ -23,9 +23,7 @@ const studyItems: ActivityItem[] = [
     details:
       "기본적인 알고리즘과 자료구조를 배우고, 실전 문제 풀이를 통해 알고리즘 사고력을 향상시킨다.",
     date: "24.02.06",
-    images: [
-      "https://yenaley.github.io/img/project/%EC%8A%A4%ED%84%B0%EB%94%943.jpg",
-    ],
+    images: ["https://zippy.b-cdn.net/luxo_img1.png"],
     tools: ["react", "python", "java"],
   },
   {
@@ -34,8 +32,8 @@ const studyItems: ActivityItem[] = [
       "웹 개발의 기본을 다지고, 간단한 프로젝트를 만들어보며 실력을 키운다.",
     date: "24.02.02",
     images: [
-      "https://yenaley.github.io/img/project/%EC%BD%94%EB%94%A9%ED%85%8C%EC%8A%A4%ED%8A%B8%EC%8A%A4%ED%84%B0%EB%94%94.jpg",
-      "https://yenaley.github.io/img/project/%EC%8A%A4%ED%84%B0%EB%94%943.jpg",
+      "https://zippy.b-cdn.net/hand_img2.jpeg",
+      "https://zippy.b-cdn.net/mailper_img1.jpeg",
     ],
     tools: ["html5", "css3", "javascript"],
   },

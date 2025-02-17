@@ -25,8 +25,8 @@ const developmentItems: ActivityItem[] = [
     date: "24.01.30",
     link: "https://quipu.uos.ac.kr/",
     images: [
-      "https://yenaley.github.io/img/project/%EB%B0%B0%ED%8B%80%EA%B8%80%EB%9D%BC%EC%9A%B4%EB%93%9C1.jpeg",
-      "https://yenaley.github.io/img/project/%EB%A7%81%EA%B3%A0%EC%BB%A4%EB%84%A5%ED%8A%B8.png",
+      "https://zippy.b-cdn.net/articket_img1.jpeg",
+      "https://zippy.b-cdn.net/_배틀글라운드_img1.jpeg",
     ],
     tools: ["react", "firebase", "tailwindcss"],
   },
@@ -37,8 +37,8 @@ const developmentItems: ActivityItem[] = [
     date: "24.01.20",
     link: "https://quipu.uos.ac.kr/",
     images: [
-      "https://yenaley.github.io/img/project/%ED%80%B4%ED%91%B8%EB%B0%B1%EC%98%A4%ED%94%BC%EC%8A%A41.png",
-      "https://yenaley.github.io/img/project/%ED%80%B4%ED%91%B8%EB%A9%94%EC%9D%B8%EC%9B%B91.png",
+      "https://zippy.b-cdn.net/_와글와글_img1.jpeg",
+      "https://zippy.b-cdn.net/링고커넥트_img4.jpeg",
     ],
     tools: ["nodejs", "socketio", "mongodb"],
   },
