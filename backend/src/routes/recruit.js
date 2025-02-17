@@ -33,7 +33,7 @@ const portfolioDir = path.join(__dirname, '../../portfolio/');
   
   router.post('/', upload.single('portfolio_pdf'), async (req, res) => {
           try {
-              const { name, student_id, major, phone_number, semina, dev, study, external, 
+              const { name, student_id, grade, major, phone_number, semina, dev, study, external, 
                 motivation_semina, field_dev, motivation_study, motivation_external, github_profile } = req.body;
               let ext = "", tmpFilename = "", tmpFilepath = "";
               console.log(`[LOG] 데이터 전송 완료 - 신청자: ${name}, 학번: ${student_id}`);
@@ -46,8 +46,8 @@ const portfolioDir = path.join(__dirname, '../../portfolio/');
               }
 
               // 값 누락 체크
-              const requiredFields = {name, student_id, major, phone_number, semina, dev, study, external};
-              const extraFields = {motivation_semina, field_dev, motivation_study, motivation_external, github_profile};
+              const requiredFields = {name, grade, student_id, major, phone_number, semina, dev, study, external};
+              //const extraFields = {motivation_semina, field_dev, motivation_study, motivation_external, github_profile};
               const motivationFields = [
                 { activity: semina, motivation: motivation_semina},
                 { activity: dev, motivation: field_dev},
@@ -115,6 +115,7 @@ const portfolioDir = path.join(__dirname, '../../portfolio/');
   
               await Member.create({
                   name,
+                  grade, 
                   student_id,
                   major,
                   phone_number,

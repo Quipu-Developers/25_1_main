@@ -11,13 +11,14 @@ const hpp = require('hpp');                     // 보안 관련
 const morgan = require('morgan');               // http 요청 로깅 용 미들웨어
 const mysql = require('mysql2/promise');        // mysql 연결용
 const fs = require('fs').promises;              // fs
-require('dotenv').config();                     // .env 파일 로드
-
+require("dotenv").config({ path: path.resolve(__dirname, "../.env") });     // .env 파일 로드
+console.log(process.env.NODE_ENV);
 
 const { sequelize } = require('./models'); // Sequelize ORM 연결
 const PORT = process.env.PORT || 3001;          // 포트 설정
 const app = express();
-const config = require(__dirname + '/config/config.json')[process.env.NODE_ENV];
+const config = require(__dirname + '/config/config');
+//const config = require(__dirname + '/config/config.json')[process.env.NODE_ENV];
 
 //cors 해결
 app.use(cors({
@@ -49,12 +50,17 @@ async function setupPortfolioDir() {
 };
 async function startServer() {
     try {
-        // mysql에 연결
-        const connection = await mysql.createConnection({ host: config.host, user: config.username, password: config.password });
+        if(process.env.NODE_ENV === "development") {
+            // mysql에 연결
+            const connection = await mysql.createConnection({ host: config.host, user: config.username, password: config.password });
 
-        // DB가 없으면 생성
-        await connection.query(`CREATE DATABASE IF NOT EXISTS \`${config.database}\`;`);
-        console.log(`[LOG] 데이터베이스 확인 완료: ${config.database}`);
+            // DB가 없으면 생성
+            await connection.query(`CREATE DATABASE IF NOT EXISTS \`${config.database}\`;`);
+            console.log(`[LOG] 데이터베이스 확인 완료: ${config.database}`);
+        
+            // 연결 종료(다시 sequelize로 연결할 예정)
+            await connection.end();
+        }
         
         // Sequelize 연결
         await sequelize.authenticate();

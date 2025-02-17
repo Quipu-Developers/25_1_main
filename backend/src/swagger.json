@@ -22,6 +22,11 @@
                     "description": "이름",
                     "example": "이제민"
                   },
+                  "grade": {
+                    "type": "integer",
+                    "description": "학년",
+                    "example": "4"
+                  },
                   "student_id": {
                     "type": "string",
                     "description": "학번",
@@ -88,7 +93,7 @@
                     "example": "https://github.com/username"
                   }
                 },
-                "required": ["name", "student_id", "major", "phone_number", "semina", "dev", "study", "external"]
+                "required": ["name", "grade","student_id", "major", "phone_number", "semina", "dev", "study", "external"]
               }
             }
           }
