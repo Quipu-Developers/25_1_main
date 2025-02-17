@@ -15,6 +15,7 @@ require("dotenv").config({ path: path.resolve(__dirname, "../.env") });     // .
 console.log(process.env.NODE_ENV);
 
 const { sequelize } = require('./models'); // Sequelize ORM 연결
+const { exec } = require('child_process');
 const PORT = process.env.PORT || 3001;          // 포트 설정
 const app = express();
 const config = require(__dirname + '/config/config');
@@ -48,6 +49,21 @@ async function setupPortfolioDir() {
         }
     }
 };
+
+function runMigrations() {
+    return new Promise((resolve, reject) => {
+        exec('npx sequelize-cli db:migrate --config ./src/config/config.js', (err, stdout, stderr) => {
+            if (err) {
+                console.error(`[ERROR] 마이그레이션 실행 실패: ${stderr}`);
+                reject(err);
+            } else {
+                console.log('[LOG] 마이그레이션 완료:', stdout);
+                resolve();
+            }
+        });
+    });
+}
+
 async function startServer() {
     try {
         if(process.env.NODE_ENV === "development") {
@@ -65,10 +81,13 @@ async function startServer() {
         // Sequelize 연결
         await sequelize.authenticate();
         console.log('[LOG] DB 연결 성공');
-
+        
         // Sequelize 테이블 동기화
-        await sequelize.sync();
+        await sequelize.sync({ force: true} );
         console.log('[LOG] DB 동기화 완료');
+
+        // migration 실행
+        await runMigrations();
 
         // 주기적으로 DB 연결 유지
         setInterval(async () => {
