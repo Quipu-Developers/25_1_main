@@ -64,7 +64,7 @@ const useToast = (): UseToast => {
     }
 
     toastIdRef.current = toastType(
-      ({ closeToast, toastProps }) => (
+      ({ closeToast }) => (
         <S.ConfirmToast>
           <p>{message}</p>
           <div>

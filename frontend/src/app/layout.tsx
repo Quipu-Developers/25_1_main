@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
-import CMToast from "@/components/CMToast";
 
 export const metadata: Metadata = {
   title: "QUIPU | UOS 컴퓨터 학술 중앙동아리",

@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion"; // Framer Motion import
 import CMToast from "@/components/CMToast";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import useToast from "@/hooks/useToast";
 
 type ActivityType = "semina" | "dev" | "study" | "external";
@@ -216,7 +216,7 @@ export default function RecruitForm() {
       setFormData((prev) => ({ ...prev, [name]: Number(value) }));
     } else if (name === "phone_number") {
       // 숫자만 남기기
-      let numericValue = value.replace(/\D/g, "").slice(0, 11);
+      const numericValue = value.replace(/\D/g, "").slice(0, 11);
 
       // 자동으로 "-" 추가 (백스페이스 시 자연스럽게 삭제)
       let formattedValue = numericValue;
@@ -403,11 +403,12 @@ export default function RecruitForm() {
             setChecked1(false);
             setChecked2(false);
           }
-        } catch (error: any) {
-          if (error.response) {
-            if (error.response.status === 400) {
+        } catch (err: unknown) {
+          if (axios.isAxiosError(err)) {
+            const axiosError = err as AxiosError;
+            if (axiosError.response?.status === 400) {
               showToast("error", "하나 이상의 활동을 선택해주세요.");
-            } else if (error.response.status === 422) {
+            } else if (axiosError.response?.status === 422) {
               showToast(
                 "error",
                 "선택한 활동에 대한 모든 폼을 올바르게 작성해주세요."
@@ -416,9 +417,10 @@ export default function RecruitForm() {
               showToast("error", "신청 중 오류가 발생했습니다.");
             }
           } else {
+            // axios 에러가 아닌 일반 오류 처리
             showToast("error", "신청 중 오류가 발생했습니다.");
+            console.error(err);
           }
-          console.error(error);
         }
       },
       () => {},
