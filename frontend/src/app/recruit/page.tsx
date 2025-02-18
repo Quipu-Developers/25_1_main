@@ -299,7 +299,7 @@ export default function RecruitForm() {
     return true;
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     if (!bothChecked) {
@@ -469,7 +469,6 @@ export default function RecruitForm() {
 
         <motion.form
           ref={formRef}
-          onSubmit={handleSubmit}
           variants={containerVariants}
           className="w-full"
         >
@@ -689,9 +688,9 @@ export default function RecruitForm() {
           </motion.div>
         </motion.form>
         <motion.button
-          onClick={(e) => {
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             if (formRef.current) {
-              handleSubmit(e as any);
+              handleSubmit(e);
             }
           }}
           variants={itemVariants}
