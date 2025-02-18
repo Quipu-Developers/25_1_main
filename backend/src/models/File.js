@@ -1,16 +1,21 @@
 const { DataTypes } = require('sequelize');
 const Sequelize = require("sequelize");
-class Image extends Sequelize.Model {
+
+class File extends Sequelize.Model {
     static initiate(sequelize) {
-        Image.init(
+        File.init(
             {
-                image_id: {
+                file_id: {
                     type: DataTypes.INTEGER,
                     autoIncrement: true,
                     primaryKey: true,
-                }, // image_id
-                image_url: {
+                }, // 파일 ID
+                file_url: {
                     type: DataTypes.STRING,
+                    allowNull: false,
+                }, // 파일 URL (이미지, PDF 등)
+                file_type: {
+                    type: DataTypes.ENUM("image", "pdf"), // 파일 유형 구분
                     allowNull: false,
                 },
                 semina_id: {
@@ -22,8 +27,8 @@ class Image extends Sequelize.Model {
                 sequelize,
                 timestamps: true,
                 underscored: true,
-                modelName: "Image",
-                tableName: "images",
+                modelName: "File",
+                tableName: "files",
                 paranoid: false,
                 charset: "utf8mb4",
                 collate: "utf8mb4_general_ci",
@@ -31,8 +36,8 @@ class Image extends Sequelize.Model {
         );
     }
     static associate(db) {
-      db.Image.belongsTo(db.Semina, { foreignKey: 'semina_id', targetKey: 'semina_id' });
+      db.File.belongsTo(db.Semina, { foreignKey: 'semina_id', targetKey: 'semina_id' });
     }
 }
 
-module.exports = Image;
+module.exports = File;

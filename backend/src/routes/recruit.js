@@ -36,7 +36,7 @@ const portfolioDir = path.join(__dirname, '../../portfolio/');
               const { name, student_id, grade, major, phone_number, semina, dev, study, external, 
                 motivation_semina, field_dev, motivation_study, motivation_external, github_profile } = req.body;
               let ext = "", tmpFilename = "", tmpFilepath = "";
-              console.log(`[LOG] 데이터 전송 완료 - 신청자: ${name}, 학번: ${student_id}`);
+              console.log(`[LOG] recruit api 실행, 데이터 전송 완료 - 신청자: ${name}, 학번: ${student_id}`);
 
 
               if (req.file){
@@ -72,6 +72,7 @@ const portfolioDir = path.join(__dirname, '../../portfolio/');
                   if(req.file){
                     await deleteFile(tmpFilepath);
                   }
+                  console.log(`[ERROR] ${activity} 관련 동기 누락- 신청자: ${name}, 학번: ${student_id}`);
                   return res.status(400).send(`필수 요소 누락: ${activity} 관련 동기 입력 필요`);
                 }
               }
@@ -93,6 +94,7 @@ const portfolioDir = path.join(__dirname, '../../portfolio/');
                   if(req.file){
                     await deleteFile(tmpFilepath);
                   }
+                  console.log(`[ERROR] 중복된 인원 - 신청자: ${name}, 학번: ${student_id}`)
                   return res.status(409).send(`이미 신청하셨습니다 - 신청자: ${name}, 학번: ${student_id}`);
               }
               console.log(`[LOG] 데이터 검사 완료 - 신청자: ${name}, 학번: ${student_id}`);

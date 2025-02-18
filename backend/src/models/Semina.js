@@ -9,18 +9,10 @@ class Semina extends Sequelize.Model {
                     autoIncrement: true,
                     primaryKey: true,
                 }, // semina_id
-                speaker_name: {
+                speaker: {
                     type: DataTypes.STRING,
                     allowNull: false
-                }, // 발표자 이름
-                speaker_major: {
-                    type: DataTypes.STRING,
-                    allowNull: false
-                }, // 발표자 전공
-                speaker_studentID: {
-                    type: DataTypes.STRING,
-                    allowNull: false,
-                }, // 발표자 학번
+                },
                 topic: {
                     type: DataTypes.STRING,
                     allowNUll: false,
@@ -47,7 +39,7 @@ class Semina extends Sequelize.Model {
         );
     }
     static associate(db) {
-      db.Semina.hasMany(db.Image, { foreignKey: 'semina_id', sourceKey: 'semina_id' });
+      db.Semina.hasMany(db.File, { foreignKey: 'semina_id', sourceKey: 'semina_id' });
     }
 }
 

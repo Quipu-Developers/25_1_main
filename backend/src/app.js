@@ -12,14 +12,14 @@ const morgan = require('morgan');               // http 요청 로깅 용 미들
 const mysql = require('mysql2/promise');        // mysql 연결용
 const fs = require('fs').promises;              // fs
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });     // .env 파일 로드
-console.log(process.env.NODE_ENV);
+console.log(`[LOG] NODE_ENV = ${process.env.NODE_ENV}`);
 
 const { sequelize } = require('./models'); // Sequelize ORM 연결
 const { exec } = require('child_process');
 const PORT = process.env.PORT || 3001;          // 포트 설정
 const app = express();
 const config = require(__dirname + '/config/config');
-//const config = require(__dirname + '/config/config.json')[process.env.NODE_ENV];
+
 
 //cors 해결
 app.use(cors({
@@ -33,31 +33,37 @@ app.use(express.json());
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
+// local test용
+const insertDummyData = require("./scripts/dummyData");
+
 // Router 세팅
 const recruitRouter = require('./routes/recruit.js');
+const seminainfoRouter = require('./routes/semina_info.js');
+
+// portfolio directory 세팅
 const portfolioDir = path.join(__dirname, '../../portfolio/');
 async function setupPortfolioDir() {
     try {
         await fs.readdir(portfolioDir);
-        console.log('[LOG] Portfolio directory exists.');
+        console.log('[LOG] Portfolio directory 확인.');
     } catch (error) {
         try {
             await fs.mkdir(portfolioDir, { recursive: true });
-            console.log('[LOG] Portfolio directory created.');
+            console.log('[LOG] Portfolio directory 생성.');
         } catch (mkdirError) {
-            console.error('[LOG] Failed to create portfolio directory:', mkdirError);
+            console.error('[LOG] Portfolio directory 생성 실패:', mkdirError);
         }
     }
 };
 
 function runMigrations() {
     return new Promise((resolve, reject) => {
-        exec('npx sequelize-cli db:migrate --config ./src/config/config.js', (err, stdout, stderr) => {
+        exec('npx sequelize-cli db:migrate --config ./src/config/config.js', (err, stderr) => {
             if (err) {
                 console.error(`[ERROR] 마이그레이션 실행 실패: ${stderr}`);
                 reject(err);
             } else {
-                console.log('[LOG] 마이그레이션 완료:', stdout);
+                console.log('[LOG] 마이그레이션 완료');
                 resolve();
             }
         });
@@ -83,7 +89,7 @@ async function startServer() {
         console.log('[LOG] DB 연결 성공');
         
         // Sequelize 테이블 동기화
-        await sequelize.sync({ force: true} );
+        await sequelize.sync({ alter: true} );
         console.log('[LOG] DB 동기화 완료');
 
         // migration 실행
@@ -99,12 +105,18 @@ async function startServer() {
             }
         }, 3600000); 
 
+        //local test
+        if (process.env.NODE_ENV === "development") {
+            await insertDummyData();
+        }
+
         // 서버 실행
         app.listen(PORT, () => {
             console.log(`PORT: ${PORT}`);
             console.log(`swagger: http://localhost:${PORT}/api-docs`);
             console.log(`server: http://localhost:${PORT}`);
-        });        
+        });   
+
 
     } catch (err) {
         console.error('[ERROR] 서버 시작 실패:', err);
@@ -113,6 +125,18 @@ async function startServer() {
 }
 
 setupPortfolioDir().then(() => startServer());
+
+
+
+
+//API
+
+//{url}/recruit
 app.use('/recruit', recruitRouter);
+
+//{url}/semina?current_page=${currentPage}&items_per_page=${itemsPerPage}
+app.use('/semina', seminainfoRouter);
+
+//{url}/api-docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

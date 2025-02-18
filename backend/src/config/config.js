@@ -9,6 +9,7 @@ const config = {
     host: process.env.DEV_DB_HOST,
     dialect: "mysql",
     port: process.env.DEV_DB_PORT || 3306,
+    logging: false,
   },
   test: {
     username: process.env.TEST_DB_USER,
@@ -17,6 +18,7 @@ const config = {
     host: process.env.TEST_DB_HOST,
     dialect: "mysql",
     port: process.env.TESt_DB_PORT || 3306,
+    logging: false,
   },
   production: {
     username: process.env.PROD_DB_USER,
@@ -25,6 +27,7 @@ const config = {
     host: process.env.PROD_DB_HOST,
     dialect: "mysql",
     port: process.env.PROD_DB_PORT || 3306,
+    logging: false,
   }
 };
 
