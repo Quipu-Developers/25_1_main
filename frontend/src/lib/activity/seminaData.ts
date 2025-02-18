@@ -11,7 +11,7 @@ const items: ActivityItem[] = [
     details:
       "내 작업 폴더에서 원격 저장소까지 코드가 이동하는 과정을 알아보며, Git이 파일 상태에 따라 어떻게 동작하는지 정리해보다.",
     date: "24.02.07",
-    pdf_name: "github_principles.pdf",
+    pdf: "github_principles.pdf",
     images: [
       "https://zippy.b-cdn.net/포폴24_img1.png",
       "https://zippy.b-cdn.net/링고커넥트_img10.png",
@@ -22,7 +22,7 @@ const items: ActivityItem[] = [
     topic: "데이터베이스 개요",
     details: "데이터베이스의 기본 개념과 실전 활용법을 알아보자.",
     date: "24.02.05",
-    pdf_name: "database_intro.pdf",
+    pdf: "database_intro.pdf",
     images: [
       "https://zippy.b-cdn.net/룰렛24_img1.jpeg",
       "https://zippy.b-cdn.net/포폴24_img1.png",
@@ -34,7 +34,7 @@ const items: ActivityItem[] = [
     details:
       "스테이블 디퓨전의 속도를 높이고 효율적으로 네트워크를 활용하는 방법에 대해 논의한다.",
     date: "24.01.31",
-    pdf_name: "stable_diffusion_network.pdf",
+    pdf: "stable_diffusion_network.pdf",
     images: [
       "https://zippy.b-cdn.net/링고커넥트_img10.png",
       "https://zippy.b-cdn.net/룰렛24_img1.jpeg",
@@ -46,7 +46,7 @@ const items: ActivityItem[] = [
     details:
       "IT 분야에서 하드웨어와 소프트웨어를 아우르는 커리어 패스를 소개한다.",
     date: "24.01.13",
-    pdf_name: "it_career_guide.pdf",
+    pdf: "it_career_guide.pdf",
     images: [
       "https://zippy.b-cdn.net/링고커넥트_img10.png",
       "https://zippy.b-cdn.net/룰렛24_img1.jpeg",
@@ -58,7 +58,7 @@ const items: ActivityItem[] = [
     details:
       "클라우드 기반 배포 방식과 온프레미스 배포의 장단점을 비교 분석한다.",
     date: "24.01.10",
-    pdf_name: "cloud_vs_onprem.pdf",
+    pdf: "cloud_vs_onprem.pdf",
     images: [
       "https://zippy.b-cdn.net/포폴24_img1.png",
       "https://zippy.b-cdn.net/링고커넥트_img10.png",
