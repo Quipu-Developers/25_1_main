@@ -28,7 +28,7 @@ const useToast = (): UseToast => {
     options: ToastOptions = {
       autoClose: 3000,
       hideProgressBar: false,
-      position: "bottom-center",
+      position: "top-center",
     }
   ) => {
     toast.dismiss();
@@ -97,7 +97,7 @@ const useToast = (): UseToast => {
           </div>
         </S.ConfirmToast>
       ),
-      { autoClose: false, position: "bottom-right" }
+      { autoClose: false, position: "top-center" }
     );
   };
 
