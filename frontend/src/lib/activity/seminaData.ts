@@ -1,5 +1,5 @@
-export const seminarTitleData: ActivityTitle = {
-  type: "SEMINAR",
+export const seminaTitleData: ActivityTitle = {
+  type: "SEMINA",
   description:
     "컴퓨터 및 IT에 대한 다양한 주제를 다루는 세미나를 정기적으로 진행합니다. “배우고 나누자”라는 목표를 갖습니다.",
 };
@@ -66,7 +66,7 @@ const items: ActivityItem[] = [
   },
 ];
 
-export const seminarData: HardcodedActivityContent = {
+export const seminaData: HardcodedActivityContent = {
   total_items: items.length,
   items: items,
 };

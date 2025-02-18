@@ -1,13 +1,10 @@
 "use client";
 
-// RecruitForm은 클라이언트 컴포넌트입니다.
-// useState, useEffect 등 브라우저 전용 훅을 사용하므로 "use client" 선언이 필요합니다.
-
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion"; // Framer Motion import
+import { motion } from "framer-motion";
 import CMToast from "@/components/CMToast";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import useToast from "@/hooks/useToast";
 import { majors } from "@/lib/recruitData";
 
@@ -95,12 +92,12 @@ export default function RecruitForm() {
   const checkRecruitmentStatus = async (): Promise<void> => {
     try {
       const response = await axios.get<RecruitmentStatusResponse>(
-        `${BASE_URL}/recruit-status`
+        `${BASE_URL}/feature/recruit`
       );
-      setIsRecruiting(response.data.isRecruiting);
+      setIsRecruiting(response.data.is_enabled);
     } catch (error) {
       console.error(error);
-      // setIsRecruiting(false);
+      setIsRecruiting(false);
     }
   };
 
@@ -299,21 +296,22 @@ export default function RecruitForm() {
     return true;
   };
 
+  // --- handleSubmit 함수 수정 ---
+  // 기존에는 모든 데이터를 FormData에 담아 전송했으나,
+  // 아래 코드는 sendDevelopment와 같은 방식으로 각각의 필드를 개별적으로 payload 객체에 담아 전송합니다.
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
+    // (1) 체크박스 동의 여부 등 간단한 유효성 검사 (예시)
     if (!bothChecked) {
       showToast("error", "안내 사항을 모두 확인 및 동의해주세요.");
       return;
     }
 
-    // (1) 필수 입력값 체크
-    if (!validateRequiredFields()) return;
+    // (2) 필수값이나 형식 검사 (예시)
+    if (!validateRequiredFields() || !validatePatterns()) return;
 
-    // (2) 입력값 형식 검사
-    if (!validatePatterns()) return;
-
-    // (3) 최소 1개 이상의 활동 선택 확인
+    // (3) 최소 하나의 활동을 선택했는지 확인 (예시)
     if (
       !formData.semina &&
       !formData.dev &&
@@ -324,115 +322,102 @@ export default function RecruitForm() {
       return;
     }
 
-    // (4) 선택한 활동별 세부 폼 입력 확인
-    if (formData.semina && formData.motivation_semina.trim() === "") {
-      showToast("error", "세미나 활동의 모든 요소를 입력해주세요.");
+    // (4) 선택된 활동별 추가 유효성 검사 (예시)
+    if (formData.semina && !formData.motivation_semina.trim()) {
+      showToast("error", "세미나 활동 내용을 입력해주세요.");
       return;
     }
     if (formData.dev) {
       if (
-        formData.field_dev.trim() === "" ||
+        !formData.field_dev.trim() ||
         !formData.portfolio_pdf ||
-        formData.github_profile.trim() === ""
+        !formData.github_profile.trim()
       ) {
-        showToast("error", "개발 활동의 모든 요소를 입력해주세요.");
+        showToast("error", "개발 활동의 모든 항목을 입력해주세요.");
         return;
       }
     }
-    if (formData.study && formData.motivation_study.trim() === "") {
-      showToast("error", "스터디 활동의 모든 요소를 입력해주세요.");
+    if (formData.study && !formData.motivation_study.trim()) {
+      showToast("error", "스터디 활동 내용을 입력해주세요.");
       return;
     }
-    if (formData.external && formData.motivation_external.trim() === "") {
-      showToast("error", "대외 활동의 모든 요소를 입력해주세요.");
+    if (formData.external && !formData.motivation_external.trim()) {
+      showToast("error", "대외 활동 내용을 입력해주세요.");
       return;
     }
 
-    confirmToast(
-      "error",
-      "제출 후 수정과 삭제는 불가능합니다. 계속 진행하시겠습니까?",
-      async () => {
-        // (5) FormData 생성 후 폼 데이터 전송
-        const payload = new FormData();
-        payload.append("name", formData.name);
-        payload.append("major", formData.major);
-        payload.append("grade", String(formData.grade));
-        payload.append("student_id", formData.student_id);
-        payload.append("phone_number", formData.phone_number);
-        payload.append("semina", String(formData.semina));
-        payload.append("dev", String(formData.dev));
-        payload.append("study", String(formData.study));
-        payload.append("external", String(formData.external));
+    try {
+      // --- 핵심 변경 부분: 각각의 필드를 개별적으로 payload 객체에 담아서 전송 ---
+      const payload = {
+        // 1) 공통 정보
+        name: formData.name,
+        student_id: formData.student_id,
+        grade: formData.grade,
+        major: formData.major,
+        phone_number: formData.phone_number,
+        // 2) 활동 boolean 플래그
+        semina: formData.semina,
+        dev: formData.dev,
+        study: formData.study,
+        external: formData.external,
+        // 3) 각 활동별 추가 정보 (선택된 활동에 대해서만 값 할당)
+        motivation_semina: formData.semina ? formData.motivation_semina : "",
+        field_dev: formData.dev ? formData.field_dev : "",
+        portfolio_pdf: formData.dev ? formData.portfolio_pdf : null,
+        github_profile: formData.dev ? formData.github_profile : "",
+        motivation_study: formData.study ? formData.motivation_study : "",
+        motivation_external: formData.external
+          ? formData.motivation_external
+          : "",
+      };
 
-        if (formData.semina) {
-          payload.append("motivation_semina", formData.motivation_semina);
-        }
-        if (formData.dev) {
-          payload.append("field_dev", formData.field_dev);
-          if (formData.portfolio_pdf) {
-            payload.append("portfolio_pdf", formData.portfolio_pdf);
-          }
-          payload.append("github_profile", formData.github_profile);
-        }
-        if (formData.study) {
-          payload.append("motivation_study", formData.motivation_study);
-        }
-        if (formData.external) {
-          payload.append("motivation_external", formData.motivation_external);
-        }
+      // --- 실제 API 호출 (JSON 방식으로 전송) ---
+      const response = await axios.post(`${BASE_URL}/recruit`, payload, {
+        headers: { "Content-Type": "application/json" },
+      });
+      console.log(response);
 
-        try {
-          const response = await axios.post(`${BASE_URL}/recruit`, payload, {
-            headers: { "Content-Type": "multipart/form-data" },
-          });
-
-          if (response.status === 200) {
-            showToast("success", "신청이 완료되었습니다!");
-            // 제출 후 폼 초기화
-            setFormData({
-              name: "",
-              student_id: "",
-              grade: 1,
-              major: "",
-              phone_number: "",
-              semina: false,
-              dev: false,
-              study: false,
-              external: false,
-              motivation_semina: "",
-              field_dev: "",
-              portfolio_pdf: null,
-              github_profile: "",
-              motivation_study: "",
-              motivation_external: "",
-            });
-            setChecked1(false);
-            setChecked2(false);
-          }
-        } catch (err: unknown) {
-          if (axios.isAxiosError(err)) {
-            const axiosError = err as AxiosError;
-            if (axiosError.response?.status === 400) {
-              showToast("error", "하나 이상의 활동을 선택해주세요.");
-            } else if (axiosError.response?.status === 422) {
-              showToast(
-                "error",
-                "선택한 활동에 대한 모든 폼을 올바르게 작성해주세요."
-              );
-            } else {
-              showToast("error", "신청 중 오류가 발생했습니다.");
-            }
-          } else {
-            // axios 에러가 아닌 일반 오류 처리
-            showToast("error", "신청 중 오류가 발생했습니다.");
-            console.error(err);
-          }
+      if (response.status === 201) {
+        showToast("success", "신청이 완료되었습니다!");
+        // 제출 후 폼 초기화
+        // setFormData({
+        //   name: "",
+        //   student_id: "",
+        //   grade: 1,
+        //   major: "",
+        //   phone_number: "",
+        //   semina: false,
+        //   dev: false,
+        //   study: false,
+        //   external: false,
+        //   motivation_semina: "",
+        //   field_dev: "",
+        //   portfolio_pdf: null,
+        //   github_profile: "",
+        //   motivation_study: "",
+        //   motivation_external: "",
+        // });
+        // setChecked1(false);
+        // setChecked2(false);
+      }
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        // 서버로부터의 에러 응답 처리
+        if (err.response?.status === 400) {
+          showToast("error", "하나 이상의 활동을 선택해주세요.");
+        } else if (err.response?.status === 422) {
+          showToast("error", "선택한 활동 내용을 모두 작성해주세요.");
+        } else if (err.response?.status === 409) {
+          showToast("error", "이미 제출하셨습니다.");
+        } else {
+          showToast("error", "신청 중 오류가 발생했습니다.");
         }
-      },
-      () => {},
-      "네",
-      "아니요"
-    );
+      } else {
+        // Axios 에러가 아닌 경우
+        showToast("error", "신청 중 오류가 발생했습니다.");
+        console.error(err);
+      }
+    }
   };
 
   return (

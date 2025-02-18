@@ -8,7 +8,7 @@ const fetchParams: Record<
   { useHardcoded: boolean; itemsPerPage: number }
 > = {
   study: { useHardcoded: true, itemsPerPage: 4 },
-  seminar: { useHardcoded: true, itemsPerPage: 4 },
+  semina: { useHardcoded: false, itemsPerPage: 4 },
   development: { useHardcoded: true, itemsPerPage: 4 },
   extra: { useHardcoded: true, itemsPerPage: 4 },
 };
@@ -17,7 +17,7 @@ const fetchParams: Record<
 const Activity = () => {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({
     study: false,
-    seminar: false,
+    semina: false,
     development: false,
     extra: false,
   });
@@ -27,7 +27,7 @@ const Activity = () => {
       // 펼쳐질 때는 해당 타입만 true, 다른 타입은 false
       const newState: Record<string, boolean> = {
         study: false,
-        seminar: false,
+        semina: false,
         development: false,
         extra: false,
       };
@@ -43,7 +43,7 @@ const Activity = () => {
       </h2>
 
       {/* 타입별 버튼 목록 */}
-      {["study", "seminar", "development", "extra"].map((type) => (
+      {["study", "semina", "development", "extra"].map((type) => (
         <div key={type} className="space-y-3">
           <button
             onClick={() => toggleType(type)}
@@ -217,9 +217,9 @@ const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
             <span className="font-semibold">Date:</span> {item.date}
           </p>
         )}
-        {item.pdf_name && (
+        {item.pdf && (
           <a
-            href={`/path/to/pdf/${item.pdf_name}`}
+            href={`${item.pdf}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-500 underline"

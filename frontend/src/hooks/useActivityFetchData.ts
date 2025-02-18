@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { studyTitleData, studyData } from "@/lib/activity/studyData";
-import { seminarTitleData, seminarData } from "@/lib/activity/seminarData";
+import { seminaTitleData, seminaData } from "@/lib/activity/seminaData";
 import {
   developmentTitleData,
   developmentData,
@@ -16,7 +16,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 // 제목 데이터 매핑
 const titleDataMap: Record<string, ActivityTitle> = {
   study: studyTitleData,
-  seminar: seminarTitleData,
+  semina: seminaTitleData,
   development: developmentTitleData,
   extra: extraTitleData,
 };
@@ -24,7 +24,7 @@ const titleDataMap: Record<string, ActivityTitle> = {
 // 내용 데이터 매핑
 const contentDataMap: Record<string, HardcodedActivityContent> = {
   study: studyData,
-  seminar: seminarData,
+  semina: seminaData,
   development: developmentData,
   extra: extraData,
 };

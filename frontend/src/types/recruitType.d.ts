@@ -41,7 +41,7 @@ declare interface ActivityOption {
 }
 
 declare interface RecruitmentStatusResponse {
-  isRecruiting: boolean;
+  is_enabled: boolean;
 }
 
 declare interface FaqItemProps {
