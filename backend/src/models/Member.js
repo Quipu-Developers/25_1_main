@@ -13,6 +13,10 @@ class Member extends Sequelize.Model {
                     type: DataTypes.STRING,
                     allowNull: false
                 }, // 이름
+                grade: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false
+                }, // 학년
                 student_id: {
                     type: DataTypes.STRING,
                     allowNull: false,

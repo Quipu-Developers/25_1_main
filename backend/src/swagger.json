@@ -17,104 +17,117 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "이름",
-                    "example": "이제민"
-                  },
-                  "student_id": {
-                    "type": "string",
-                    "description": "학번",
-                    "example": "2020440102"
-                  },
-                  "major": {
-                    "type": "string",
-                    "description": "전공",
-                    "example": "전자전기컴퓨터공학부"
-                  },
-                  "phone_number": {
-                    "type": "string",
-                    "description": "전화번호",
-                    "example": "01096761452"
-                  },
-                  "semina": {
-                    "type": "boolean",
-                    "description": "세미나 신청 여부",
-                    "example": true
-                  },
-                  "dev": {
-                    "type": "boolean",
-                    "description": "개발 신청 여부",
-                    "example": false
-                  },
-                  "study": {
-                    "type": "boolean",
-                    "description": "스터디 신청 여부",
-                    "example": true
-                  },
-                  "external": {
-                    "type": "boolean",
-                    "description": "대외활동 신청 여부",
-                    "example": false
-                  },
-                  "motivation_semina": {
-                    "type": "string",
-                    "description": "세미나 동기 (세미나 신청 시 필수)",
-                    "example": "세미나에 참여하고 싶습니다."
-                  },
-                  "field_dev": {
-                    "type": "string",
-                    "description": "개발 분야 (개발 신청 시 필수)",
-                    "example": "웹 개발"
-                  },
-                  "motivation_study": {
-                    "type": "string",
-                    "description": "스터디 동기 (스터디 신청 시 필수)",
-                    "example": "스터디를 통해 배움을 얻고 싶습니다."
-                  },
-                  "motivation_external": {
-                    "type": "string",
-                    "description": "대외활동 동기 (대외활동 신청 시 필수)",
-                    "example": "다양한 활동을 경험하고 싶습니다."
-                  },
-                  "portfolio_pdf": {
-                    "type": "string",
-                    "format": "binary",
-                    "description": "포트폴리오 PDF 파일"
-                  },
-                  "github_profile": {
-                    "type": "string",
-                    "description": "GitHub 프로필 URL",
-                    "example": "https://github.com/username"
-                  }
+                  "name": { "type": "string", "description": "이름", "example": "이제민" },
+                  "grade": { "type": "integer", "description": "학년", "example": 4 },
+                  "student_id": { "type": "string", "description": "학번", "example": "2020440102" },
+                  "major": { "type": "string", "description": "전공", "example": "전자전기컴퓨터공학부" },
+                  "phone_number": { "type": "string", "description": "전화번호", "example": "01096761452" },
+                  "semina": { "type": "boolean", "description": "세미나 신청 여부", "example": true },
+                  "dev": { "type": "boolean", "description": "개발 신청 여부", "example": false },
+                  "study": { "type": "boolean", "description": "스터디 신청 여부", "example": true },
+                  "external": { "type": "boolean", "description": "대외활동 신청 여부", "example": false },
+                  "motivation_semina": { "type": "string", "description": "세미나 동기", "example": "세미나에 참여하고 싶습니다." },
+                  "field_dev": { "type": "string", "description": "개발 분야", "example": "웹 개발" },
+                  "motivation_study": { "type": "string", "description": "스터디 동기", "example": "스터디를 통해 배움을 얻고 싶습니다." },
+                  "motivation_external": { "type": "string", "description": "대외활동 동기", "example": "다양한 활동을 경험하고 싶습니다." },
+                  "portfolio_pdf": { "type": "string", "format": "binary", "description": "포트폴리오 PDF 파일" },
+                  "github_profile": { "type": "string", "description": "GitHub 프로필 URL", "example": "https://github.com/username" }
                 },
-                "required": ["name", "student_id", "major", "phone_number", "semina", "dev", "study", "external"]
+                "required": ["name", "grade", "student_id", "major", "phone_number", "semina", "dev", "study", "external"]
               }
             }
           }
         },
         "responses": {
-          "201": {
-            "description": "저장 완료",
+          "201": { "description": "저장 완료", "content": { "application/json": { "example": "저장 완료" } } },
+          "400": { "description": "잘못된 요청 (필수 값 누락 또는 형식 오류)", "content": { "application/json": { "example": "필수 요소 누락: {필드명}" } } },
+          "409": { "description": "이미 신청한 지원자", "content": { "application/json": { "example": "이미 신청하셨습니다" } } },
+          "500": { "description": "서버 내부 오류", "content": { "application/json": { "example": "서버 에러" } } }
+        }
+      }
+    },
+    "/semina": {
+      "get": {
+        "summary": "세미나 정보 조회 API",
+        "description": "세미나 정보 목록을 조회하는 API. 페이지네이션을 지원합니다.",
+        "parameters": [
+          {
+            "name": "current_page",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "example": 1 },
+            "description": "현재 페이지 번호 (기본값: 1)"
+          },
+          {
+            "name": "items_per_page",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "example": 5 },
+            "description": "한 페이지당 항목 개수 (기본값: 5)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "조회 성공",
             "content": {
               "application/json": {
-                "example": "저장 완료"
+                "example": {
+                  "total_items": 13,
+                  "total_pages": 3,
+                  "current_page": 1,
+                  "items_per_page": 5,
+                  "items": [
+                    {
+                      "speaker": "이제민",
+                      "topic": "백엔드",
+                      "details": "백엔드백엔드백엔드",
+                      "date": "2025-02-20",
+                      "pdf": "https://example.com/file.pdf",
+                      "images": [
+                        "https://example.com/image1.jpg",
+                        "https://example.com/image2.jpg"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": { "description": "잘못된 요청", "content": { "application/json": { "example": { "error": "유효하지 않은 요청 값" } } } },
+          "500": { "description": "서버 내부 오류", "content": { "application/json": { "example": { "error": "서버 오류 발생" } } } }
+        }
+      }
+    },
+    "/feature/{feature_name}": {
+      "get": {
+        "summary": "기능 활성화 여부 조회 API",
+        "description": "특정 기능의 ON/OFF 상태를 확인하는 API",
+        "parameters": [
+          {
+            "name": "feature_name",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "example": "recruit" },
+            "description": "확인할 기능 이름"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "기능 상태 조회 성공",
+            "content": {
+              "application/json": {
+                "example": {
+                  "feature_name": "recruit",
+                  "is_enabled": true
+                }
               }
             }
           },
           "400": {
-            "description": "잘못된 요청 (필수 값 누락 또는 형식 오류)",
+            "description": "기능을 찾을 수 없음",
             "content": {
               "application/json": {
-                "example": "필수 요소 누락: {필드명}"
-              }
-            }
-          },
-          "409": {
-            "description": "이미 신청한 지원자",
-            "content": {
-              "application/json": {
-                "example": "이미 신청하셨습니다"
+                "example": "recruit 기능을 찾을 수 없음."
               }
             }
           },
@@ -122,7 +135,7 @@
             "description": "서버 내부 오류",
             "content": {
               "application/json": {
-                "example": "서버 에러"
+                "example": "error: 서버 오류 발생"
               }
             }
           }
