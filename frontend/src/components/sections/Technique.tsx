@@ -259,7 +259,7 @@ export default function Technique() {
   }, [beadSize]);
 
   return (
-    <TechniqueSection className="min-h-screen w-full pt-[60px] flex flex-col items-center justify-center">
+    <div className="grow flex flex-col items-center justify-center">
       <h2 className="font-firaCode w-full text-5xl md:text-6xl lg:text-7xl text-right pr-8 pb-8">
         how we make
       </h2>
@@ -297,7 +297,7 @@ export default function Technique() {
           ))
         )}
       </div>
-    </TechniqueSection>
+    </div>
   );
 }
 
@@ -315,10 +315,4 @@ const BeadDiv = styled.div<{ $size: number; $borderColor: string }>`
   align-items: center;
   justify-content: center;
   overflow: hidden;
-`;
-
-const TechniqueSection = styled.div`
-  @media (max-width: 900px) {
-    padding-bottom: 50px;
-  }
 `;

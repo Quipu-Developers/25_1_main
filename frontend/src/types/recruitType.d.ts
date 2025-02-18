@@ -43,3 +43,8 @@ declare interface ActivityOption {
 declare interface RecruitmentStatusResponse {
   isRecruiting: boolean;
 }
+
+declare interface FaqItemProps {
+  question: string;
+  answer: string;
+}

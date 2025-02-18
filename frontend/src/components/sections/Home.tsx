@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <div
       ref={svgRef}
-      className="flex items-center justify-center relative h-screen"
+      className="relative grow flex flex-col items-center justify-center"
     >
       <header className="absolute w-full flex justify-between top-0 p-[15px] text-[#898989] text-[16px]">
         <p>University of Seoul Computer Club</p>

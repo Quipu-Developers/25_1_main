@@ -33,7 +33,7 @@ export default function About() {
   return (
     <div
       ref={containerRef}
-      className="flex flex-col items-center justify-center h-screen text-base/7"
+      className="grow flex flex-col items-center justify-center text-base/7"
     >
       <motion.h1
         ref={titleRef}

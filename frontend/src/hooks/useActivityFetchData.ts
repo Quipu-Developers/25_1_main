@@ -1,10 +1,13 @@
 // useActivityFetchData.ts
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { studyTitleData, studyData } from "@/lib/studyData";
-import { seminarTitleData, seminarData } from "@/lib/seminarData";
-import { developmentTitleData, developmentData } from "@/lib/developmentData";
-import { extraTitleData, extraData } from "@/lib/extraData";
+import { studyTitleData, studyData } from "@/lib/activity/studyData";
+import { seminarTitleData, seminarData } from "@/lib/activity/seminarData";
+import {
+  developmentTitleData,
+  developmentData,
+} from "@/lib/activity/developmentData";
+import { extraTitleData, extraData } from "@/lib/activity/extraData";
 
 const TOOL_ICON_BASE_URL =
   "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons";

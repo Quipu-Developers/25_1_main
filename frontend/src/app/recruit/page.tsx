@@ -3,14 +3,13 @@
 // RecruitForm은 클라이언트 컴포넌트입니다.
 // useState, useEffect 등 브라우저 전용 훅을 사용하므로 "use client" 선언이 필요합니다.
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion"; // Framer Motion import
 import CMToast from "@/components/CMToast";
 import axios, { AxiosError } from "axios";
 import useToast from "@/hooks/useToast";
-
-type ActivityType = "semina" | "dev" | "study" | "external";
+import { majors } from "@/lib/recruitData";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -45,6 +44,9 @@ const itemVariants = {
 export default function RecruitForm() {
   const { showToast, confirmToast } = useToast();
   const router = useRouter();
+  const formRef = useRef<HTMLFormElement | null>(null);
+
+  const [isRecruiting, setIsRecruiting] = useState<boolean | null>(true);
 
   // 폼 데이터 상태 초기화
   const [formData, setFormData] = useState<RecruitFormData>({
@@ -65,19 +67,30 @@ export default function RecruitForm() {
     motivation_external: "",
   });
 
-  // 모집 여부 상태 (초기 null 이후 실제 값 할당)
-  const [isRecruiting, setIsRecruiting] = useState<boolean | null>(false);
-
-  // 활동 선택 옵션 (value는 formData의 boolean 필드명과 일치)
-  const activityOptions: { label: string; value: ActivityType }[] = [
+  const activityOptions: {
+    label: string;
+    value: "semina" | "dev" | "study" | "external";
+  }[] = [
     { label: "세미나", value: "semina" },
     { label: "개발", value: "dev" },
     { label: "스터디", value: "study" },
     { label: "대외 활동", value: "external" },
   ];
 
-  // 개발 분야 옵션
   const devFields: string[] = ["기획", "디자인", "프론트엔드", "백엔드"];
+
+  const handleCopyAccount = (): void => {
+    const accountInfo = "카카오뱅크 3333311276288 (예금주: 김예영)";
+    navigator.clipboard
+      .writeText(accountInfo)
+      .then(() => {
+        showToast("success", "계좌번호가 복사되었습니다.");
+      })
+      .catch((err) => {
+        console.error(err);
+        showToast("error", "계좌번호 복사에 실패했습니다.");
+      });
+  };
 
   const checkRecruitmentStatus = async (): Promise<void> => {
     try {
@@ -87,7 +100,7 @@ export default function RecruitForm() {
       setIsRecruiting(response.data.isRecruiting);
     } catch (error) {
       console.error(error);
-      setIsRecruiting(false);
+      // setIsRecruiting(false);
     }
   };
 
@@ -95,7 +108,6 @@ export default function RecruitForm() {
     checkRecruitmentStatus();
   }, []);
 
-  // 모집 기간이 아닐 경우 confirmToast로 안내 후 홈으로 이동
   useEffect(() => {
     if (isRecruiting === false) {
       confirmToast(
@@ -110,9 +122,7 @@ export default function RecruitForm() {
       );
     }
   }, [isRecruiting, confirmToast, router]);
-  /**
-   * 활동별 필드 초기화 로직
-   */
+
   const resetActivityFields = (
     prev: RecruitFormData,
     activity: "semina" | "dev" | "study" | "external"
@@ -149,13 +159,9 @@ export default function RecruitForm() {
     }
   };
 
-  /**
-   * 활동 선택 버튼 클릭 시 해당 boolean 값을 토글
-   * - 이미 활성화된 활동을 다시 누르면 confirmToast로 확인 후 데이터 초기화
-   * - 비활성 → 활성은 단순 토글
-   */
-  const handleCheckboxChange = (activity: ActivityType): void => {
-    // 선택된 활동의 입력 폼이 하나라도 채워져 있는지 확인
+  const handleCheckboxChange = (
+    activity: "semina" | "dev" | "study" | "external"
+  ): void => {
     const isFormFilled =
       formData[activity] &&
       (() => {
@@ -185,12 +191,8 @@ export default function RecruitForm() {
         confirmToast(
           "warn",
           `${activityLabel} 활동을 취소하시겠습니까? \n작성해주신 내용이 사라질 수 있습니다.`,
-          // 확인(OK) 시
           () => setFormData((prev) => resetActivityFields(prev, activity)),
-          // 취소(Cancel) 시
-          () => {
-            // 아무것도 하지 않음 (기존 값 유지)
-          },
+          () => {},
           "확인",
           "취소"
         );
@@ -198,7 +200,6 @@ export default function RecruitForm() {
         setFormData((prev) => resetActivityFields(prev, activity));
       }
     } else {
-      // false 상태 ⇒ 활성화(ON)
       setFormData((prev) => ({
         ...prev,
         [activity]: true,
@@ -206,7 +207,6 @@ export default function RecruitForm() {
     }
   };
 
-  // 기본 입력값 변경 핸들러 (학년은 number로 변환)
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ): void => {
@@ -215,10 +215,8 @@ export default function RecruitForm() {
     if (name === "grade") {
       setFormData((prev) => ({ ...prev, [name]: Number(value) }));
     } else if (name === "phone_number") {
-      // 숫자만 남기기
+      // "-" 자동 추가
       const numericValue = value.replace(/\D/g, "").slice(0, 11);
-
-      // 자동으로 "-" 추가 (백스페이스 시 자연스럽게 삭제)
       let formattedValue = numericValue;
       if (numericValue.length > 3) {
         formattedValue = `${numericValue.slice(0, 3)}-${numericValue.slice(3)}`;
@@ -231,6 +229,19 @@ export default function RecruitForm() {
       }
 
       setFormData((prev) => ({ ...prev, phone_number: formattedValue }));
+    } else if (name === "major") {
+      let newValue = value;
+
+      // 학과 두 글자 이상 입력했을 때만 자동 완성 실행
+      if (newValue.length >= formData.major.length && newValue.length >= 2) {
+        const match = majors.find((major) => major.startsWith(newValue));
+
+        if (match) {
+          newValue = match; // 첫 번째 매칭된 학과로 자동 완성
+        }
+      }
+
+      setFormData((prev) => ({ ...prev, major: newValue }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
@@ -246,12 +257,10 @@ export default function RecruitForm() {
     setFormData((prev) => ({ ...prev, portfolio_pdf: file }));
   };
 
-  // 제출 전, 유저 동의 체크박스 상태
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const bothChecked = checked1 && checked2;
 
-  // ===== 필수 입력 및 형식 검사 함수 =====
   const validateRequiredFields = (): boolean => {
     if (!formData.name.trim()) {
       showToast("error", "이름을 입력해주세요.");
@@ -290,11 +299,9 @@ export default function RecruitForm() {
     return true;
   };
 
-  // ===== 제출 핸들러 =====
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // 동의 체크박스 모두 선택되지 않은 경우 알림
     if (!bothChecked) {
       showToast("error", "안내 사항을 모두 확인 및 동의해주세요.");
       return;
@@ -341,7 +348,6 @@ export default function RecruitForm() {
       return;
     }
 
-    // 제출 전, 수정/삭제 불가 안내 토스트
     confirmToast(
       "error",
       "제출 후 수정과 삭제는 불가능합니다. 계속 진행하시겠습니까?",
@@ -431,33 +437,42 @@ export default function RecruitForm() {
 
   return (
     <>
-      {/* 전역 토스트 컴포넌트 */}
       <CMToast />
 
-      {/* motion.div로 전체 폼 및 상단 안내 영역에 애니메이션 적용 */}
       <motion.div
-        className="max-w-3xl mx-auto p-6"
+        className="min-h-screen max-w-[600px] mx-auto p-6 flex flex-col items-center justify-around gap-10"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        {/* 상단 안내 영역 */}
-        <motion.div className="mb-6" variants={itemVariants}>
-          <h1 className="text-2xl font-bold mb-2">Welcome</h1>
-          <p>환영합니다! 지원서는 회비 납부 이후 제출해주세요.</p>
-          <p>회비: 10,000원</p>
-          <p>계좌: 카카오뱅크 3333311276288 (예금주: 김예영)</p>
-        </motion.div>
+        <h2 className="font-firaCode w-full text-5xl md:text-6xl lg:text-7xl text-center">
+          Welcome!
+        </h2>
+        <div className="flex items-center">
+          <span className="text-3xl">{"{"}</span>
+          <div>
+            <p>환영합니다! 지원서는 회비 납부 이후 제출해주세요.</p>
+            <p>회비: 10,000원</p>
+            <p>
+              계좌:{" "}
+              <span
+                className="underline cursor-pointer"
+                onClick={handleCopyAccount}
+                title="계좌번호 클릭 시 복사"
+              >
+                카카오뱅크 3333311276288 (예금주: 김예영)
+              </span>
+            </p>
+          </div>
+          <span className="text-3xl">{"}"}</span>
+        </div>
 
-        {/* 폼 전체 */}
-        <motion.form onSubmit={handleSubmit} variants={containerVariants}>
-          <motion.h1
-            className="text-2xl font-bold mb-4"
-            variants={itemVariants}
-          >
-            Recruit Form
-          </motion.h1>
-
+        <motion.form
+          ref={formRef}
+          onSubmit={handleSubmit}
+          variants={containerVariants}
+          className="w-full"
+        >
           {/* 기본 정보 입력 영역 */}
           <motion.div className="space-y-3" variants={itemVariants}>
             <InputField
@@ -483,7 +498,7 @@ export default function RecruitForm() {
                 value={formData.grade}
                 onChange={handleChange}
                 disabled={!isRecruiting}
-                className="border border-gray-300 p-2 rounded bg-[#F1F1F1]"
+                className="p-2 rounded-lg bg-[#F1F1F1]"
               >
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -498,6 +513,7 @@ export default function RecruitForm() {
               onChange={handleChange}
               placeholder="2025000000"
               disabled={!isRecruiting}
+              type="tel"
             />
             <InputField
               label="전화번호"
@@ -521,7 +537,7 @@ export default function RecruitForm() {
                   key={value}
                   onClick={() => handleCheckboxChange(value)}
                   disabled={!isRecruiting}
-                  className={`p-2 border border-gray-300 rounded-none ${
+                  className={`py-2 px-5 rounded-lg ${
                     formData[value as keyof RecruitFormData]
                       ? "bg-[#6666ff] text-[#ffffff]"
                       : "bg-[#F1F1F1] text-black"
@@ -536,7 +552,7 @@ export default function RecruitForm() {
           {/* 선택한 활동에 따른 추가 폼 영역 */}
           <motion.div className="mt-6 space-y-4" variants={itemVariants}>
             {formData.semina && (
-              <div className="border border-gray-300 p-4 rounded">
+              <div className="border-b border-gray-300 p-4 rounded">
                 <h3 className="mb-2 font-semibold">세미나 활동</h3>
                 <InputField
                   label="발표하고 싶은 주제 & 듣고 싶은 주제"
@@ -550,7 +566,7 @@ export default function RecruitForm() {
             )}
 
             {formData.dev && (
-              <div className="border border-gray-300 p-4 rounded">
+              <div className="border-b border-gray-300 p-4 rounded">
                 <h3 className="mb-2 font-semibold">개발 활동</h3>
                 <div className="flex flex-wrap gap-3">
                   {devFields.map((field) => (
@@ -561,7 +577,7 @@ export default function RecruitForm() {
                         setFormData((prev) => ({ ...prev, field_dev: field }))
                       }
                       disabled={!isRecruiting}
-                      className={`p-2 border border-gray-300 rounded-none ${
+                      className={`p-2 rounded-lg ${
                         formData.field_dev === field
                           ? "bg-[#6666ff] text-[#ffffff]"
                           : "bg-[#F1F1F1] text-black"
@@ -573,17 +589,36 @@ export default function RecruitForm() {
                     </button>
                   ))}
                 </div>
-                <div className="mt-3">
-                  <label className="block text-sm font-medium">
+                <div className="my-6">
+                  <label className="mb-1 font-medium">
                     포트폴리오 (PDF, 5MB 이하)
                   </label>
-                  <input
-                    type="file"
-                    accept="application/pdf"
-                    onChange={handleFileChange}
-                    disabled={!isRecruiting}
-                    className="mt-1 border border-gray-300 p-2 rounded bg-[#F1F1F1]"
-                  />
+                  <div className="p-2 rounded-lg bg-[#F1F1F1] flex items-center">
+                    {/* 파일 선택 버튼 */}
+                    <label
+                      htmlFor="portfolio_upload"
+                      className="cursor-pointer bg-white px-4 py-1 rounded-lg shadow text-sm text-gray-700"
+                    >
+                      파일 선택
+                    </label>
+
+                    {/* 실제 input[type="file"] 요소 (숨김 처리) */}
+                    <input
+                      id="portfolio_upload"
+                      type="file"
+                      accept="application/pdf"
+                      onChange={handleFileChange}
+                      disabled={!isRecruiting}
+                      className="hidden"
+                    />
+
+                    {/* 선택된 파일명 표시 */}
+                    <span className="ml-4 text-sm text-gray-600">
+                      {formData.portfolio_pdf
+                        ? formData.portfolio_pdf.name
+                        : "선택한 파일 없음"}
+                    </span>
+                  </div>
                 </div>
                 <InputField
                   label="깃허브 프로필 URL"
@@ -597,7 +632,7 @@ export default function RecruitForm() {
             )}
 
             {formData.study && (
-              <div className="border border-gray-300 p-4 rounded">
+              <div className="border-b border-gray-300 p-4 rounded">
                 <h3 className="mb-2 font-semibold">스터디 활동</h3>
                 <InputField
                   label="참여하고 싶은 스터디"
@@ -611,7 +646,7 @@ export default function RecruitForm() {
             )}
 
             {formData.external && (
-              <div className="border border-gray-300 p-4 rounded">
+              <div className="border-b border-gray-300 p-4 rounded">
                 <h3 className="mb-2 font-semibold">대외 활동</h3>
                 <InputField
                   label="참여하고 싶은 대외 활동 분야"
@@ -652,28 +687,29 @@ export default function RecruitForm() {
               </label>
             </div>
           </motion.div>
-
-          {/* 제출 버튼: 동의 체크 시 활성화 */}
-          <motion.button
-            variants={itemVariants}
-            type="submit"
-            disabled={!isRecruiting || !bothChecked}
-            className={`mt-6 w-full py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed ${
-              bothChecked
-                ? "bg-[#6666ff] text-[#ffffff]"
-                : "bg-[#F1F1F1] text-black"
-            }`}
-          >
-            제출하기
-          </motion.button>
         </motion.form>
+        <motion.button
+          onClick={(e) => {
+            if (formRef.current) {
+              handleSubmit(e as any);
+            }
+          }}
+          variants={itemVariants}
+          type="submit"
+          disabled={!isRecruiting || !bothChecked}
+          className={`mt-6 px-10 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed ${
+            bothChecked
+              ? "bg-[#6666ff] text-[#ffffff]"
+              : "bg-[#F1F1F1] text-black"
+          }`}
+        >
+          제출하기
+        </motion.button>
       </motion.div>
     </>
   );
 }
 
-// ===== InputField 컴포넌트 =====
-// 폼 입력 요소를 위한 재사용 가능한 컴포넌트입니다.
 interface InputFieldProps {
   label: string;
   name: string;
@@ -694,7 +730,7 @@ function InputField({
   disabled = false,
 }: InputFieldProps) {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mb-5">
       <label className="mb-1 font-medium">{label}</label>
       <input
         type={type}
@@ -703,7 +739,8 @@ function InputField({
         onChange={onChange}
         placeholder={placeholder}
         disabled={disabled}
-        className="border border-gray-300 p-2 rounded bg-[#F1F1F1] disabled:opacity-50 disabled:cursor-not-allowed"
+        className="p-2 rounded-lg bg-[#F1F1F1] disabled:opacity-50 disabled:cursor-not-allowed 
+                   focus:outline-none focus:ring-2 focus:ring-point"
       />
     </div>
   );

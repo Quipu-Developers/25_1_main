@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import useActivityFetchData from "@/hooks/useActivityFetchData";
 
+// 이 부분(주석 + 로직)은 절대 수정 불가
 const fetchParams: Record<
   string,
   { useHardcoded: boolean; itemsPerPage: number }
@@ -12,6 +13,7 @@ const fetchParams: Record<
   extra: { useHardcoded: true, itemsPerPage: 4 },
 };
 
+// 로직, 주석 수정 불가
 const Activity = () => {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({
     study: false,
@@ -35,23 +37,45 @@ const Activity = () => {
   };
 
   return (
-    <div className="min-h-screen mx-auto p-6 pt-[60px] space-y-6">
-      <h2 className="font-firaCode w-full text-5xl md:text-6xl lg:text-7xl text-left pr-8 pb-8">
+    <div className="grow flex flex-col px-6 space-y-10 lg:space-y-14 py-8">
+      <h2 className="font-firaCode w-full text-5xl md:text-6xl lg:text-7xl text-left pb-4 md:pb-8">
         what we do
       </h2>
 
+      {/* 타입별 버튼 목록 */}
       {["study", "seminar", "development", "extra"].map((type) => (
-        <div key={type} className="space-y-2">
+        <div key={type} className="space-y-3">
           <button
             onClick={() => toggleType(type)}
-            className={`p-2 border rounded text-left capitalize ${
-              expanded[type]
-                ? "bg-blue-500 text-white"
-                : "bg-gray-100 text-gray-800"
-            }`}
+            className={`w-full flex items-center justify-between p-4 border rounded text-left uppercase tracking-wide transition-colors
+              ${
+                expanded[type]
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-100 text-gray-800"
+              }
+            `}
           >
-            {type}
+            <span className="font-bold text-lg">{type}</span>
+            {/* 화살표 아이콘 (열림/닫힘에 따라 180도 회전) */}
+            <svg
+              className={`h-5 w-5 transform transition-transform duration-300 ${
+                expanded[type] ? "rotate-180" : ""
+              }`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
           </button>
+
+          {/* 펼쳐졌을 때만 하위 섹션 렌더링 */}
           <TypeSection type={type} expanded={expanded[type]} />
         </div>
       ))}
@@ -61,6 +85,7 @@ const Activity = () => {
 
 export default Activity;
 
+// 로직, 주석 수정 불가
 const TypeSection = ({ type, expanded }: ActivityTypeSectionProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -89,18 +114,19 @@ const TypeSection = ({ type, expanded }: ActivityTypeSectionProps) => {
   }
 
   return (
-    <div>
+    <div className="space-y-6 md:space-y-8">
       {loading && <p className="text-gray-500">Loading...</p>}
 
       {!loading && !data && <p className="text-gray-500">No data available.</p>}
 
       {!loading && data && (
-        <div className="space-y-4">
+        <div className="space-y-6">
+          {/* 상단 설명 영역 */}
           <div className="p-4 border rounded bg-gray-50">
-            <p>{data.titleData?.description}</p>
+            <p className="text-gray-700">{data.titleData?.description}</p>
           </div>
 
-          {/* 선택된 아이템 디테일 표시 (selectedIndex가 범위 내인지 확인) */}
+          {/* 현재 선택된 아이템 디테일 영역 */}
           {data.items &&
             data.items.length > 0 &&
             selectedIndex < data.items.length && (
@@ -113,11 +139,13 @@ const TypeSection = ({ type, expanded }: ActivityTypeSectionProps) => {
               <button
                 key={index}
                 onClick={() => setSelectedIndex(index)}
-                className={`p-2 border rounded flex justify-between items-center ${
-                  index === selectedIndex
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-100 text-gray-800"
-                }`}
+                className={`p-3 border rounded flex justify-between items-center transition-colors
+                  ${
+                    index === selectedIndex
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-100 text-gray-800"
+                  }
+                `}
               >
                 <span className="font-bold">{item.topic || "No Topic"}</span>
                 <span className="text-sm">{item.date || "No Date"}</span>
@@ -125,7 +153,7 @@ const TypeSection = ({ type, expanded }: ActivityTypeSectionProps) => {
             ))}
           </div>
 
-          {/* 페이지네이션 버튼 */}
+          {/* 페이지네이션 */}
           <div className="flex justify-center space-x-2">
             {Array.from({ length: data.total_pages }, (_, i) => (
               <PageButton
@@ -133,7 +161,7 @@ const TypeSection = ({ type, expanded }: ActivityTypeSectionProps) => {
                 $active={currentPage === i + 1}
                 onClick={() => {
                   setCurrentPage(i + 1);
-                  setSelectedIndex(0); // 페이지 이동 시 첫 아이템을 선택하도록 리셋
+                  setSelectedIndex(0); // 페이지 이동 시 첫 아이템으로 리셋
                 }}
               >
                 {i + 1}
@@ -146,11 +174,12 @@ const TypeSection = ({ type, expanded }: ActivityTypeSectionProps) => {
   );
 };
 
+// 로직, 주석 수정 불가
 const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
   return (
-    <div className="flex border p-4 rounded">
-      <div className="w-1/3">
-        {/* 이미지가 여러 장이면 캐러셀, 한 장이면 단일 이미지 표시 */}
+    <div className="flex flex-col md:flex-row border p-4 rounded bg-white shadow-md space-y-4 md:space-y-0 md:space-x-4">
+      {/* 좌측: 이미지(캐러셀) 영역 */}
+      <div className="w-full md:w-1/3">
         {item.images && item.images.length > 1 ? (
           <ImageCarousel images={item.images} />
         ) : item.images && item.images.length === 1 ? (
@@ -165,7 +194,9 @@ const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
           </div>
         )}
       </div>
-      <div className="w-2/3 pl-4 flex flex-col space-y-2">
+
+      {/* 우측: 정보 영역 */}
+      <div className="w-full md:w-2/3 flex flex-col space-y-2">
         {item.speaker && (
           <p>
             <span className="font-semibold">Speaker:</span> {item.speaker}
@@ -224,6 +255,7 @@ const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
   );
 };
 
+// 로직, 주석 수정 불가
 const ImageCarousel = ({ images }: { images: string[] }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -273,6 +305,8 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
   );
 };
 
+// 여기서만 styled-component로 동적으로 스타일 바꿔 줌
+// (주석, 로직 변경 없이 디자인만 변경)
 const PageButton = styled.button<{ $active: boolean }>`
   padding: 0.5rem 0.75rem;
   border: none;

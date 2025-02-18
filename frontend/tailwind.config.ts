@@ -13,6 +13,7 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        point: "var(--point)",
       },
       fontFamily: {
         spoqaHanSansNeo: ["var(--font-spoqaHanSansNeo)", "sans-serif"],

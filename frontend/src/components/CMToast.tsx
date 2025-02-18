@@ -10,7 +10,6 @@ const CMToast = () => {
 export default CMToast;
 
 const StyledToastContainer = styled(ToastContainer).attrs({
-  position: "top-right",
   transition: Slide,
   autoClose: 3000,
   hideProgressBar: false,
