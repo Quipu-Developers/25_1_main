@@ -39,6 +39,7 @@ const insertDummyData = require("./scripts/dummyData");
 // Router 세팅
 const recruitRouter = require('./routes/recruit.js');
 const seminainfoRouter = require('./routes/semina_info.js');
+const featureRouter = require('./routes/feature.js');
 
 // portfolio directory 세팅
 const portfolioDir = path.join(__dirname, '../../portfolio/');
@@ -136,6 +137,8 @@ app.use('/recruit', recruitRouter);
 
 //{url}/semina?current_page=${currentPage}&items_per_page=${itemsPerPage}
 app.use('/semina', seminainfoRouter);
+
+app.use('/feature', featureRouter);
 
 //{url}/api-docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));

@@ -1,4 +1,4 @@
-const { File, Semina } = require("../models");
+const { File, Semina, Feature } = require("../models");
 
 const insertDummyData = async () => {
   try {
@@ -35,6 +35,10 @@ const insertDummyData = async () => {
       { file_url: "https://example.com/image3.jpg", file_type: "image", semina_id: 2 },
       { file_url: "https://example.com/file2.pdf", file_type: "pdf", semina_id: 2 },
     ]);
+
+    await Feature.bulkCreate([
+      { feature_name: "recruit", is_enabled: true },
+    ])
 
     console.log("[TEST] 더미 데이터 삽입 완료");
   } catch (error) {
