@@ -7,6 +7,7 @@ import CMToast from "@/components/CMToast";
 import axios from "axios";
 import useToast from "@/hooks/useToast";
 import { majors } from "@/lib/recruitData";
+import { MdArrowBackIos } from "react-icons/md";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -423,16 +424,19 @@ export default function RecruitForm() {
   return (
     <>
       <CMToast />
-
+      <h2 className="font-firaCode p-6 w-full text-5xl md:text-6xl lg:text-7xl text-center relative cursor-pointer">
+        <MdArrowBackIos
+          onClick={() => router.push("/")}
+          className="absolute top-1/2 -translate-y-1/2  left-7 text-3xl"
+        />
+        Welcome!
+      </h2>
       <motion.div
         className="min-h-screen max-w-[600px] mx-auto p-6 flex flex-col items-center justify-around gap-10"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        <h2 className="font-firaCode w-full text-5xl md:text-6xl lg:text-7xl text-center">
-          Welcome!
-        </h2>
         <div className="flex items-center">
           <span className="text-3xl">{"{"}</span>
           <div>

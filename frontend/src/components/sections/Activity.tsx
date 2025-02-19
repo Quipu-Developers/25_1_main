@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import useActivityFetchData from "@/hooks/useActivityFetchData";
+import Image from "next/image";
 
 // 이 부분(주석 + 로직)은 절대 수정 불가
 const fetchParams: Record<
@@ -37,7 +38,7 @@ const Activity = () => {
   };
 
   return (
-    <div className="grow flex flex-col px-6 space-y-10 lg:space-y-14 py-8">
+    <div className="grow flex flex-col px-6 space-y-10 lg:space-y-14 py-8 max-w-[1100px]">
       <h2 className="font-firaCode w-full text-5xl md:text-6xl lg:text-7xl text-left pb-4 md:pb-8">
         what we do
       </h2>
@@ -47,18 +48,14 @@ const Activity = () => {
         <div key={type} className="space-y-3">
           <button
             onClick={() => toggleType(type)}
-            className={`w-full flex items-center justify-between p-4 border rounded text-left uppercase tracking-wide transition-colors
-              ${
-                expanded[type]
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-100 text-gray-800"
-              }
-            `}
+            className={`w-full flex items-center justify-between text-left uppercase tracking-wide ${
+              expanded[type] ? "" : "border-b-[0.5px] border-black"
+            }`}
           >
-            <span className="font-bold text-lg">{type}</span>
+            <span className="text-4xl">{type}</span>
             {/* 화살표 아이콘 (열림/닫힘에 따라 180도 회전) */}
             <svg
-              className={`h-5 w-5 transform transition-transform duration-300 ${
+              className={`h-10 w-10 transform transition-transform duration-300 ${
                 expanded[type] ? "rotate-180" : ""
               }`}
               fill="none"
@@ -69,7 +66,7 @@ const Activity = () => {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2}
+                strokeWidth={1}
                 d="M19 9l-7 7-7-7"
               />
             </svg>
@@ -114,16 +111,18 @@ const TypeSection = ({ type, expanded }: ActivityTypeSectionProps) => {
   }
 
   return (
-    <div className="space-y-6 md:space-y-8">
+    <div className="">
       {loading && <p className="text-gray-500">Loading...</p>}
 
       {!loading && !data && <p className="text-gray-500">No data available.</p>}
 
       {!loading && data && (
-        <div className="space-y-6">
+        <div>
           {/* 상단 설명 영역 */}
-          <div className="p-4 border rounded bg-gray-50">
-            <p className="text-gray-700">{data.titleData?.description}</p>
+          <div className="">
+            <p className="text-[#686868] text-1xl">
+              {data.titleData?.description}
+            </p>
           </div>
 
           {/* 현재 선택된 아이템 디테일 영역 */}
@@ -134,21 +133,17 @@ const TypeSection = ({ type, expanded }: ActivityTypeSectionProps) => {
             )}
 
           {/* 아이템 목록 */}
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col space-y-2 mt-[60px]">
             {data.items?.map((item, index) => (
               <button
                 key={index}
                 onClick={() => setSelectedIndex(index)}
-                className={`p-3 border rounded flex justify-between items-center transition-colors
-                  ${
-                    index === selectedIndex
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-100 text-gray-800"
-                  }
+                className={`py-3 border-b-[0.4px] border-[#CBCBCB] flex justify-between items-center transition-colors text-1xl
+                  ${index === selectedIndex ? "font-bold" : "text-[#686868]"}
                 `}
               >
-                <span className="font-bold">{item.topic || "No Topic"}</span>
-                <span className="text-sm">{item.date || "No Date"}</span>
+                <span>{item.topic || "No Topic"}</span>
+                <span>{item.date || "No Date"}</span>
               </button>
             ))}
           </div>
@@ -177,52 +172,70 @@ const TypeSection = ({ type, expanded }: ActivityTypeSectionProps) => {
 // 로직, 주석 수정 불가
 const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
   return (
-    <div className="flex flex-col md:flex-row border p-4 rounded bg-white shadow-md space-y-4 md:space-y-0 md:space-x-4">
+    <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
       {/* 좌측: 이미지(캐러셀) 영역 */}
-      <div className="w-full md:w-1/3">
+      <div>
         {item.images && item.images.length > 1 ? (
           <ImageCarousel images={item.images} />
         ) : item.images && item.images.length === 1 ? (
-          <img
+          <Image
+            width={300}
+            height={250}
             src={item.images[0]}
             alt={item.topic || "Image"}
-            className="w-full h-auto object-cover rounded"
+            className="h-[250px] w-auto object-cover rounded"
           />
         ) : (
-          <div className="w-full h-48 bg-gray-200 flex items-center justify-center rounded">
+          <div className="h-[250px] w-[300px] bg-gray-200 flex items-center justify-center rounded">
             No Image
           </div>
         )}
       </div>
 
       {/* 우측: 정보 영역 */}
-      <div className="w-full md:w-2/3 flex flex-col space-y-2">
+      <div className="w-full flex flex-col justify-end gap-3 pt-[40px]">
+        {item.date && (
+          <p className="w-full flex justify-between">
+            <span className="font-semibold">Date</span> {item.date}
+          </p>
+        )}
         {item.speaker && (
-          <p>
-            <span className="font-semibold">Speaker:</span> {item.speaker}
+          <p className="w-full flex justify-between">
+            <span className="font-semibold">Speaker</span> {item.speaker}
           </p>
         )}
         {item.topic && (
-          <p>
-            <span className="font-semibold">Topic:</span> {item.topic}
+          <p className="w-full flex justify-between">
+            <span className="font-semibold">Topic</span> {item.topic}
           </p>
         )}
         {item.details && (
-          <p>
-            <span className="font-semibold">Details:</span> {item.details}
+          <p className="w-full flex justify-between">
+            <span className="font-semibold">Details</span>
+            <span className="w-1/2 text-end break-keep">{item.details}</span>
           </p>
         )}
-        {item.date && (
-          <p>
-            <span className="font-semibold">Date:</span> {item.date}
-          </p>
+        {item.tools && item.tools.length > 0 && (
+          <div className="flex justify-between space-x-2">
+            <span className="font-semibold">Tools</span>
+            <div className="flex space-x-2">
+              {item.tools.map((imgUrl: string, index: number) => (
+                <img
+                  key={index}
+                  src={imgUrl}
+                  alt="Tool"
+                  className="w-6 h-6 object-cover"
+                />
+              ))}
+            </div>
+          </div>
         )}
         {item.pdf && (
           <a
             href={`${item.pdf}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-500 underline"
+            className="text-blue-500 underline text-end"
           >
             View PDF
           </a>
@@ -232,71 +245,35 @@ const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
             href={item.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-500 underline"
+            className="text-blue-500 underline text-end"
           >
             View More
           </a>
-        )}
-        {item.tools && item.tools.length > 0 && (
-          <div className="flex items-center space-x-2">
-            <span className="font-semibold">Tools:</span>
-            {item.tools.map((imgUrl: string, index: number) => (
-              <img
-                key={index}
-                src={imgUrl}
-                alt="Tool"
-                className="w-6 h-6 object-contain"
-              />
-            ))}
-          </div>
         )}
       </div>
     </div>
   );
 };
 
-// 로직, 주석 수정 불가
 const ImageCarousel = ({ images }: { images: string[] }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const prevImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
-    );
-  };
-
-  const nextImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
-    );
-  };
-
   return (
     <div className="relative">
-      <img
+      <Image
+        width={300}
+        height={250}
         src={images[currentImageIndex]}
         alt={`Image ${currentImageIndex + 1}`}
-        className="w-full h-auto object-cover rounded"
+        className="h-[250px] w-auto object-cover rounded"
       />
-      <button
-        onClick={prevImage}
-        className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-700 text-white p-2 rounded-r"
-      >
-        &#8249;
-      </button>
-      <button
-        onClick={nextImage}
-        className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-700 text-white p-2 rounded-l"
-      >
-        &#8250;
-      </button>
-      <div className="absolute bottom-2 left-0 right-0 flex justify-center space-x-2">
+      <div className="absolute bottom-[-20px] left-0 right-0 flex justify-center space-x-2">
         {images.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentImageIndex(index)}
             className={`w-2 h-2 rounded-full ${
-              currentImageIndex === index ? "bg-white" : "bg-gray-500"
+              currentImageIndex === index ? "bg-gray-500" : "bg-gray-300"
             }`}
           />
         ))}
@@ -305,16 +282,10 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
   );
 };
 
-// 여기서만 styled-component로 동적으로 스타일 바꿔 줌
-// (주석, 로직 변경 없이 디자인만 변경)
 const PageButton = styled.button<{ $active: boolean }>`
   padding: 0.5rem 0.75rem;
   border: none;
-  border-radius: 0.375rem;
   cursor: pointer;
-  background-color: ${(props) => (props.$active ? "#3b82f6" : "#e5e7eb")};
-  color: ${(props) => (props.$active ? "#ffffff" : "#374151")};
-  &:hover {
-    background-color: ${(props) => (props.$active ? "#2563eb" : "#d1d5db")};
-  }
+  color: ${(props) => (props.$active ? "black" : "#686868")};
+  font-weight: ${(props) => (props.$active ? "700" : "400")};
 `;

@@ -64,15 +64,12 @@ export default function Interview() {
           <motion.div
             key="overlay"
             className="absolute inset-0 z-10"
-            onClick={handleOverlayClick} // 오버레이 누르면 닫힘
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            onClick={handleOverlayClick}
           >
             {/* 동그라미(왼쪽 아래로 이동) */}
             <motion.div
               layoutId={`circle-${selectedMember.id}`}
-              className="absolute bottom-[60px] left-[60px] w-60 h-60 rounded-full overflow-hidden cursor-pointer shadow-lg bg-white"
+              className="absolute bottom-[10%] left-[12%] w-40 h-40 md:w-60 md:h-60 rounded-full overflow-hidden cursor-pointer shadow-lg bg-white"
             >
               <img
                 src={selectedMember.imgSrc}
@@ -83,7 +80,14 @@ export default function Interview() {
 
             {/* 말풍선 (동그라미 오른쪽에 위치) */}
             <motion.div
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[650px] w-[90%] max-h-[500px] h-[50%] bg-white shadow-lg rounded-md p-6 overflow-scroll"
+              className="absolute 
+              top-[35%] md:top-1/2 
+              left-1/2 md:left-[60%] 
+              transform
+              -translate-x-1/2 md:-translate-x-[60%] 
+              -translate-y-[35%] md:-translate-y-1/2 
+              max-w-[650px] w-[90%] max-h-[500px] h-[50%] 
+              bg-white shadow-[0_4px_10px_rgba(0,0,0,0.2)] rounded-md p-6 overflow-scroll"
               onClick={(e) => e.stopPropagation()} // 말풍선 닫히지 않도록
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
