@@ -22,19 +22,37 @@ router.get('/', async(req, res) => {
       include: [
         {
           model: File,
-          attributes: ["file_url", "file_type"], 
+          attributes: ["file_name"], 
         },
       ],
     });
+
+    const BASE_URL = "https://pub-880f96b9aa254fce88011c97e585d2bd.r2.dev"; // R2.dev 기본 URL
+    // https://pub-880f96b9aa254fce88011c97e585d2bd.r2.dev/example1.png
+    const finaldata = seminas.map((semina) => {
+        const pdfs = [];
+        const images = [];
     
-    const finaldata = seminas.map((semina) => ({
-      speaker: semina.speaker,
-      topic: semina.topic,
-      details: semina.detail,
-      date: semina.presentation_date.toISOString().split("T")[0], // YYYY-MM-DD 변환
-      pdf: semina.Files.find((file) => file.file_type === "pdf")?.file_url || "", // 첫 번째 PDF URL만 가져옴
-      images: semina.Files.filter((file) => file.file_type === "image").map((file) => file.file_url), //  배열 유지     
-    }));
+        semina.Files.forEach((file) => {
+            const fileUrl = `${BASE_URL}/${file.file_name}`; // 파일 URL 생성
+            const extension = file.file_name.split(".").pop().toLowerCase(); // 확장자 추출
+    
+            if (["pdf"].includes(extension)) {
+                pdfs.push(fileUrl); // PDF 리스트에 추가
+            } else if (["jpg", "jpeg", "png", "gif", "webp"].includes(extension)) {
+                images.push(fileUrl); // 이미지 리스트에 추가
+            }
+        });
+    
+        return {
+            speaker: semina.speaker,
+            topic: semina.topic,
+            details: semina.detail,
+            date: semina.presentation_date.toISOString().split("T")[0], // YYYY-MM-DD 변환
+            pdf: pdfs, // PDF 리스트
+            images: images, // 이미지 리스트
+        };
+    });
 
     console.log("[LOG] semina_info api 응답 완료")
 

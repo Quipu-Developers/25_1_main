@@ -10,14 +10,10 @@ class File extends Sequelize.Model {
                     autoIncrement: true,
                     primaryKey: true,
                 }, // 파일 ID
-                file_url: {
+                file_name: {
                     type: DataTypes.STRING,
                     allowNull: false,
-                }, // 파일 URL (이미지, PDF 등)
-                file_type: {
-                    type: DataTypes.ENUM("image", "pdf"), // 파일 유형 구분
-                    allowNull: false,
-                },
+                }, // 파일 이름 (example1.png, example2.jpg, example3.pdf 등)
                 semina_id: {
                   type: DataTypes.INTEGER,
                   allowNull: false,

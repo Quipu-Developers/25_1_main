@@ -29,11 +29,11 @@ const insertDummyData = async () => {
 
     // ✅ 더미 파일 데이터 삽입 (이미지 + PDF)
     await File.bulkCreate([
-      { file_url: "https://example.com/image1.jpg", file_type: "image", semina_id: 1 },
-      { file_url: "https://example.com/image2.jpg", file_type: "image", semina_id: 1 },
-      { file_url: "https://example.com/file1.pdf", file_type: "pdf", semina_id: 1 },
-      { file_url: "https://example.com/image3.jpg", file_type: "image", semina_id: 2 },
-      { file_url: "https://example.com/file2.pdf", file_type: "pdf", semina_id: 2 },
+      { file_name: "image1.jpg", semina_id: 1 },
+      { file_name: "image2.png", semina_id: 1 },
+      { file_name: "file1.pdf", semina_id: 1 },
+      { file_name: "image3.jpg", semina_id: 2 },
+      { file_name: "file2.pdf", semina_id: 2 },
     ]);
 
     await Feature.bulkCreate([

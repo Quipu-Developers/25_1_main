@@ -1,7 +1,6 @@
 // Todo
-// 2.10 sequelize로 DB 구조 1차적 완성. mysql 연결, model 디렉토리 파일들 완성
 
-// 해야 할 일: api 생성( 총 2가지)
+// production 신경 쓰기 -> 보안 옵션 전부 켜기
 
 const express = require('express');             // 웹 프레임워크
 const path = require('path');                   // 파일, 디렉토리 다루기 위한 유틸리티 패키지                        
@@ -11,6 +10,7 @@ const hpp = require('hpp');                     // 보안 관련
 const morgan = require('morgan');               // http 요청 로깅 용 미들웨어
 const mysql = require('mysql2/promise');        // mysql 연결용
 const fs = require('fs').promises;              // fs
+const winston = require('winston');
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });     // .env 파일 로드
 console.log(`[LOG] NODE_ENV = ${process.env.NODE_ENV}`);
 
@@ -100,7 +100,7 @@ async function startServer() {
         setInterval(async () => {
             try {
                 await sequelize.query('SELECT 1');
-                console.log('[LOG] DB 연결 유지');
+                console.log('[LOG] DB 연결 유지 로직 작동');
             } catch (err) {
                 console.error('[ERROR] DB 연결 체크/유지 실패:', err);
             }
@@ -142,4 +142,29 @@ app.use('/feature', featureRouter);
 
 //{url}/api-docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+
+//error handler
+const logger = winston.createLogger({
+    level: 'error',
+    format: winston.format.json(),
+    transports: [
+        new winston.transports.File({ filename: 'error.log' })
+    ]
+});
+
+
+app.use((err, req, res, next) => {
+    if (process.env.NODE_ENV === 'development') {
+        console.log("[ERROR] error handler 동작")
+        console.error(err.stack || err);
+    } else {
+        logger.error(err.message || 'Unexpected error'); // 운영 환경에서는 로그 파일에 저장
+    }
+
+    res.status(err.status || 500).json({
+        error: { message: 'Internal Server Error' }
+    });
+});
+
 
