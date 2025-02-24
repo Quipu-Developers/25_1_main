@@ -38,19 +38,17 @@ const Activity = () => {
   };
 
   return (
-    <div className="grow flex flex-col px-6 space-y-10 lg:space-y-14 py-8 max-w-[1100px]">
+    <div className="grow flex flex-col px-6 space-y-10 lg:space-y-14 py-8 max-w-[1000px]">
       <h2 className="font-firaCode w-full text-5xl md:text-6xl lg:text-7xl text-left pb-4 md:pb-8">
         what we do
       </h2>
 
       {/* 타입별 버튼 목록 */}
       {["study", "semina", "development", "extra"].map((type) => (
-        <div key={type} className="space-y-3">
+        <div key={type}>
           <button
             onClick={() => toggleType(type)}
-            className={`w-full flex items-center justify-between text-left uppercase tracking-wide ${
-              expanded[type] ? "" : "border-b-[0.5px] border-black"
-            }`}
+            className="w-full flex items-center justify-between text-left uppercase tracking-wide border-b-[0.5px] border-black"
           >
             <span className="text-4xl">{type}</span>
             {/* 화살표 아이콘 (열림/닫힘에 따라 180도 회전) */}
@@ -106,21 +104,27 @@ const TypeSection = ({ type, expanded }: ActivityTypeSectionProps) => {
   }, [loading, data, selectedIndex]);
 
   // 펼쳐지지 않았다면(= expanded가 false), 내용 감춤
-  if (!expanded) {
-    return null;
-  }
+  // if (!expanded) {
+  //   return null;
+  // }
 
   return (
-    <div className="">
-      {loading && <p className="text-gray-500">Loading...</p>}
+    <div
+      className={`overflow-hidden transition-[max-height] duration-500 ease-in-out ${
+        expanded ? "max-h-[1000px]" : "max-h-0"
+      }`}
+    >
+      {loading && <p className="text-gray-500 my-4">Loading...</p>}
 
-      {!loading && !data && <p className="text-gray-500">No data available.</p>}
+      {!loading && !data && (
+        <p className="text-gray-500 my-4">내용이 없습니다.</p>
+      )}
 
       {!loading && data && (
         <div>
           {/* 상단 설명 영역 */}
           <div className="">
-            <p className="text-[#686868] text-1xl">
+            <p className="text-[#686868] text-1xl my-4">
               {data.titleData?.description}
             </p>
           </div>
@@ -172,7 +176,7 @@ const TypeSection = ({ type, expanded }: ActivityTypeSectionProps) => {
 // 로직, 주석 수정 불가
 const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
   return (
-    <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+    <div className="flex flex-col md:flex-row space-y-4 md:space-y-0">
       {/* 좌측: 이미지(캐러셀) 영역 */}
       <div>
         {item.images && item.images.length > 1 ? (
@@ -183,7 +187,7 @@ const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
             height={250}
             src={item.images[0]}
             alt={item.topic || "Image"}
-            className="h-[250px] w-auto object-cover rounded"
+            className="h-[250px] w-auto object-cover rounded shadow-md"
           />
         ) : (
           <div className="h-[250px] w-[300px] bg-gray-200 flex items-center justify-center rounded">
@@ -193,7 +197,7 @@ const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
       </div>
 
       {/* 우측: 정보 영역 */}
-      <div className="w-full flex flex-col justify-end gap-3 pt-[40px]">
+      <div className="w-full flex flex-col justify-end gap-3 pt-[30px] md:ml-4">
         {item.date && (
           <p className="w-full flex justify-between">
             <span className="font-semibold">Date</span> {item.date}
@@ -258,15 +262,37 @@ const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
 const ImageCarousel = ({ images }: { images: string[] }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+
   return (
-    <div className="relative">
+    <div className="relative my-4 mx-auto md:mx-6 w-[80%] md:w-[400px] h-[150px] md:h-[250px] flex items-center justify-center">
+      <button
+        onClick={prevImage}
+        className="absolute left-[-24px] top-1/2 -translate-y-1/2 text-lg text-gray-500"
+      >
+        &lt;
+      </button>
+      <button
+        onClick={nextImage}
+        className="absolute right-[-24px] top-1/2 -translate-y-1/2 text-lg text-gray-500"
+      >
+        &gt;
+      </button>
+
       <Image
         width={300}
         height={250}
         src={images[currentImageIndex]}
         alt={`Image ${currentImageIndex + 1}`}
-        className="h-[250px] w-auto object-cover rounded"
+        className="h-full w-auto rounded"
       />
+
       <div className="absolute bottom-[-20px] left-0 right-0 flex justify-center space-x-2">
         {images.map((_, index) => (
           <button
