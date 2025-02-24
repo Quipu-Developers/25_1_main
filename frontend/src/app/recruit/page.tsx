@@ -98,7 +98,7 @@ export default function RecruitForm() {
       setIsRecruiting(response.data.is_enabled);
     } catch (error) {
       console.error(error);
-      setIsRecruiting(false);
+      // setIsRecruiting(false);
     }
   };
 

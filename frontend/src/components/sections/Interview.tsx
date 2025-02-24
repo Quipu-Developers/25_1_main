@@ -29,7 +29,7 @@ export default function Interview() {
       <AnimatePresence>
         {!selectedMember && (
           <motion.div
-            className="flex flex-col md:flex-row justify-around items-center h-full flex-1"
+            className="flex flex-col lg:flex-row justify-around items-center h-full flex-1"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -39,7 +39,7 @@ export default function Interview() {
                 key={item.id}
                 layoutId={`circle-${item.id}`}
                 className={`
-                  w-40 h-40 md:w-60 md:h-60 rounded-full overflow-hidden cursor-pointer shadow-lg 
+                  w-40 h-40 lg:w-60 lg:h-60 rounded-full overflow-hidden cursor-pointer shadow-lg 
                   bg-white ${circlePositions[index] || ""}
                 `}
                 onClick={() => setSelectedId(item.id)}
@@ -69,7 +69,7 @@ export default function Interview() {
             {/* 동그라미(왼쪽 아래로 이동) */}
             <motion.div
               layoutId={`circle-${selectedMember.id}`}
-              className="absolute bottom-[10%] left-[12%] w-40 h-40 md:w-60 md:h-60 rounded-full overflow-hidden cursor-pointer shadow-lg bg-white"
+              className="absolute bottom-[10%] left-[12%] w-40 h-40 lg:w-60 lg:h-60 rounded-full overflow-hidden cursor-pointer shadow-lg bg-white z-50"
             >
               <img
                 src={selectedMember.imgSrc}
@@ -81,13 +81,13 @@ export default function Interview() {
             {/* 말풍선 (동그라미 오른쪽에 위치) */}
             <motion.div
               className="absolute 
-              top-[35%] md:top-1/2 
-              left-1/2 md:left-[60%] 
+              top-[37%] lg:top-1/2 
+              left-1/2 lg:left-[60%] 
               transform
-              -translate-x-1/2 md:-translate-x-[60%] 
-              -translate-y-[35%] md:-translate-y-1/2 
-              max-w-[650px] w-[90%] max-h-[500px] h-[50%] 
-              bg-white shadow-[0_4px_10px_rgba(0,0,0,0.2)] rounded-md p-6 overflow-scroll"
+              -translate-x-1/2 lg:-translate-x-[60%] 
+              -translate-y-[35%] lg:-translate-y-1/2 
+              max-w-[650px] w-[80%] max-h-[500px] h-[50%] 
+              bg-white shadow-[0_4px_10px_rgba(0,0,0,0.2)] rounded-3xl rounded-bl-none p-6 overflow-scroll"
               onClick={(e) => e.stopPropagation()} // 말풍선 닫히지 않도록
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -119,34 +119,34 @@ export default function Interview() {
               <h2 className="text-2xl font-semibold mb-1">
                 {selectedMember.name}
               </h2>
-              <span className="text-blue-500 mb-2 inline-block">
+              <span className="text-point mb-2 inline-block">
                 {selectedMember.shortLine}
               </span>
               <hr className="mb-4" />
 
-              <div className="space-y-4 text-sm leading-relaxed">
+              <div className="space-y-8 text-sm leading-relaxed">
                 {/* 1번 질문 */}
                 <div>
                   <h3 className="font-bold text-lg mb-1">
-                    자기소개와 맡은 역할을 알려주세요!
+                    🧑‍💼 자기소개와 맡은 역할을 알려주세요!
                   </h3>
-                  <p>{selectedMember.answers.answer1}</p>
+                  <p className="break-keep">{selectedMember.answers.answer1}</p>
                 </div>
 
                 {/* 2번 질문 */}
                 <div>
                   <h3 className="font-bold text-lg mb-1">
-                    퀴푸를 추천하는 이유가 무엇인가요?
+                    🌟 퀴푸를 추천하는 이유가 무엇인가요?
                   </h3>
-                  <p>{selectedMember.answers.answer2}</p>
+                  <p className="break-keep">{selectedMember.answers.answer2}</p>
                 </div>
 
                 {/* 3번 질문 */}
                 <div>
                   <h3 className="font-bold text-lg mb-1">
-                    가장 기억에 남는 활동이나 프로젝트는 뭐였나요?
+                    🎯 가장 기억에 남는 활동이나 프로젝트는 뭐였나요?
                   </h3>
-                  <pre className="whitespace-pre-wrap">
+                  <pre className="whitespace-pre-wrap break-keep">
                     {selectedMember.answers.answer3}
                   </pre>
                 </div>
