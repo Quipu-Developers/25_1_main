@@ -9,6 +9,7 @@ import Activity from "@/components/sections/Activity";
 import Technique from "@/components/sections/Technique";
 import Interview from "@/components/sections/Interview";
 import Recruit from "@/components/sections/Recruit";
+import Footer from "@/components/sections/Footer";
 
 // 메인 페이지
 export default function MainPage() {
@@ -103,6 +104,11 @@ export default function MainPage() {
       <Section id="recruit">
         <Recruit />
       </Section>
+
+      {/* 리크루트 섹션 */}
+      <Section>
+        <Footer />
+      </Section>
     </div>
   );
 }
@@ -113,6 +119,7 @@ const Section = styled.section`
   display: flex;
   flex-direction: column;
   padding-top: 50px;
+  scroll-snap-align: start;
 
   @media (max-width: 900px) {
     padding: 50px 0;

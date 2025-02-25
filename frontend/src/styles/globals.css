@@ -23,11 +23,13 @@ body {
   scroll-behavior: smooth;
   overflow-x: hidden;
   overscroll-behavior: contain;
+  overflow-y: overlay;
 }
 
 /* Webkit 기반 브라우저 (Chrome, Safari, Edge 일부) */
 ::-webkit-scrollbar {
   width: 6px;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -36,6 +38,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
+  box-shadow: none;
   background: transparent;
 }
 
@@ -49,6 +52,8 @@ body {
 body,
 html {
   -ms-overflow-style: none; /* IE, Edge에서 기본 스크롤바 숨기기 */
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
 
   @media (max-width: 900px) {
     font-size: 15px;

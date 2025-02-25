@@ -3,10 +3,12 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { faqData } from "@/lib/recruitData";
+import { motion } from "framer-motion";
+import { useAnimatedInView } from "@/hooks/useAnimatedInView";
+import { containerVariants, textLineVariants } from "@/hooks/useAnimations";
 
 export default function RecruitPage() {
   const router = useRouter();
-
   return (
     <div className="grow flex flex-col items-center justify-start min-h-screen p-8">
       {/* 상단 Welcome 영역 */}
@@ -14,18 +16,16 @@ export default function RecruitPage() {
         Welcome!
       </h2>
 
-      <div className="flex items-center mb-8 space-x-2">
+      <button
+        className="flex items-center mb-8 space-x-2"
+        onClick={() => router.push("/recruit")}
+      >
         <span className="text-3xl">{"{"}</span>
-        <button
-          onClick={() => router.push("/recruit")}
-          className="px-4 py-2 bg-transparent text-2xl"
-        >
-          <div className="flex items-center space-x-2">
-            <span>퀴푸 가입하러 가기</span>
-          </div>
-        </button>
+        <div className="px-4 py-2 text-2xl">
+          <span>퀴푸 가입하러 가기</span>
+        </div>
         <span className="text-3xl">{"}"}</span>
-      </div>
+      </button>
 
       {/* FAQ 섹션 */}
       <FaqSection />
@@ -34,23 +34,39 @@ export default function RecruitPage() {
 }
 
 function FaqSection() {
+  const [containerRef, isInView] = useAnimatedInView({ once: false });
+
   return (
-    <div className="w-full max-w-2xl px-4">
+    <motion.div
+      className="w-full max-w-2xl px-4"
+      ref={containerRef}
+      variants={containerVariants}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+    >
       <h2 className="text-3xl mb-4">FAQ</h2>
       {faqData.map((item, idx) => (
-        <FaqItem key={idx} question={item.question} answer={item.answer} />
+        <FaqItem
+          key={idx}
+          index={idx}
+          question={item.question}
+          answer={item.answer}
+        />
       ))}
-    </div>
+    </motion.div>
   );
 }
 
-function FaqItem({ question, answer }: FaqItemProps) {
+function FaqItem({ question, answer, index }: FaqItemProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => setIsOpen((prev) => !prev);
 
   return (
-    <div className="border-b border-gray-300 py-3">
+    <motion.div
+      className="border-b border-gray-300 py-3"
+      variants={textLineVariants(index % 2 === 0 ? "left" : "right")}
+    >
       <button
         className="flex w-full justify-between items-center focus:outline-none"
         onClick={toggleOpen}
@@ -77,7 +93,7 @@ function FaqItem({ question, answer }: FaqItemProps) {
       <AnswerContainer $isOpen={isOpen} className="mt-2 text-gray-600 text-sm">
         {answer}
       </AnswerContainer>
-    </div>
+    </motion.div>
   );
 }
 
