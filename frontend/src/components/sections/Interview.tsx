@@ -91,7 +91,7 @@ export default function Interview() {
               -translate-x-1/2 lg:-translate-x-[60%] 
               -translate-y-[35%] lg:-translate-y-[60%]
               -rotate-3 lg:-rotate-1
-              max-w-[650px] w-[80%] max-h-[500px] h-[50%] 
+              max-w-[650px] w-[80%] max-h-[500px] h-[350px] lg:h-[500px] 
               bg-white shadow-[0_4px_10px_rgba(0,0,0,0.2)] rounded-3xl rounded-bl-none p-6 flex flex-col"
               onClick={(e) => e.stopPropagation()} // 말풍선 닫히지 않도록
               initial={{ opacity: 0 }}
