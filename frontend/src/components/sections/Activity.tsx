@@ -213,11 +213,12 @@ const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
             <span className="font-semibold">Tools</span>
             <div className="flex space-x-2">
               {item.tools.map((imgUrl: string, index: number) => (
-                <img
+                <Image
+                  width={22}
+                  height={22}
                   key={index}
                   src={imgUrl}
                   alt="Tool"
-                  className="w-6 h-6 object-cover"
                 />
               ))}
             </div>
@@ -259,6 +260,10 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
     setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
+  useEffect(() => {
+    setCurrentImageIndex(0);
+  }, [images]);
+
   return (
     <div className="relative mt-4 mx-auto md:mx-6 w-[80%] md:w-[400px] h-[150px] md:h-[250px] flex items-center justify-center">
       <button
@@ -275,11 +280,11 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
       </button>
 
       <Image
-        width={300}
+        width={350}
         height={250}
         src={images[currentImageIndex]}
         alt={`Image ${currentImageIndex + 1}`}
-        className="h-full w-auto rounded"
+        className="h-full w-auto object-contain rounded"
       />
 
       <div className="absolute bottom-[-20px] left-0 right-0 flex justify-center space-x-2">

@@ -1,7 +1,7 @@
 export const seminaTitleData: ActivityTitle = {
   type: "SEMINA",
   description:
-    "컴퓨터 및 IT에 대한 다양한 주제를 다루는 세미나를 정기적으로 진행합니다. “배우고 나누자”라는 목표를 갖습니다.",
+    "IT에 대한 다양한 주제를 다루는 세미나를 정기적으로 진행합니다. “배우고 나누자”라는 목표를 갖습니다.",
 };
 
 const items: ActivityItem[] = [
@@ -53,10 +53,10 @@ const items: ActivityItem[] = [
     ],
   },
   {
-    speaker: "정하은 | 정보보호학과 | 2021567890",
+    speaker: "이예나 | 전자전기컴퓨터공학부",
     topic: "쿼푸 웹 배포 전략: 클라우드에서 온프레미스로",
     details:
-      "클라우드 기반 배포 방식과 온프레미스 배포의 장단점을 비교 분석한다.",
+      "클라우드 기반 배포 방식과 온프레미스 배포의 장단점을 분석하여 앞으로의 퀴푸 메인 웹의 배포 전략을 공유",
     date: "24.01.10",
     pdf: "cloud_vs_onprem.pdf",
     images: [

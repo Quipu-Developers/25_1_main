@@ -14,33 +14,62 @@
 export const developmentTitleData: ActivityTitle = {
   type: "DEVELOPMENT",
   description:
-    "동아리의 웹 프로젝트를 매년 새로운 버전 출시를 통해 발전시킵니다. 개발을 좋아하는 학우분들과 함께 아이디어를 공유하고 발전합니다.",
+    "동아리 회원들을 대상으로 실용성과 재미를 모두 갖춘 프로젝트를 개발하며, 매년 새로운 버전을 출시해 프로젝트를 지속적으로 발전시켜 나갑니다.",
 };
 
 const developmentItems: ActivityItem[] = [
   {
-    topic: "배틀그라운드 커뮤니티 웹사이트",
-    details:
-      "게임을 좋아하는 유저들을 위한 커뮤니티 사이트를 개발하여, 정보 공유와 실시간 매칭 시스템을 구축한다.",
-    date: "24.01.30",
+    topic: "퀴푸 메인 웹사이트 2024 ver.",
+    details: "퀴푸를 소개하고 모집을 진행하는 퀴푸 대표 웹사이트",
+    date: "24.03.01",
     link: "https://quipu.uos.ac.kr/",
     images: [
-      "https://zippy.b-cdn.net/articket_img1.jpeg",
-      "https://zippy.b-cdn.net/_배틀글라운드_img1.jpeg",
+      "https://zippy.b-cdn.net/main24_img1.png",
+      "https://zippy.b-cdn.net/main24_img2.png",
+      "https://zippy.b-cdn.net/main24_img3.png",
+      "https://zippy.b-cdn.net/룰렛24_img1.jpeg",
+      "https://zippy.b-cdn.net/룰렛24_img5.jpeg",
     ],
-    tools: ["react", "firebase", "tailwindcss"],
+    tools: ["threejs", "react", "nodejs"],
   },
   {
-    topic: "실시간 채팅 애플리케이션",
+    topic: "퀴푸 백오피스 웹사이트",
     details:
-      "WebSocket 기술을 이용하여 빠른 실시간 메시지 송수신 기능을 제공하는 채팅 애플리케이션을 구현한다.",
-    date: "24.01.20",
-    link: "https://quipu.uos.ac.kr/",
+      "지원자분들의 지원 내용을 실시간으로 확인하고 관리할 수 있는 관리자 서비스",
+    date: "24.09.01",
     images: [
-      "https://zippy.b-cdn.net/_와글와글_img1.jpeg",
-      "https://zippy.b-cdn.net/링고커넥트_img4.jpeg",
+      "https://zippy.b-cdn.net/backoffice_img1.png",
+      "https://zippy.b-cdn.net/backoffice_img2.png",
     ],
-    tools: ["nodejs", "socketio", "mongodb"],
+    tools: ["react", "nodejs"],
+  },
+  {
+    topic: "배틀글라운드",
+    details:
+      "최대 3명의 플레이어가 한 방에서 주어진 단어장에서 더 많은 단어를 빠르게 차지하는 멀티플레이어 타자 게임",
+    date: "24.09.24",
+    images: [
+      "https://zippy.b-cdn.net/배틀글라운드_img1.jpeg",
+      "https://zippy.b-cdn.net/배틀글라운드_img5.jpeg",
+      "https://zippy.b-cdn.net/배틀글라운드_img2.jpeg",
+      "https://zippy.b-cdn.net/배틀글라운드_img3.jpeg",
+      "https://zippy.b-cdn.net/_배틀글라운드_img1.jpeg",
+      "https://zippy.b-cdn.net/_배틀글라운드_img2.jpeg",
+    ],
+    tools: ["socketio", "typescript", "react", "nodejs"],
+  },
+  {
+    topic: "Articket",
+    details:
+      "간단한 성격 테스트를 통해 어울리는 화가를 매칭하고, 스테이블 디퓨전을 활용해서 사용자의 사진을 해당 화가의 스타일로 변환해주는 서비스",
+    date: "24.11.19",
+    images: [
+      "https://zippy.b-cdn.net/articket_img1.jpeg",
+      "https://zippy.b-cdn.net/articket_img3.jpeg",
+      "https://zippy.b-cdn.net/articket_img4.jpeg",
+      "https://zippy.b-cdn.net/articket_img6.jpeg",
+    ],
+    tools: ["socketio", "react", "flask"],
   },
 ];
 

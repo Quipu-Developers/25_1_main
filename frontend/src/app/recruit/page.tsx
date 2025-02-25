@@ -28,7 +28,7 @@ export default function RecruitForm() {
     grade: 1,
     major: "",
     phone_number: "",
-    semina: false,
+    semina: true,
     dev: false,
     study: false,
     external: false,
@@ -135,12 +135,15 @@ export default function RecruitForm() {
   const handleCheckboxChange = (
     activity: "semina" | "dev" | "study" | "external"
   ): void => {
+    if (activity === "semina") {
+      showToast("warn", "세미나는 필수 참여 항목이에요! 😊");
+      return;
+    }
+
     const isFormFilled =
       formData[activity] &&
       (() => {
         switch (activity) {
-          case "semina":
-            return formData.motivation_semina.trim() !== "";
           case "dev":
             return (
               formData.field_dev.trim() !== "" ||
@@ -410,10 +413,13 @@ export default function RecruitForm() {
         animate={isInView ? "visible" : "hidden"}
       >
         <div className="flex items-center gap-5">
-          <span className="text-3xl">{"{"}</span>
+          <span className="text-3xl font-bold">{"{"}</span>
           <div>
-            <p>환영합니다! 지원서는 회비 납부 이후 제출해주세요.</p>
-            <p>회비: 10,000원</p>
+            <p>
+              환영합니다! 지원서는{" "}
+              <span className="text-point">회비 납부 이후 제출</span>해주세요.
+            </p>
+            <p>회비: 25,000원</p>
             <p>
               계좌:{" "}
               <span
@@ -425,7 +431,7 @@ export default function RecruitForm() {
               </span>
             </p>
           </div>
-          <span className="text-3xl">{"}"}</span>
+          <span className="text-3xl font-bold">{"}"}</span>
         </div>
 
         <form ref={formRef} className="w-full">
