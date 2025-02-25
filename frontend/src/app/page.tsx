@@ -119,6 +119,7 @@ const Section = styled.section`
   display: flex;
   flex-direction: column;
   padding-top: 50px;
+  scroll-snap-align: start;
 
   @media (max-width: 900px) {
     padding: 50px 0;

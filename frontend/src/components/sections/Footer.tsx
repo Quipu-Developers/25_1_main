@@ -18,7 +18,9 @@ export default function Footer() {
               width="100px"
               viewBox="-50 -50 768 757"
               className="overflow-visible mb-4 cursor-pointer"
-              onClick={() => router.push("/")}
+              onClick={() => {
+                router.push("/");
+              }}
             >
               <use href={`/assets/logo.svg#left-part`} />
               <use href={`/assets/logo.svg#right-part`} />

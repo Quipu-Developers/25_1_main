@@ -52,6 +52,8 @@ body {
 body,
 html {
   -ms-overflow-style: none; /* IE, Edge에서 기본 스크롤바 숨기기 */
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
 
   @media (max-width: 900px) {
     font-size: 15px;
