@@ -30,7 +30,7 @@ export default function About() {
         className="font-firaCode mb-[120px] text-6xl md:text-7xl lg:text-8xl"
         variants={textLineVariants("left")}
       >
-        "Hello quipu!"
+        &quot;Hello quipu!&quot;
       </motion.h1>
 
       {/* 둘째 (오른쪽 -> 왼쪽 모션) */}
