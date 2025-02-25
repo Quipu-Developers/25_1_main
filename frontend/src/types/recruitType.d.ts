@@ -47,7 +47,7 @@ declare interface RecruitmentStatusResponse {
 declare interface FaqItemProps {
   question: string;
   answer: string;
-  index: number;
+  index?: number;
 }
 
 declare interface InputFieldProps {

@@ -65,7 +65,9 @@ function FaqItem({ question, answer, index }: FaqItemProps) {
   return (
     <motion.div
       className="border-b border-gray-300 py-3"
-      variants={textLineVariants(index % 2 === 0 ? "left" : "right")}
+      variants={textLineVariants(
+        index !== undefined && index % 2 === 0 ? "left" : "right"
+      )}
     >
       <button
         className="flex w-full justify-between items-center focus:outline-none"
