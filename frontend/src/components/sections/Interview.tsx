@@ -87,50 +87,52 @@ export default function Interview() {
               -translate-x-1/2 lg:-translate-x-[60%] 
               -translate-y-[35%] lg:-translate-y-1/2 
               max-w-[650px] w-[80%] max-h-[500px] h-[50%] 
-              bg-white shadow-[0_4px_10px_rgba(0,0,0,0.2)] rounded-3xl rounded-bl-none p-6 overflow-scroll"
+              bg-white shadow-[0_4px_10px_rgba(0,0,0,0.2)] rounded-3xl rounded-bl-none p-6 flex flex-col"
               onClick={(e) => e.stopPropagation()} // 말풍선 닫히지 않도록
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.5 }}
             >
-              {/* 닫기 버튼 (오른쪽 상단) */}
-              <button
-                className="absolute top-4 right-4 text-gray-500 hover:text-black z-10"
-                onClick={() => setSelectedId(null)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
+              <div className="border-b flex gap-4 items-center justify-between pb-3">
+                {/* 말풍선 내용 */}
+                <h2 className="text-2xl font-semibold flex flex-col items-start gap-3 lg:flex-row lg:items-center">
+                  {selectedMember.name}
+                  <span className="text-point text-lg font-normal">
+                    {selectedMember.shortLine}
+                  </span>
+                </h2>
+                {/* 닫기 버튼 (오른쪽 상단) */}
+                <button
+                  className="text-gray-500 relative bottom-[5px]"
+                  onClick={() => setSelectedId(null)}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
 
-              {/* 말풍선 내용 */}
-              <h2 className="text-2xl font-semibold mb-1">
-                {selectedMember.name}
-              </h2>
-              <span className="text-point mb-2 inline-block">
-                {selectedMember.shortLine}
-              </span>
-              <hr className="mb-4" />
-
-              <div className="space-y-8 text-sm leading-relaxed">
+              <div className="space-y-11 flex-1 py-5 text-sm overflow-scroll">
                 {/* 1번 질문 */}
                 <div>
                   <h3 className="font-bold text-lg mb-1">
                     🧑‍💼 자기소개와 맡은 역할을 알려주세요!
                   </h3>
-                  <p className="break-keep">{selectedMember.answers.answer1}</p>
+                  <pre className="whitespace-pre-wrap break-keep">
+                    {selectedMember.answers.answer1}
+                  </pre>
                 </div>
 
                 {/* 2번 질문 */}
@@ -138,7 +140,9 @@ export default function Interview() {
                   <h3 className="font-bold text-lg mb-1">
                     🌟 퀴푸를 추천하는 이유가 무엇인가요?
                   </h3>
-                  <p className="break-keep">{selectedMember.answers.answer2}</p>
+                  <pre className="whitespace-pre-wrap break-keep">
+                    {selectedMember.answers.answer2}
+                  </pre>
                 </div>
 
                 {/* 3번 질문 */}

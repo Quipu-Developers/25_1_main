@@ -1,7 +1,10 @@
+import { motion } from "framer-motion";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import useActivityFetchData from "@/hooks/useActivityFetchData";
 import Image from "next/image";
+import { useAnimatedInView } from "@/hooks/useAnimatedInView";
+import { containerVariants, textLineVariants } from "@/hooks/useAnimations";
 
 // 이 부분(주석 + 로직)은 절대 수정 불가
 const fetchParams: Record<
@@ -16,6 +19,8 @@ const fetchParams: Record<
 
 // 로직, 주석 수정 불가
 const Activity = () => {
+  const [containerRef, isInView] = useAnimatedInView({ once: false });
+
   const [expanded, setExpanded] = useState<Record<string, boolean>>({
     study: false,
     semina: false,
@@ -38,14 +43,23 @@ const Activity = () => {
   };
 
   return (
-    <div className="grow flex flex-col px-6 space-y-10 lg:space-y-14 py-8 max-w-[1000px]">
+    <motion.div
+      className="grow flex flex-col px-6 space-y-10 lg:space-y-14 py-8 max-w-[1000px]"
+      ref={containerRef}
+      variants={containerVariants}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+    >
       <h2 className="font-firaCode w-full text-5xl md:text-6xl lg:text-7xl text-left pb-4 md:pb-8">
         what we do
       </h2>
 
       {/* 타입별 버튼 목록 */}
-      {["study", "semina", "development", "extra"].map((type) => (
-        <div key={type}>
+      {["study", "semina", "development", "extra"].map((type, i) => (
+        <motion.div
+          key={type}
+          variants={textLineVariants(i % 2 === 0 ? "left" : "right")}
+        >
           <button
             onClick={() => toggleType(type)}
             className="w-full flex items-center justify-between text-left uppercase tracking-wide border-b-[0.5px] border-black"
@@ -72,9 +86,9 @@ const Activity = () => {
 
           {/* 펼쳐졌을 때만 하위 섹션 렌더링 */}
           <TypeSection type={type} expanded={expanded[type]} />
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 };
 
@@ -179,16 +193,8 @@ const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
     <div className="flex flex-col md:flex-row space-y-4 md:space-y-0">
       {/* 좌측: 이미지(캐러셀) 영역 */}
       <div>
-        {item.images && item.images.length > 1 ? (
+        {item.images && item.images.length ? (
           <ImageCarousel images={item.images} />
-        ) : item.images && item.images.length === 1 ? (
-          <Image
-            width={300}
-            height={250}
-            src={item.images[0]}
-            alt={item.topic || "Image"}
-            className="h-[250px] w-auto object-cover rounded shadow-md"
-          />
         ) : (
           <div className="h-[250px] w-[300px] bg-gray-200 flex items-center justify-center rounded">
             No Image
@@ -197,7 +203,7 @@ const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
       </div>
 
       {/* 우측: 정보 영역 */}
-      <div className="w-full flex flex-col justify-end gap-3 pt-[30px] md:ml-4">
+      <div className="w-full flex flex-col justify-end gap-3 pt-[30px] md:ml-7">
         {item.date && (
           <p className="w-full flex justify-between">
             <span className="font-semibold">Date</span> {item.date}
@@ -216,7 +222,7 @@ const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
         {item.details && (
           <p className="w-full flex justify-between">
             <span className="font-semibold">Details</span>
-            <span className="w-1/2 text-end break-keep">{item.details}</span>
+            <span className="w-[80%] text-end break-keep">{item.details}</span>
           </p>
         )}
         {item.tools && item.tools.length > 0 && (
@@ -251,7 +257,7 @@ const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
             rel="noopener noreferrer"
             className="text-blue-500 underline text-end"
           >
-            View More
+            View Page
           </a>
         )}
       </div>
@@ -271,7 +277,7 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
   };
 
   return (
-    <div className="relative my-4 mx-auto md:mx-6 w-[80%] md:w-[400px] h-[150px] md:h-[250px] flex items-center justify-center">
+    <div className="relative mt-4 mx-auto md:mx-6 w-[80%] md:w-[400px] h-[150px] md:h-[250px] flex items-center justify-center">
       <button
         onClick={prevImage}
         className="absolute left-[-24px] top-1/2 -translate-y-1/2 text-lg text-gray-500"

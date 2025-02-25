@@ -7,37 +7,11 @@ import CMToast from "@/components/CMToast";
 import axios from "axios";
 import useToast from "@/hooks/useToast";
 import { majors } from "@/lib/recruitData";
-import { MdArrowBackIos } from "react-icons/md";
+import { SlArrowLeft } from "react-icons/sl";
+import { useAnimatedInView } from "@/hooks/useAnimatedInView";
+import { containerVariants, textLineVariants } from "@/hooks/useAnimations";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-
-const containerVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.2,
-      type: "spring",
-      damping: 20,
-      stiffness: 100,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      damping: 20,
-      stiffness: 100,
-    },
-  },
-};
 
 export default function RecruitForm() {
   const { showToast, confirmToast } = useToast();
@@ -45,6 +19,8 @@ export default function RecruitForm() {
   const formRef = useRef<HTMLFormElement | null>(null);
 
   const [isRecruiting, setIsRecruiting] = useState<boolean | null>(true);
+
+  const [containerRef, isInView] = useAnimatedInView({ once: false });
 
   // 폼 데이터 상태 초기화
   const [formData, setFormData] = useState<RecruitFormData>({
@@ -425,19 +401,22 @@ export default function RecruitForm() {
     <>
       <CMToast />
       <h2 className="font-firaCode p-6 w-full text-5xl md:text-6xl lg:text-7xl text-center relative cursor-pointer">
-        <MdArrowBackIos
+        <SlArrowLeft
           onClick={() => router.push("/")}
-          className="absolute top-1/2 -translate-y-1/2  left-7 text-3xl"
+          className="absolute top-1/2 -translate-y-1/2  left-7 text-2xl"
         />
         Welcome!
       </h2>
       <motion.div
         className="min-h-screen max-w-[600px] mx-auto p-6 flex flex-col items-center justify-around gap-10"
+        // (2) 감시하고 싶은 영역에 ref 연결
+        ref={containerRef}
+        // (3) 컨테이너가 보일 때 자식들을 순차적으로 visible 처리
         variants={containerVariants}
         initial="hidden"
-        animate="visible"
+        animate={isInView ? "visible" : "hidden"}
       >
-        <div className="flex items-center">
+        <div className="flex items-center gap-5">
           <span className="text-3xl">{"{"}</span>
           <div>
             <p>환영합니다! 지원서는 회비 납부 이후 제출해주세요.</p>
@@ -456,13 +435,9 @@ export default function RecruitForm() {
           <span className="text-3xl">{"}"}</span>
         </div>
 
-        <motion.form
-          ref={formRef}
-          variants={containerVariants}
-          className="w-full"
-        >
+        <form ref={formRef} className="w-full">
           {/* 기본 정보 입력 영역 */}
-          <motion.div className="space-y-3" variants={itemVariants}>
+          <div className="space-y-6">
             <InputField
               label="이름"
               name="name"
@@ -476,10 +451,14 @@ export default function RecruitForm() {
               name="major"
               value={formData.major}
               onChange={handleChange}
-              placeholder="컴퓨터공학"
+              placeholder="전자전기컴퓨터공학부"
               disabled={!isRecruiting}
+              VariantsDirection="right"
             />
-            <div className="flex flex-col">
+            <motion.div
+              className="flex flex-col"
+              variants={textLineVariants("left")}
+            >
               <label className="mb-1 font-medium">학년</label>
               <select
                 name="grade"
@@ -493,7 +472,7 @@ export default function RecruitForm() {
                 <option value="3">3</option>
                 <option value="4">4</option>
               </select>
-            </div>
+            </motion.div>
             <InputField
               label="학번"
               name="student_id"
@@ -502,6 +481,7 @@ export default function RecruitForm() {
               placeholder="2025000000"
               disabled={!isRecruiting}
               type="tel"
+              VariantsDirection="right"
             />
             <InputField
               label="전화번호"
@@ -511,10 +491,10 @@ export default function RecruitForm() {
               placeholder="010-1234-5678"
               disabled={!isRecruiting}
             />
-          </motion.div>
+          </div>
 
           {/* 활동 선택 영역 */}
-          <motion.div className="mt-6" variants={itemVariants}>
+          <motion.div className="mt-6" variants={textLineVariants("right")}>
             <h3 className="font-semibold mb-2">
               하고 싶은 활동을 선택하세요 (복수 선택 가능)
             </h3>
@@ -538,7 +518,7 @@ export default function RecruitForm() {
           </motion.div>
 
           {/* 선택한 활동에 따른 추가 폼 영역 */}
-          <motion.div className="mt-6 space-y-4" variants={itemVariants}>
+          <div className="mt-6 space-y-4">
             {formData.semina && (
               <div className="border-b border-gray-300 p-4 rounded">
                 <h3 className="mb-2 font-semibold">세미나 활동</h3>
@@ -646,43 +626,42 @@ export default function RecruitForm() {
                 />
               </div>
             )}
-          </motion.div>
+          </div>
 
           {/* 안내 문구 및 동의 체크박스 영역 */}
-          <motion.div className="mt-8 space-y-2" variants={itemVariants}>
-            <div>
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={checked1}
-                  onChange={(e) => setChecked1(e.target.checked)}
-                  disabled={!isRecruiting}
-                  className="mr-2"
-                />
-                <span>제출 후 수정이 되지 않습니다</span>
-              </label>
-            </div>
-            <div>
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={checked2}
-                  onChange={(e) => setChecked2(e.target.checked)}
-                  disabled={!isRecruiting}
-                  className="mr-2"
-                />
-                <span>입력하신 정보가 정확한지 다시 한 번 확인해주세요</span>
-              </label>
-            </div>
+          <motion.div
+            className="mt-8 space-y-2"
+            variants={textLineVariants("right")}
+          >
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                checked={checked1}
+                onChange={(e) => setChecked1(e.target.checked)}
+                disabled={!isRecruiting}
+                className="mr-2"
+              />
+              <span>제출 후 수정이 되지 않습니다</span>
+            </label>
+            <label className="flex items-center">
+              <input
+                type="checkbox"
+                checked={checked2}
+                onChange={(e) => setChecked2(e.target.checked)}
+                disabled={!isRecruiting}
+                className="mr-2"
+              />
+              <span>입력하신 정보가 정확한지 다시 한 번 확인해주세요</span>
+            </label>
           </motion.div>
-        </motion.form>
+        </form>
         <motion.button
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             if (formRef.current) {
               handleSubmit(e);
             }
           }}
-          variants={itemVariants}
+          variants={textLineVariants("right")}
           type="submit"
           disabled={!isRecruiting || !bothChecked}
           className={`mt-6 px-10 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed ${
@@ -698,16 +677,6 @@ export default function RecruitForm() {
   );
 }
 
-interface InputFieldProps {
-  label: string;
-  name: string;
-  value: string | number;
-  onChange: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement>;
-  type?: string;
-  placeholder?: string;
-  disabled?: boolean;
-}
-
 function InputField({
   label,
   name,
@@ -716,9 +685,13 @@ function InputField({
   type = "text",
   placeholder = "",
   disabled = false,
+  VariantsDirection = "left",
 }: InputFieldProps) {
   return (
-    <div className="flex flex-col mb-5">
+    <motion.div
+      className="flex flex-col mb-5"
+      variants={textLineVariants(VariantsDirection)}
+    >
       <label className="mb-1 font-medium">{label}</label>
       <input
         type={type}
@@ -730,6 +703,6 @@ function InputField({
         className="p-2 rounded-lg bg-[#F1F1F1] disabled:opacity-50 disabled:cursor-not-allowed 
                    focus:outline-none focus:ring-2 focus:ring-point"
       />
-    </div>
+    </motion.div>
   );
 }

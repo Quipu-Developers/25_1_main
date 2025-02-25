@@ -19,25 +19,11 @@ export interface UseToast {
 const useToast = (): UseToast => {
   const toastIdRef = useRef<string | number | null>(null);
 
-  /**
-   * showToast
-   */
-  const showToast = (
-    type: ToastType,
-    message: string,
-    options: ToastOptions = {
-      autoClose: 3000,
-      hideProgressBar: false,
-      position: "top-center",
-    }
-  ) => {
+  const showToast = (type: ToastType, message: string) => {
     toast.dismiss();
-    toastIdRef.current = toast[type](message, options);
+    toastIdRef.current = toast[type](message);
   };
 
-  /**
-   * confirmToast
-   */
   const confirmToast = (
     type: ToastType,
     message: string,
@@ -89,7 +75,6 @@ const useToast = (): UseToast => {
                   }
                   closeToast();
                 }}
-                style={{ backgroundColor: "lightgray" }}
               >
                 {cancelText}
               </button>
@@ -97,7 +82,7 @@ const useToast = (): UseToast => {
           </div>
         </S.ConfirmToast>
       ),
-      { autoClose: false, position: "top-center" }
+      { autoClose: false }
     );
   };
 
@@ -108,28 +93,31 @@ export default useToast;
 
 const S = {
   ConfirmToast: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     p {
+      margin: 0 0 0.5rem 0;
       text-align: center;
-      margin-left: 10px;
       word-break: keep-all;
     }
     div {
-      width: 100%;
       display: flex;
-      justify-content: center;
-      margin-top: 10px;
+      gap: 0.5rem;
     }
     button {
-      margin: 0 8px;
       padding: 6px 12px;
-      background-color: #4caf50;
-      color: white;
+      background-color: #333;
+      color: #fff;
       border: none;
-      border-radius: 5px;
+      border-radius: 4px;
       cursor: pointer;
       &:nth-child(2) {
-        background-color: lightgray;
-        color: black;
+        background-color: #999;
+      }
+
+      @media (max-width: 480px) {
+        padding: 3px 8px;
       }
     }
   `,

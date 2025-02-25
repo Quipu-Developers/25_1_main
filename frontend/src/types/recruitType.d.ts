@@ -47,4 +47,16 @@ declare interface RecruitmentStatusResponse {
 declare interface FaqItemProps {
   question: string;
   answer: string;
+  index: number;
+}
+
+declare interface InputFieldProps {
+  label: string;
+  name: string;
+  value: string | number;
+  onChange: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement>;
+  type?: string;
+  placeholder?: string;
+  disabled?: boolean;
+  VariantsDirection?: "left" | "right";
 }
