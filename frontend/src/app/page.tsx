@@ -54,6 +54,7 @@ export default function MainPage() {
       setActiveSection(currentSection);
     };
 
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
