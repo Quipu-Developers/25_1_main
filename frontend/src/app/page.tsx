@@ -99,6 +99,8 @@ const Section = styled.section`
   min-height: 100svh;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding-top: 50px;
   scroll-snap-align: start;
   scroll-snap-stop: always;
