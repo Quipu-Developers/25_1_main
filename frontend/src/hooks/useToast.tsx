@@ -51,8 +51,15 @@ const useToast = (): UseToast => {
 
     toastIdRef.current = toastType(
       ({ closeToast }) => (
-        <S.ConfirmToast>
-          <p>{message}</p>
+        <ConfirmToast>
+          <p>
+            {message.split("\n").map((line, idx) => (
+              <React.Fragment key={idx}>
+                {line}
+                {idx !== message.split("\n").length - 1 && <br />}
+              </React.Fragment>
+            ))}
+          </p>
           <div>
             <button
               onClick={async () => {
@@ -80,7 +87,7 @@ const useToast = (): UseToast => {
               </button>
             )}
           </div>
-        </S.ConfirmToast>
+        </ConfirmToast>
       ),
       { autoClose: false }
     );
@@ -91,34 +98,33 @@ const useToast = (): UseToast => {
 
 export default useToast;
 
-const S = {
-  ConfirmToast: styled.div`
+const ConfirmToast = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p {
+    margin-bottom: 5px;
+    text-align: center;
+    word-break: keep-all;
+    padding-left: 5px;
+  }
+  div {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    p {
-      margin: 0 0 0.5rem 0;
-      text-align: center;
-      word-break: keep-all;
+    gap: 10px;
+  }
+  button {
+    padding: 6px 12px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    &:nth-child(2) {
+      background-color: #999;
     }
-    div {
-      display: flex;
-      gap: 0.5rem;
-    }
-    button {
-      padding: 6px 12px;
-      background-color: #333;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      &:nth-child(2) {
-        background-color: #999;
-      }
 
-      @media (max-width: 480px) {
-        padding: 3px 8px;
-      }
+    @media (max-width: 480px) {
+      padding: 3px 8px;
     }
-  `,
-};
+  }
+`;

@@ -15,16 +15,6 @@ export default function MainPage() {
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
   useEffect(() => {
-    function setScreenSize() {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty("--vh", `${vh}px`);
-    }
-    setScreenSize();
-    window.addEventListener("resize", setScreenSize);
-    return () => window.removeEventListener("resize", setScreenSize);
-  }, []);
-
-  useEffect(() => {
     const sections = [
       "home",
       "about",
@@ -64,7 +54,6 @@ export default function MainPage() {
       setActiveSection(currentSection);
     };
 
-    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -107,7 +96,7 @@ export default function MainPage() {
 
 const Section = styled.section`
   position: relative;
-  min-height: calc(var(--vh, 1vh) * 100);
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   padding-top: 50px;

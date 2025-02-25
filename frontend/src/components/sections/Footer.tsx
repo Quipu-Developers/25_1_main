@@ -4,7 +4,7 @@ import { AiFillInstagram, AiFillMail, AiFillGithub } from "react-icons/ai";
 export default function Footer() {
   const router = useRouter();
   return (
-    <footer className="grow flex flex-col justify-end w-full text-[#898989] pt-[200px]">
+    <footer className="justify-end w-full text-[#898989] pt-[200px]">
       <div>
         <div className="flex flex-col lg:flex-row justify-between lg:items-end gap-10">
           <div className="text-sm space-y-1">

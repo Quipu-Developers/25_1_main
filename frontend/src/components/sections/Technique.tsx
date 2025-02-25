@@ -49,6 +49,7 @@ type Bead = {
   y: number; // 좌측 상단 기준 y (px)
   vx: number; // x 방향 속도 (px/프레임 단위)
   vy: number; // y 방향 속도
+  isDragging: boolean;
 };
 
 export default function Technique() {
@@ -64,6 +65,9 @@ export default function Technique() {
 
   // 컨테이너 내 마우스 위치 (마우스 반발 효과에 사용)
   const mousePos = useRef<{ x: number; y: number } | null>(null);
+
+  // 현재 드래그 중인 구슬 인덱스
+  const draggedBead = useRef<number | null>(null);
 
   // 화면 크기에 따라 구슬 크기 조절
   useEffect(() => {
@@ -125,6 +129,7 @@ export default function Technique() {
           y,
           vx: Math.random() * 0.8 - 0.4,
           vy: Math.random() * 0.8 - 0.4,
+          isDragging: false,
         };
 
         let overlap = false;
@@ -179,66 +184,73 @@ export default function Technique() {
 
       // 각 구슬의 물리 상태 업데이트
       for (let i = 0; i < beads.length; i++) {
+        const bead = beads[i];
         // 마우스 반발 효과 적용
-        if (mousePos.current) {
-          const beadCenterX = beads[i].x + beadSize / 2;
-          const beadCenterY = beads[i].y + beadSize / 2;
-          const dx = beadCenterX - mousePos.current.x;
-          const dy = beadCenterY - mousePos.current.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < repulsionRadius && dist > 0) {
-            const force =
-              (repulsionStrength * (repulsionRadius - dist)) / repulsionRadius;
-            beads[i].vx += (dx / dist) * force;
-            beads[i].vy += (dy / dist) * force;
+        if (!bead.isDragging) {
+          if (mousePos.current) {
+            const beadCenterX = bead.x + beadSize / 2;
+            const beadCenterY = bead.y + beadSize / 2;
+            const dx = beadCenterX - mousePos.current.x;
+            const dy = beadCenterY - mousePos.current.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < repulsionRadius && dist > 0) {
+              const force =
+                (repulsionStrength * (repulsionRadius - dist)) /
+                repulsionRadius;
+              bead.vx += (dx / dist) * force;
+              bead.vy += (dy / dist) * force;
+            }
           }
-        }
 
-        // 위치 업데이트
-        beads[i].x += beads[i].vx * dt * 1.3;
-        beads[i].y += beads[i].vy * dt * 1.3;
+          // 위치 업데이트
+          bead.x += bead.vx * dt * 1.3;
+          bead.y += bead.vy * dt * 1.3;
+        }
       }
 
       // 벽 충돌 처리
       for (let i = 0; i < beads.length; i++) {
-        if (beads[i].x < 0) {
-          beads[i].x = 0;
-          beads[i].vx = -beads[i].vx;
-        } else if (beads[i].x > containerWidth - beadSize) {
-          beads[i].x = containerWidth - beadSize;
-          beads[i].vx = -beads[i].vx;
+        const bead = beads[i];
+        if (bead.x < 0) {
+          bead.x = 0;
+          bead.vx = -bead.vx;
+        } else if (bead.x > containerWidth - beadSize) {
+          bead.x = containerWidth - beadSize;
+          bead.vx = -bead.vx;
         }
-        if (beads[i].y < 0) {
-          beads[i].y = 0;
-          beads[i].vy = -beads[i].vy;
-        } else if (beads[i].y > containerHeight - beadSize) {
-          beads[i].y = containerHeight - beadSize;
-          beads[i].vy = -beads[i].vy;
+        if (bead.y < 0) {
+          bead.y = 0;
+          bead.vy = -bead.vy;
+        } else if (bead.y > containerHeight - beadSize) {
+          bead.y = containerHeight - beadSize;
+          bead.vy = -bead.vy;
         }
       }
 
-      // 구슬 간 충돌 (매우 단순한 처리)
+      // 구슬 간 충돌
       for (let i = 0; i < beads.length; i++) {
+        const beadI = beads[i];
         for (let j = i + 1; j < beads.length; j++) {
-          const dx = beads[i].x + beadSize / 2 - (beads[j].x + beadSize / 2);
-          const dy = beads[i].y + beadSize / 2 - (beads[j].y + beadSize / 2);
+          const beadJ = beads[j];
+          const dx = beadI.x + beadSize / 2 - (beadJ.x + beadSize / 2);
+          const dy = beadI.y + beadSize / 2 - (beadJ.y + beadSize / 2);
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < beadSize && dist > 0) {
             // 속도 스왑
-            const tempVx = beads[i].vx;
-            const tempVy = beads[i].vy;
-            beads[i].vx = beads[j].vx;
-            beads[i].vy = beads[j].vy;
-            beads[j].vx = tempVx;
-            beads[j].vy = tempVy;
+            const tempVx = beadI.vx;
+            const tempVy = beadI.vy;
+            beadI.vx = beadJ.vx;
+            beadI.vy = beadJ.vy;
+            beadJ.vx = tempVx;
+            beadJ.vy = tempVy;
             // 위치 보정
             const overlap = beadSize - dist;
             const adjustX = (dx / dist) * (overlap / 2);
             const adjustY = (dy / dist) * (overlap / 2);
-            beads[i].x += adjustX;
-            beads[i].y += adjustY;
-            beads[j].x -= adjustX;
-            beads[j].y -= adjustY;
+            beadI.x += adjustX;
+            beadI.y += adjustY;
+            beadJ.x -= adjustX;
+            beadJ.y -= adjustY;
           }
         }
       }
@@ -257,6 +269,40 @@ export default function Technique() {
     animationFrame = requestAnimationFrame(update);
     return () => cancelAnimationFrame(animationFrame);
   }, [beadSize]);
+
+  const handleMouseDown = (index: number) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    draggedBead.current = index;
+    beadsRef.current[index].isDragging = true;
+    beadsRef.current[index].vx = 0;
+    beadsRef.current[index].vy = 0;
+  };
+
+  const handleMouseMove = (e: MouseEvent) => {
+    if (draggedBead.current === null || beadSize === null) return;
+    const index = draggedBead.current;
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+
+    beadsRef.current[index].x = e.clientX - rect.left - beadSize / 2;
+    beadsRef.current[index].y = e.clientY - rect.top - beadSize / 2;
+  };
+
+  const handleMouseUp = () => {
+    if (draggedBead.current !== null) {
+      beadsRef.current[draggedBead.current].isDragging = false;
+      draggedBead.current = null;
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, []);
 
   return (
     <div className="grow flex flex-col items-center justify-center">
@@ -283,6 +329,7 @@ export default function Technique() {
               }}
               $size={beadSize}
               $borderColor={imageData.border}
+              onMouseDown={handleMouseDown(index)}
             >
               <Image
                 src={imageData.src}
@@ -315,4 +362,5 @@ const BeadDiv = styled.div<{ $size: number; $borderColor: string }>`
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  cursor: grab;
 `;

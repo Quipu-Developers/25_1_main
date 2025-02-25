@@ -20,7 +20,6 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  scroll-behavior: smooth;
   overflow-x: hidden;
   overscroll-behavior: contain;
   overflow-y: overlay;

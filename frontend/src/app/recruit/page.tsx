@@ -22,7 +22,6 @@ export default function RecruitForm() {
 
   const [containerRef, isInView] = useAnimatedInView({ once: false });
 
-  // 폼 데이터 상태 초기화
   const [formData, setFormData] = useState<RecruitFormData>({
     name: "",
     student_id: "",
@@ -164,7 +163,7 @@ export default function RecruitForm() {
 
         confirmToast(
           "warn",
-          `${activityLabel} 활동을 취소하시겠습니까? \n작성해주신 내용이 사라질 수 있습니다.`,
+          `${activityLabel} 활동을 취소하시겠습니까?\n작성해주신 내용이 사라질 수 있습니다.`,
           () => setFormData((prev) => resetActivityFields(prev, activity)),
           () => {},
           "확인",
@@ -211,7 +210,7 @@ export default function RecruitForm() {
         const match = majors.find((major) => major.startsWith(newValue));
 
         if (match) {
-          newValue = match; // 첫 번째 매칭된 학과로 자동 완성
+          newValue = match;
         }
       }
 
@@ -259,36 +258,33 @@ export default function RecruitForm() {
     // 학번: 공백 제거 후 10글자
     const studentIdNoSpace = formData.student_id.replace(/\s/g, "");
     if (studentIdNoSpace.length !== 10) {
-      showToast("error", "학번은 공백 제외 10글자여야 합니다.");
+      showToast("error", "학번을 다시 확인해주세요.");
       return false;
     }
 
     // 전화번호: 000-0000-0000 형식
     const phoneRegex = /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/;
     if (!phoneRegex.test(formData.phone_number)) {
-      showToast("error", "전화번호는 000-0000-0000 형식이어야 합니다.");
+      showToast("error", "전화번호를 다시 확인해주세요.");
       return false;
     }
 
     return true;
   };
 
-  // --- handleSubmit 함수 수정 ---
-  // 기존에는 모든 데이터를 FormData에 담아 전송했으나,
-  // 아래 코드는 sendDevelopment와 같은 방식으로 각각의 필드를 개별적으로 payload 객체에 담아 전송합니다.
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    // (1) 체크박스 동의 여부 등 간단한 유효성 검사 (예시)
+    // (1) 체크박스 동의 여부 등 간단한 유효성 검사
     if (!bothChecked) {
       showToast("error", "안내 사항을 모두 확인 및 동의해주세요.");
       return;
     }
 
-    // (2) 필수값이나 형식 검사 (예시)
+    // (2) 필수값이나 형식 검사
     if (!validateRequiredFields() || !validatePatterns()) return;
 
-    // (3) 최소 하나의 활동을 선택했는지 확인 (예시)
+    // (3) 최소 하나의 활동을 선택했는지 확인
     if (
       !formData.semina &&
       !formData.dev &&
@@ -299,7 +295,7 @@ export default function RecruitForm() {
       return;
     }
 
-    // (4) 선택된 활동별 추가 유효성 검사 (예시)
+    // (4) 선택된 활동별 추가 유효성 검사
     if (formData.semina && !formData.motivation_semina.trim()) {
       showToast("error", "세미나 활동 내용을 입력해주세요.");
       return;
@@ -324,7 +320,6 @@ export default function RecruitForm() {
     }
 
     try {
-      // --- 핵심 변경 부분: 각각의 필드를 개별적으로 payload 객체에 담아서 전송 ---
       const payload = {
         // 1) 공통 정보
         name: formData.name,
@@ -409,9 +404,7 @@ export default function RecruitForm() {
       </h2>
       <motion.div
         className="min-h-screen max-w-[600px] mx-auto p-6 flex flex-col items-center justify-around gap-10"
-        // (2) 감시하고 싶은 영역에 ref 연결
         ref={containerRef}
-        // (3) 컨테이너가 보일 때 자식들을 순차적으로 visible 처리
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
@@ -562,7 +555,6 @@ export default function RecruitForm() {
                     포트폴리오 (PDF, 5MB 이하)
                   </label>
                   <div className="p-2 rounded-lg bg-[#F1F1F1] flex items-center">
-                    {/* 파일 선택 버튼 */}
                     <label
                       htmlFor="portfolio_upload"
                       className="cursor-pointer bg-white px-4 py-1 rounded-lg shadow text-sm text-gray-700"
@@ -570,7 +562,6 @@ export default function RecruitForm() {
                       파일 선택
                     </label>
 
-                    {/* 실제 input[type="file"] 요소 (숨김 처리) */}
                     <input
                       id="portfolio_upload"
                       type="file"
@@ -580,7 +571,6 @@ export default function RecruitForm() {
                       className="hidden"
                     />
 
-                    {/* 선택된 파일명 표시 */}
                     <span className="ml-4 text-sm text-gray-600">
                       {formData.portfolio_pdf
                         ? formData.portfolio_pdf.name

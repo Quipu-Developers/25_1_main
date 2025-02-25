@@ -20,13 +20,13 @@ export default {
         firaCode: ["var(--font-fira-code)", "monospace"],
       },
       height: {
-        screen: "calc(var(--vh, 1vh) * 100)",
+        screen: "100dvh",
       },
       minHeight: {
-        screen: "calc(var(--vh, 1vh) * 100)",
+        screen: "100dvh",
       },
       maxHeight: {
-        screen: "calc(var(--vh, 1vh) * 100)",
+        screen: "100dvh",
       },
     },
   },

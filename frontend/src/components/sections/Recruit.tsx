@@ -45,6 +45,7 @@ function FaqSection() {
       variants={containerVariants}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
+      tabIndex={-1}
     >
       <h2 className="text-3xl mb-4">FAQ</h2>
       {faqData.map((item, idx) => (
@@ -70,6 +71,7 @@ function FaqItem({ question, answer, index }: FaqItemProps) {
       variants={textLineVariants(
         index !== undefined && index % 2 === 0 ? "left" : "right"
       )}
+      layout="position"
     >
       <button
         className="flex w-full justify-between items-center focus:outline-none"
