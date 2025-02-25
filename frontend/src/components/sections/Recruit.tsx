@@ -6,12 +6,12 @@ import { faqData } from "@/lib/recruitData";
 import { motion } from "framer-motion";
 import { useAnimatedInView } from "@/hooks/useAnimatedInView";
 import { containerVariants, textLineVariants } from "@/hooks/useAnimations";
+import Footer from "@/components/sections/Footer";
 
-export default function RecruitPage() {
+export default function Recruit() {
   const router = useRouter();
   return (
     <div className="grow flex flex-col items-center justify-start min-h-screen p-8">
-      {/* 상단 Welcome 영역 */}
       <h2 className="font-firaCode w-full text-5xl md:text-6xl lg:text-7xl text-center pb-8">
         Welcome!
       </h2>
@@ -27,8 +27,10 @@ export default function RecruitPage() {
         <span className="text-3xl">{"}"}</span>
       </button>
 
-      {/* FAQ 섹션 */}
       <FaqSection />
+
+      {/* 푸터 섹션 */}
+      <Footer />
     </div>
   );
 }

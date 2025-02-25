@@ -1,13 +1,12 @@
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
+import { useAnimatedInView } from "@/hooks/useAnimatedInView";
 
 export default function Home() {
-  const svgRef = useRef(null);
-  const isInView = useInView(svgRef, { once: false, amount: 0.5 });
+  const [containerRef, isInView] = useAnimatedInView({ once: false });
 
   return (
     <div
-      ref={svgRef}
+      ref={containerRef}
       className="relative grow flex flex-col items-center justify-center"
     >
       <header className="absolute w-full flex justify-between top-0 p-[15px] text-[#898989] text-[16px]">

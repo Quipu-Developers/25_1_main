@@ -9,9 +9,7 @@ import Activity from "@/components/sections/Activity";
 import Technique from "@/components/sections/Technique";
 import Interview from "@/components/sections/Interview";
 import Recruit from "@/components/sections/Recruit";
-import Footer from "@/components/sections/Footer";
 
-// 메인 페이지
 export default function MainPage() {
   const [navPosition, setNavPosition] = useState("bottom-0");
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -54,7 +52,6 @@ export default function MainPage() {
         const section = document.getElementById(id);
         if (section) {
           const { top, bottom } = section.getBoundingClientRect();
-          // 뷰포트의 세로 중앙(0.5 * window.innerHeight)에 섹션이 걸쳐있으면 해당 섹션으로 인식
           if (
             top <= window.innerHeight * 0.5 &&
             bottom >= window.innerHeight * 0.5
@@ -67,7 +64,7 @@ export default function MainPage() {
       setActiveSection(currentSection);
     };
 
-    handleScroll(); // 초기 스크롤 상태도 반영
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -104,11 +101,6 @@ export default function MainPage() {
       <Section id="recruit">
         <Recruit />
       </Section>
-
-      {/* 리크루트 섹션 */}
-      <Section>
-        <Footer />
-      </Section>
     </div>
   );
 }
@@ -120,6 +112,7 @@ const Section = styled.section`
   flex-direction: column;
   padding-top: 50px;
   scroll-snap-align: start;
+  scroll-snap-stop: always;
 
   @media (max-width: 900px) {
     padding: 50px 0;

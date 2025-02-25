@@ -6,7 +6,6 @@ import Image from "next/image";
 import { useAnimatedInView } from "@/hooks/useAnimatedInView";
 import { containerVariants, textLineVariants } from "@/hooks/useAnimations";
 
-// 이 부분(주석 + 로직)은 절대 수정 불가
 const fetchParams: Record<
   string,
   { useHardcoded: boolean; itemsPerPage: number }
@@ -17,8 +16,7 @@ const fetchParams: Record<
   extra: { useHardcoded: true, itemsPerPage: 4 },
 };
 
-// 로직, 주석 수정 불가
-const Activity = () => {
+export default function Activity() {
   const [containerRef, isInView] = useAnimatedInView({ once: false });
 
   const [expanded, setExpanded] = useState<Record<string, boolean>>({
@@ -30,7 +28,6 @@ const Activity = () => {
 
   const toggleType = (type: string) => {
     setExpanded((prev) => {
-      // 펼쳐질 때는 해당 타입만 true, 다른 타입은 false
       const newState: Record<string, boolean> = {
         study: false,
         semina: false,
@@ -54,7 +51,7 @@ const Activity = () => {
         what we do
       </h2>
 
-      {/* 타입별 버튼 목록 */}
+      {/* 타입별 row 버튼 목록 */}
       {["study", "semina", "development", "extra"].map((type, i) => (
         <motion.div
           key={type}
@@ -65,7 +62,6 @@ const Activity = () => {
             className="w-full flex items-center justify-between text-left uppercase tracking-wide border-b-[0.5px] border-black"
           >
             <span className="text-4xl">{type}</span>
-            {/* 화살표 아이콘 (열림/닫힘에 따라 180도 회전) */}
             <svg
               className={`h-10 w-10 transform transition-transform duration-300 ${
                 expanded[type] ? "rotate-180" : ""
@@ -84,22 +80,18 @@ const Activity = () => {
             </svg>
           </button>
 
-          {/* 펼쳐졌을 때만 하위 섹션 렌더링 */}
+          {/* 펼친 타입의 하위 섹션 */}
           <TypeSection type={type} expanded={expanded[type]} />
         </motion.div>
       ))}
     </motion.div>
   );
-};
+}
 
-export default Activity;
-
-// 로직, 주석 수정 불가
 const TypeSection = ({ type, expanded }: ActivityTypeSectionProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  // 커스텀 훅으로 데이터 가져오기
   const { data, loading } = useActivityFetchData(
     type,
     fetchParams[type].useHardcoded,
@@ -108,7 +100,6 @@ const TypeSection = ({ type, expanded }: ActivityTypeSectionProps) => {
     true
   );
 
-  // 만약 페이지나 데이터가 바뀌어서 items 길이가 줄어들면 selectedIndex를 0으로 재설정
   useEffect(() => {
     if (!loading && data && data.items) {
       if (selectedIndex >= data.items.length) {
@@ -116,11 +107,6 @@ const TypeSection = ({ type, expanded }: ActivityTypeSectionProps) => {
       }
     }
   }, [loading, data, selectedIndex]);
-
-  // 펼쳐지지 않았다면(= expanded가 false), 내용 감춤
-  // if (!expanded) {
-  //   return null;
-  // }
 
   return (
     <div
@@ -136,14 +122,14 @@ const TypeSection = ({ type, expanded }: ActivityTypeSectionProps) => {
 
       {!loading && data && (
         <div>
-          {/* 상단 설명 영역 */}
+          {/* 타입 설명 */}
           <div className="">
             <p className="text-[#686868] text-1xl my-4">
               {data.titleData?.description}
             </p>
           </div>
 
-          {/* 현재 선택된 아이템 디테일 영역 */}
+          {/* 아이템 내용 */}
           {data.items &&
             data.items.length > 0 &&
             selectedIndex < data.items.length && (
@@ -166,7 +152,7 @@ const TypeSection = ({ type, expanded }: ActivityTypeSectionProps) => {
             ))}
           </div>
 
-          {/* 페이지네이션 */}
+          {/* 페이지네이션 버튼 */}
           <div className="flex justify-center space-x-2">
             {Array.from({ length: data.total_pages }, (_, i) => (
               <PageButton
@@ -187,11 +173,9 @@ const TypeSection = ({ type, expanded }: ActivityTypeSectionProps) => {
   );
 };
 
-// 로직, 주석 수정 불가
 const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
   return (
     <div className="flex flex-col md:flex-row space-y-4 md:space-y-0">
-      {/* 좌측: 이미지(캐러셀) 영역 */}
       <div>
         {item.images && item.images.length ? (
           <ImageCarousel images={item.images} />
@@ -202,7 +186,6 @@ const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
         )}
       </div>
 
-      {/* 우측: 정보 영역 */}
       <div className="w-full flex flex-col justify-end gap-3 pt-[30px] md:ml-7">
         {item.date && (
           <p className="w-full flex justify-between">
