@@ -19,7 +19,6 @@ const {exec} = require('child_process');
 const PORT = process.env.PORT || 3001; // 포트 설정
 const app = express();
 const config = require(__dirname + '/config/config');
-
 app.use(express.json());
 if (process.env.NODE_ENV === 'development') {
     app.use(cors({
@@ -59,8 +58,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // swagger 관련 세팅
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
 
 // local test용
 const insertDummyData = require("./scripts/dummyData");
@@ -112,25 +111,25 @@ async function startServer() {
             const connection = await mysql.createConnection(
                 {host: config.host, user: config.username, password: config.password}
             );
+             // DB가 없으면 생성
+             await connection.query(`CREATE DATABASE IF NOT EXISTS \`${config.database}\`;`);
+             console.log(`[LOG] 데이터베이스 확인 완료: ${config.database}`);
+ 
+             // 연결 종료(다시 sequelize로 연결할 예정)
+             await connection.end();
+         }
+ 
+         // Sequelize 연결
+         await sequelize.authenticate();
+         console.log('[LOG] DB 연결 성공');
+ 
+         // Sequelize 테이블 동기화
+         await sequelize.sync({alter: true});
+         console.log('[LOG] DB 동기화 완료');
+ 
 
-            // DB가 없으면 생성
-            await connection.query(`CREATE DATABASE IF NOT EXISTS \`${config.database}\`;`);
-            console.log(`[LOG] 데이터베이스 확인 완료: ${config.database}`);
-
-            // 연결 종료(다시 sequelize로 연결할 예정)
-            await connection.end();
-        }
-
-        // Sequelize 연결
-        await sequelize.authenticate();
-        console.log('[LOG] DB 연결 성공');
-
-        // Sequelize 테이블 동기화
-        await sequelize.sync({alter: true});
-        console.log('[LOG] DB 동기화 완료');
-
-        // migration 실행
-        await runMigrations();
+    // migration 실행
+    await runMigrations();
 
         // 주기적으로 DB 연결 유지
         setInterval(async () => {
@@ -142,31 +141,33 @@ async function startServer() {
             }
         }, 3600000);
 
-        //local test
-        if (process.env.NODE_ENV === "development") {
-            await insertDummyData();
-        }
-
-        // 서버 실행
-        app.listen(PORT, () => {
-            console.log(`PORT: ${PORT}`);
-            console.log(`swagger: http://localhost:${PORT}/api-docs`);
-            console.log(`server: http://localhost:${PORT}`);
-        });
-
-    } catch (err) {
-        console.error('[ERROR] 서버 시작 실패:', err);
-        process.exit(1);
+    //local test
+    if (process.env.NODE_ENV === "development") {
+      await insertDummyData();
     }
+
+       // 서버 실행
+       app.listen(PORT, () => {
+        console.log(`PORT: ${PORT}`);
+        console.log(`swagger: http://localhost:${PORT}/api-docs`);
+        console.log(`server: http://localhost:${PORT}`);
+    });
+
+} catch (err) {
+    console.error('[ERROR] 서버 시작 실패:', err);
+    process.exit(1);
+}
 }
 //setupPortfolioDir().then(() => startServer());
 startServer();
 
-// API {url}/recruit
+
+// API 
+// {url}/recruit
 app.use('/recruit', recruitRouter);
 
 //{url}/semina?current_page=${currentPage}&items_per_page=${itemsPerPage}
-app.use('/semina', seminainfoRouter);
+app.use("/semina", seminainfoRouter);
 
 //{url}/feature/:feature_name
 app.use('/feature', featureRouter);

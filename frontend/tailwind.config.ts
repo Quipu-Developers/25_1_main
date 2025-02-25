@@ -2,10 +2,10 @@ import type { Config } from "tailwindcss";
 
 export default {
   content: [
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}", // Next.js 13+ App Router
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}", // 재사용 가능한 컴포넌트
-    "./src/hooks/**/*.{js,ts,jsx,tsx,mdx}", // 커스텀 훅 (필요할 경우)
-    "./src/lib/**/*.{js,ts,jsx,tsx,mdx}", // 라이브러리 유틸 (필요할 경우)
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/hooks/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/lib/**/*.{js,ts,jsx,tsx,mdx}",
     "./public/fonts/fonts.ts",
   ],
   theme: {
@@ -13,10 +13,20 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        point: "var(--point)",
       },
       fontFamily: {
         spoqaHanSansNeo: ["var(--font-spoqaHanSansNeo)", "sans-serif"],
         firaCode: ["var(--font-fira-code)", "monospace"],
+      },
+      height: {
+        screen: "100dvh",
+      },
+      minHeight: {
+        screen: "100dvh",
+      },
+      maxHeight: {
+        screen: "100dvh",
       },
     },
   },

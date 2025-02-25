@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 import Navbar from "@/components/Navbar";
 import Home from "@/components/sections/Home";
 import About from "@/components/sections/About";
@@ -28,13 +29,14 @@ export default function MainPage() {
       const homeSection = document.getElementById("home");
       const homeHeight = homeSection?.offsetHeight || 0;
 
+      // home 섹션의 일정 범위보다 스크롤이 올라갔는지에 따라 네비게이션 위치 변경
       if (scrollY < homeHeight - 70) {
-        setNavPosition("absolute bottom-0");
+        setNavPosition("sticky bottom-0");
       } else {
         setNavPosition("fixed top-0");
       }
 
-      // 현재 섹션 감지
+      // 현재 스크롤 위치에 따라 활성화할 섹션 결정
       let currentSection = null;
       for (const id of sections) {
         const section = document.getElementById(id);
@@ -59,25 +61,59 @@ export default function MainPage() {
 
   return (
     <div className="relative">
-      <section id="home" className="relative h-full">
+      {/* 홈 섹션 */}
+      <Section id="home" className="pd-0">
         <Home />
         <Navbar position={navPosition} activeSection={activeSection} />
-      </section>
-      <section id="about" className="relative h-full">
+      </Section>
+
+      {/* 어바웃 섹션 */}
+      <Section id="about">
         <About />
-      </section>
-      <section id="activity" className="relative h-full">
+      </Section>
+
+      {/* 액티비티 섹션 */}
+      <Section id="activity">
         <Activity />
-      </section>
-      <section id="technique" className="relative h-full">
+      </Section>
+
+      {/* 테크닉 섹션 */}
+      <Section id="technique">
         <Technique />
-      </section>
-      <section id="interview" className="relative h-full">
+      </Section>
+
+      {/* 인터뷰 섹션 */}
+      <Section id="interview">
         <Interview />
-      </section>
-      <section id="recruit" className="relative h-full">
+      </Section>
+
+      {/* 리크루트 섹션 */}
+      <Section id="recruit">
         <Recruit />
-      </section>
+      </Section>
     </div>
   );
 }
+
+const Section = styled.section`
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 50px;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+
+  @media (max-width: 900px) {
+    padding: 50px 0;
+  }
+
+  &.pd-0 {
+    padding: 0 !important;
+
+    @media (max-width: 900px) {
+      padding: 0 !important;
+    }
+  }
+`;

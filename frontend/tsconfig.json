@@ -19,6 +19,7 @@
       }
     ],
     "paths": {
+      "@public/*": ["./public/*"],
       "@/*": ["./src/*"]
     },
     "typeRoots": ["./src/types", "./node_modules/@types"]
