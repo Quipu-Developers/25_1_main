@@ -20,11 +20,11 @@ export default function Recruit() {
         className="flex items-center mb-8 space-x-2"
         onClick={() => router.push("/recruit")}
       >
-        <span className="text-3xl">{"{"}</span>
-        <div className="px-4 py-2 text-2xl">
+        <span className="text-3xl font-bold">{"{"}</span>
+        <div className="px-4 py-2 text-2xl text-point">
           <span>퀴푸 가입하러 가기</span>
         </div>
-        <span className="text-3xl">{"}"}</span>
+        <span className="text-3xl font-bold">{"}"}</span>
       </button>
 
       <FaqSection />

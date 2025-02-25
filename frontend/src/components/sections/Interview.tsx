@@ -137,7 +137,7 @@ export default function Interview() {
                 {/* 2번 질문 */}
                 <div>
                   <h3 className="font-bold text-lg mb-1">
-                    🌟 퀴푸를 추천하는 이유가 무엇인가요?
+                    🎯 가장 기억에 남는 활동이나 프로젝트는 뭐였나요?
                   </h3>
                   <pre className="whitespace-pre-wrap break-keep">
                     {selectedMember.answers.answer2}
@@ -147,7 +147,7 @@ export default function Interview() {
                 {/* 3번 질문 */}
                 <div>
                   <h3 className="font-bold text-lg mb-1">
-                    🎯 가장 기억에 남는 활동이나 프로젝트는 뭐였나요?
+                    🌟 퀴푸를 추천하는 이유가 무엇인가요?
                   </h3>
                   <pre className="whitespace-pre-wrap break-keep">
                     {selectedMember.answers.answer3}

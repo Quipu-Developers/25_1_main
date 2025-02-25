@@ -14,7 +14,7 @@
 export const studyTitleData: ActivityTitle = {
   type: "STUDY",
   description:
-    "프로그래밍 언어부터 코딩 테스트까지, 다양한 주제로 스터디를 진행합니다. 서로 배우고 가르치며 함께 성장합니다.",
+    "개발 공부부터 코딩 테스트까지, 다양한 주제로 스터디를 진행합니다. 서로 배우고 가르치며 함께 성장합니다.",
 };
 
 const studyItems: ActivityItem[] = [

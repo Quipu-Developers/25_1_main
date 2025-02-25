@@ -6,23 +6,40 @@ export const extraTitleData: ActivityTitle = {
 
 const extraItems: ActivityItem[] = [
   {
-    topic: "2024 Plankton Hackathon",
+    topic: "2024 CO-SHOW 차세대통신 경진대회",
     details:
-      "서울의 대규모 축제나 행사에서 실시간 행사 정보와 혼잡도를 제공하는 서비스 개발 프로젝트.",
+      "사용자의 사진을 화가의 스타일로 변환하여 티켓으로 출력하는 서비스 개발",
     date: "24.02.01",
     images: [
-      "https://zippy.b-cdn.net/와글와글_img9.jpeg",
-      "https://zippy.b-cdn.net/파아란코스_img1.jpeg",
+      "https://zippy.b-cdn.net/_articket_img3.jpeg",
+      "https://zippy.b-cdn.net/_articket_img4.jpeg",
+      "https://zippy.b-cdn.net/_articket_img2.jpeg",
+      "https://zippy.b-cdn.net/_articket_img5.jpeg",
+      "https://zippy.b-cdn.net/_articket_img6.jpeg",
     ],
   },
   {
-    topic: "SeSAC AI 챌린지",
+    topic: "2024 서울시립대학교 플랑크톤 해커톤",
     details:
-      "딥러닝 기술을 활용하여 데이터를 분석하고, 예측 모델을 구축하는 프로젝트 진행.",
+      "서울의 대규모 행사에서 실시간 행사 정보와 혼잡도를 제공하는 서비스 개발",
+    date: "24.02.01",
+    images: [
+      "https://zippy.b-cdn.net/와글와글_img10.png",
+      "https://zippy.b-cdn.net/와글와글_img1.jpeg",
+      "https://zippy.b-cdn.net/와글와글_img7.jpeg",
+      "https://zippy.b-cdn.net/_와글와글_img1.jpeg",
+    ],
+  },
+  {
+    topic: "2024 새싹 해커톤",
+    details:
+      "생산형 AI를 활용하여 지적장애인의 언어 학습을 도와주는 서비스 개발",
     date: "24.01.25",
     images: [
-      "https://zippy.b-cdn.net/탱크_img1.jpeg",
-      "https://zippy.b-cdn.net/파아란코스_img2.jpeg",
+      "https://zippy.b-cdn.net/링고커넥트_img10.png",
+      "https://zippy.b-cdn.net/링고커넥트_img6.jpeg",
+      "https://zippy.b-cdn.net/링고커넥트_img9.jpeg",
+      "https://zippy.b-cdn.net/링고커넥트_img5.jpeg",
     ],
   },
 ];
