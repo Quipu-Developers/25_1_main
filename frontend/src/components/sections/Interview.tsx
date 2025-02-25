@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import interviewData from "@/lib/interviewData";
+import Image from "next/image";
 
 const circlePositions = [
   "md:absolute md:top-[20%] md:left-[15%]",
@@ -46,7 +47,9 @@ export default function Interview() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 * index, duration: 0.5 }}
               >
-                <img
+                <Image
+                  width={400}
+                  height={400}
                   src={item.imgSrc}
                   alt="avatar"
                   className="object-cover w-full h-full"
@@ -70,7 +73,9 @@ export default function Interview() {
               layoutId={`circle-${selectedMember.id}`}
               className="absolute bottom-[10%] left-[12%] w-40 h-40 lg:w-60 lg:h-60 rounded-full overflow-hidden cursor-pointer shadow-lg bg-white z-50"
             >
-              <img
+              <Image
+                width={400}
+                height={400}
                 src={selectedMember.imgSrc}
                 alt="selected avatar"
                 className="object-cover w-full h-full"
