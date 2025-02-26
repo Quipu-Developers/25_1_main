@@ -122,7 +122,7 @@ const NavButton = styled.button<{
     | "recruit";
   $isActive: boolean;
 }>`
-  display: inline-block;
+  display: flex;
   align-items: center;
   font-size: 16px;
   letter-spacing: 0.5px;
@@ -135,7 +135,7 @@ const NavButton = styled.button<{
   ${(props) =>
     props.$section === "recruit"
       ? css`
-          font-size: 1.5rem;
+          font-size: 1.2rem;
           &:hover {
             letter-spacing: 2px;
           }

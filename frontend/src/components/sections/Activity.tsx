@@ -14,7 +14,7 @@ const fetchParams: Record<
   { useHardcoded: boolean; itemsPerPage: number }
 > = {
   study: { useHardcoded: true, itemsPerPage: 4 },
-  semina: { useHardcoded: false, itemsPerPage: 4 },
+  semina: { useHardcoded: true, itemsPerPage: 4 },
   development: { useHardcoded: true, itemsPerPage: 4 },
   extra: { useHardcoded: true, itemsPerPage: 4 },
 };
@@ -232,9 +232,19 @@ const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
             href={`${item.pdf}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-500 underline text-end"
+            className="text-point underline inline ml-auto"
           >
-            View PDF
+            발표자료 구경하기
+          </a>
+        )}
+        {item.resources && (
+          <a
+            href={`${item.resources}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-point underline inline ml-auto"
+          >
+            카드뉴스 구경하기
           </a>
         )}
         {item.link && (
@@ -242,9 +252,9 @@ const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
             href={item.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-500 underline text-end"
+            className="text-point underline inline ml-auto"
           >
-            View Page
+            사이트 구경하기
           </a>
         )}
       </div>

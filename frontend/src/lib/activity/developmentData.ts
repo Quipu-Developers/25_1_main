@@ -20,7 +20,8 @@ export const developmentTitleData: ActivityTitle = {
 const developmentItems: ActivityItem[] = [
   {
     topic: "퀴푸 메인 웹사이트 2024 ver.",
-    details: "퀴푸를 소개하고 모집을 진행하는 퀴푸 대표 웹사이트",
+    details:
+      "퀴푸를 소개하고 모집 및 이벤트를 진행했던 퀴푸의 첫 웹사이트입니다. 다양하고 화려한 도형을 활용해 퀴푸의 다채로운 모습을 표현하였습니다.",
     date: "24.03.01",
     link: "https://quipu.uos.ac.kr/",
     images: [
@@ -39,7 +40,7 @@ const developmentItems: ActivityItem[] = [
   {
     topic: "퀴푸 백오피스 웹사이트",
     details:
-      "지원자분들의 지원 내용을 실시간으로 확인하고 관리할 수 있는 관리자 서비스",
+      "지원자들의 정보를 실시간으로 확인하고 관리할 수 있는 관리자 서비스입니다. 임원진의 편의를 고려하여 설계되었으며, 퀴푸의 효율적인 운영을 돕습니다.",
     date: "24.09.01",
     images: [
       "https://zippy.b-cdn.net/backoffice_img1.png",
@@ -50,7 +51,7 @@ const developmentItems: ActivityItem[] = [
   {
     topic: "배틀글라운드",
     details:
-      "최대 3명의 플레이어가 한 방에서 주어진 단어장에서 더 많은 단어를 빠르게 차지하는 멀티플레이어 타자 게임",
+      "최대 3명의 플레이어가 한 방에서 주어진 단어장에서 더 많은 단어를 빠르게 차지하는 멀티플레이어 타자 게임입니다. 한컴타자연습의 자원캐기에서 영감을 받아 개발하였으며, 서울시립대 축제 부스에서 운영됩니다.",
     date: "24.09.24",
     images: [
       "https://zippy.b-cdn.net/배틀글라운드_img1.jpeg",
@@ -70,7 +71,7 @@ const developmentItems: ActivityItem[] = [
   {
     topic: "Articket",
     details:
-      "간단한 성격 테스트를 통해 어울리는 화가를 매칭하고, 스테이블 디퓨전을 활용해서 사용자의 사진을 해당 화가의 스타일로 변환해주는 서비스",
+      "스테이블 디퓨전을 활용해 성격 테스트로 매칭된 화가의 스타일로 사용자의 사진을 변환하는 서비스입니다. 2024 CO-SHOW 차세대통신 경진대회에서 협의회장상을 수상하였으며, 서울시립대 축제 부스에서 운영됩니다.",
     date: "24.11.19",
     images: [
       "https://zippy.b-cdn.net/articket_img1.jpeg",

@@ -19,31 +19,47 @@ export const studyTitleData: ActivityTitle = {
 
 const studyItems: ActivityItem[] = [
   {
-    topic: "알고리즘과 자료구조 개념 정리",
+    topic: "리액트 스터디",
     details:
-      "기본적인 알고리즘과 자료구조를 배우고, 실전 문제 풀이를 통해 알고리즘 사고력을 향상시킨다.",
-    date: "24.02.06",
-    images: ["https://zippy.b-cdn.net/luxo_img1.png"],
+      "프론트엔드의 가장 인기 있는 라이브러리인 리액트에 입문합니다. 간단한 갤러리와 블로그가 포함된 토이 프로젝트를 진행하며, 리액트의 핵심 개념인 상태 관리에 대해 이해합니다.",
+    date: "24.03 - 24.06",
+    images: [
+      "https://pub-e688831beea1479f8b217d983b99b523.r2.dev/study6.jpeg",
+      "https://pub-e688831beea1479f8b217d983b99b523.r2.dev/study7.jpeg",
+    ],
+    tools: ["react-original-wordmark"],
+  },
+  {
+    topic: "코딩테스트 스터디",
+    details:
+      "자료구조, 정렬, 탐색 등 코딩테스트에서 자주 출제되는 문제 유형을 다루며, 각자 풀이를 소개하고 공유하여 한 문제에 대한 다양한 접근법을 익힙니다.",
+    date: "24.01 - 24.02",
+    images: ["https://pub-e688831beea1479f8b217d983b99b523.r2.dev/study5.jpg"],
+    tools: ["python-original-wordmark"],
+  },
+  {
+    topic: "퀴푸 메인 웹 개발 스터디",
+    details:
+      "퀴푸의 첫 웹 사이트 제작을 위한 웹 개발 스터디를 진행하였습니다. 기획부터 디자인, 개발, 배포까지 차근차근 배우며 즐겁게 진행하였고 완성된 메인 웹을 통해 24년도 1학기 모집을 하였습니다.",
+    date: "23.10 - 24.02",
+    link: "https://quipu-developers.github.io/24_2_main/",
+    images: [
+      "https://pub-e688831beea1479f8b217d983b99b523.r2.dev/study2.jpg",
+      "https://pub-e688831beea1479f8b217d983b99b523.r2.dev/study3.jpg",
+      "https://pub-e688831beea1479f8b217d983b99b523.r2.dev/study4.jpg",
+    ],
     tools: [
+      "figma-original",
       "react-original-wordmark",
-      "python-original-wordmark",
-      "java-original-wordmark",
+      "nodejs-original-wordmark",
     ],
   },
   {
-    topic: "HTML, CSS, JavaScript 기본 학습",
+    topic: "전자장 및 전기회로 스터디",
     details:
-      "웹 개발의 기본을 다지고, 간단한 프로젝트를 만들어보며 실력을 키운다.",
-    date: "24.02.02",
-    images: [
-      "https://zippy.b-cdn.net/hand_img2.jpeg",
-      "https://zippy.b-cdn.net/mailper_img1.jpeg",
-    ],
-    tools: [
-      "html5-original-wordmark",
-      "css3-original-wordmark",
-      "javascript-original",
-    ],
+      "전자전기컴퓨터공학부 선배님과 함께 전자장 및 전기회로의 핵심 개념을 깊이 있게 학습합니다. 강연을 통해 중요한 개념을 정리하고, 직접 풀어본 문제에 대해 질의응답하며 이해도를 탄탄하게 다집니다.",
+    date: "23.09 - 23.12",
+    images: ["https://pub-e688831beea1479f8b217d983b99b523.r2.dev/study1.png"],
   },
 ];
 

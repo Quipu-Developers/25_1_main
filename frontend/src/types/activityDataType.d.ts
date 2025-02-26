@@ -5,6 +5,7 @@ declare interface ActivityItem {
   images: string[]; // 이미지 URL 리스트
   speaker?: string;
   pdf?: string;
+  resources?: string;
   link?: string;
   tools?: string[];
 }
