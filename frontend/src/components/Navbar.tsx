@@ -132,6 +132,8 @@ const NavButton = styled.button<{
   transition: all 0.2s ease-in-out;
   will-change: transform;
 
+  color: ${(props) => (props.$isActive ? "var(--point)" : "black")};
+
   ${(props) =>
     props.$section === "recruit"
       ? css`
