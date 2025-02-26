@@ -19,7 +19,7 @@ export const developmentTitleData: ActivityTitle = {
 
 const developmentItems: ActivityItem[] = [
   {
-    topic: "퀴푸 메인 웹사이트 2024 ver.",
+    topic: "퀴푸 메인 웹사이트 2024",
     details:
       "퀴푸를 소개하고 모집 및 이벤트를 진행했던 퀴푸의 첫 웹사이트입니다. 다양하고 화려한 도형을 활용해 퀴푸의 다채로운 모습을 표현하였습니다.",
     date: "24.03.01",
