@@ -19,20 +19,38 @@ export const developmentTitleData: ActivityTitle = {
 
 const developmentItems: ActivityItem[] = [
   {
-    topic: "퀴푸 메인 웹사이트 2024",
+    topic: "Articket",
     details:
-      "퀴푸를 소개하고 모집 및 이벤트를 진행했던 퀴푸의 첫 웹사이트입니다. 다양하고 화려한 도형을 활용해 퀴푸의 다채로운 모습을 표현하였습니다.",
-    date: "24.03.01",
-    link: "https://quipu.uos.ac.kr/",
+      "스테이블 디퓨전을 활용해 성격 테스트로 매칭된 화가의 스타일로 사용자의 사진을 변환하는 서비스입니다. 2024 CO-SHOW 차세대통신 경진대회에서 협의회장상을 수상하였으며, 서울시립대 축제 부스에서 운영됩니다.",
+    date: "24.11.19",
     images: [
-      "https://zippy.b-cdn.net/main24_img1.png",
-      "https://zippy.b-cdn.net/main24_img2.png",
-      "https://zippy.b-cdn.net/main24_img3.png",
-      "https://zippy.b-cdn.net/룰렛24_img1.jpeg",
-      "https://zippy.b-cdn.net/룰렛24_img5.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/articket_img1.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/articket_img3.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/articket_img4.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/articket_img6.jpeg",
     ],
     tools: [
-      "threejs-original-wordmark",
+      "socketio-original",
+      "react-original-wordmark",
+      "flask-original-wordmark",
+    ],
+  },
+  {
+    topic: "배틀글라운드",
+    details:
+      "최대 3명의 플레이어가 한 방에서 주어진 단어장에서 더 많은 단어를 빠르게 차지하는 멀티플레이어 타자 게임입니다. 한컴타자연습의 자원캐기에서 영감을 받아 개발하였으며, 서울시립대 축제 부스에서 운영됩니다.",
+    date: "24.09.24",
+    images: [
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/배틀글라운드_img1.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/배틀글라운드_img5.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/배틀글라운드_img2.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/배틀글라운드_img3.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/_배틀글라운드_img1.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/_배틀글라운드_img2.jpeg",
+    ],
+    tools: [
+      "socketio-original",
+      "typescript-original",
       "react-original-wordmark",
       "nodejs-original-wordmark",
     ],
@@ -43,46 +61,28 @@ const developmentItems: ActivityItem[] = [
       "지원자들의 정보를 실시간으로 확인하고 관리할 수 있는 관리자 서비스입니다. 임원진의 편의를 고려하여 설계되었으며, 퀴푸의 효율적인 운영을 돕습니다.",
     date: "24.09.01",
     images: [
-      "https://zippy.b-cdn.net/backoffice_img1.png",
-      "https://zippy.b-cdn.net/backoffice_img2.png",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/backoffice_img1.png",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/backoffice_img2.png",
     ],
     tools: ["react-original-wordmark", "nodejs-original-wordmark"],
   },
   {
-    topic: "배틀글라운드",
+    topic: "퀴푸 메인 웹사이트 2024",
     details:
-      "최대 3명의 플레이어가 한 방에서 주어진 단어장에서 더 많은 단어를 빠르게 차지하는 멀티플레이어 타자 게임입니다. 한컴타자연습의 자원캐기에서 영감을 받아 개발하였으며, 서울시립대 축제 부스에서 운영됩니다.",
-    date: "24.09.24",
+      "퀴푸를 소개하고 모집 및 이벤트를 진행했던 퀴푸의 첫 웹사이트입니다. 다양하고 화려한 도형을 활용해 퀴푸의 다채로운 모습을 표현하였습니다.",
+    date: "24.03.01",
+    link: "https://quipu.uos.ac.kr/",
     images: [
-      "https://zippy.b-cdn.net/배틀글라운드_img1.jpeg",
-      "https://zippy.b-cdn.net/배틀글라운드_img5.jpeg",
-      "https://zippy.b-cdn.net/배틀글라운드_img2.jpeg",
-      "https://zippy.b-cdn.net/배틀글라운드_img3.jpeg",
-      "https://zippy.b-cdn.net/_배틀글라운드_img1.jpeg",
-      "https://zippy.b-cdn.net/_배틀글라운드_img2.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/main24_img1.png",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/main24_img2.png",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.devt/main24_img3.png",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/룰렛24_img1.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/룰렛24_img5.jpeg",
     ],
     tools: [
-      "socketio-original",
-      "typescript-original",
+      "threejs-original-wordmark",
       "react-original-wordmark",
       "nodejs-original-wordmark",
-    ],
-  },
-  {
-    topic: "Articket",
-    details:
-      "스테이블 디퓨전을 활용해 성격 테스트로 매칭된 화가의 스타일로 사용자의 사진을 변환하는 서비스입니다. 2024 CO-SHOW 차세대통신 경진대회에서 협의회장상을 수상하였으며, 서울시립대 축제 부스에서 운영됩니다.",
-    date: "24.11.19",
-    images: [
-      "https://zippy.b-cdn.net/articket_img1.jpeg",
-      "https://zippy.b-cdn.net/articket_img3.jpeg",
-      "https://zippy.b-cdn.net/articket_img4.jpeg",
-      "https://zippy.b-cdn.net/articket_img6.jpeg",
-    ],
-    tools: [
-      "socketio-original",
-      "react-original-wordmark",
-      "flask-original-wordmark",
     ],
   },
 ];
