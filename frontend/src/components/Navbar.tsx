@@ -138,6 +138,11 @@ const NavButton = styled.button<{
     props.$section === "recruit"
       ? css`
           font-size: 1.2rem;
+
+          @media (max-width: 900px) {
+            font-size: 1.5rem;
+          }
+
           &:hover {
             letter-spacing: 2px;
           }
