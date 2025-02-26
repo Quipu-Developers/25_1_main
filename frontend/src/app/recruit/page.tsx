@@ -80,15 +80,30 @@ export default function RecruitForm() {
 
   useEffect(() => {
     if (isRecruiting === false) {
+      /* ✅ 모집 공고가 없을 때 사용 */
+      // confirmToast(
+      //   "info",
+      //   "지금은 모집 기간이 아니에요. 다음에 만나요!",
+      //   () => {
+      //     router.push("/");
+      //   },
+      //   undefined,
+      //   "홈으로 가기",
+      //   ""
+      // );
+
+      /* ✅ 모집 공고가 있을 때 사용 */
       confirmToast(
         "info",
         "지금은 모집 기간이 아니에요. 다음에 만나요!",
         () => {
+          window.open("https://everytime.kr/418769/v/369933630", "_blank");
+        },
+        () => {
           router.push("/");
         },
-        undefined,
-        "홈으로 가기",
-        ""
+        "모집공고 보러가기",
+        "홈으로 가기"
       );
     }
   }, [isRecruiting, confirmToast, router]);
@@ -385,7 +400,6 @@ export default function RecruitForm() {
           showToast("error", "신청 중 오류가 발생했습니다.");
         }
       } else {
-        // Axios 에러가 아닌 경우
         showToast("error", "신청 중 오류가 발생했습니다.");
         console.error(err);
       }

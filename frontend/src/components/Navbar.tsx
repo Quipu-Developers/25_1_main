@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 
 interface Props {
   position: string;
@@ -15,9 +15,9 @@ const SECTIONS = [
   "technique",
   "interview",
   "recruit",
-];
-const MOBILE_TOP_SECTIONS = ["home", "about", "activity"];
-const MOBILE_BOTTOM_SECTIONS = ["technique", "interview", "recruit"];
+] as const;
+const MOBILE_TOP_SECTIONS = ["home", "about", "activity"] as const;
+const MOBILE_BOTTOM_SECTIONS = ["technique", "interview", "recruit"] as const;
 
 export default function Navbar({ position, activeSection }: Props) {
   const [isMobile, setIsMobile] = useState<boolean | null>(null);
@@ -28,7 +28,6 @@ export default function Navbar({ position, activeSection }: Props) {
     };
 
     setIsMobile(window.innerWidth <= 900);
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -47,10 +46,23 @@ export default function Navbar({ position, activeSection }: Props) {
           {visibleSections.map((section) => (
             <NavButton
               key={section}
-              onClick={() => scrollToSection(section)}
+              $section={section}
               $isActive={activeSection === section}
+              onClick={() => scrollToSection(section)}
             >
-              {section}!
+              {section === "recruit" ? (
+                <>
+                  <span className="text-[--point] text-2xl font-semibold">
+                    {"{"}&nbsp;
+                  </span>
+                  {"recruit!"}
+                  <span className="text-[--point] text-2xl font-semibold">
+                    &nbsp;{"}"}
+                  </span>
+                </>
+              ) : (
+                `${section}!`
+              )}
             </NavButton>
           ))}
         </div>
@@ -64,10 +76,23 @@ export default function Navbar({ position, activeSection }: Props) {
         {MOBILE_BOTTOM_SECTIONS.map((section) => (
           <NavButton
             key={section}
-            onClick={() => scrollToSection(section)}
+            $section={section}
             $isActive={activeSection === section}
+            onClick={() => scrollToSection(section)}
           >
-            {section}!
+            {section === "recruit" ? (
+              <>
+                <span className="text-[--point] text-2xl font-semibold">
+                  {"{"}&nbsp;
+                </span>
+                {"recruit!"}
+                <span className="text-[--point] text-2xl font-semibold">
+                  &nbsp;{"}"}
+                </span>
+              </>
+            ) : (
+              `${section}!`
+            )}
           </NavButton>
         ))}
       </MobileBottomNav>
@@ -87,15 +112,39 @@ const scrollToSection = (id: string) => {
 
 const DesktopNav = styled.nav``;
 
-const NavButton = styled.button<{ $isActive: boolean }>`
+const NavButton = styled.button<{
+  $section:
+    | "home"
+    | "about"
+    | "activity"
+    | "technique"
+    | "interview"
+    | "recruit";
+  $isActive: boolean;
+}>`
+  display: inline-block;
+  align-items: center;
   font-size: 16px;
-  color: ${(props) => (props.$isActive ? "var(--point)" : "black")};
-  transition: color 0.2s ease-in-out;
   letter-spacing: 0.5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  will-change: transform;
 
-  &:hover {
-    color: var(--point);
-  }
+  ${(props) =>
+    props.$section === "recruit"
+      ? css`
+          font-size: 1.5rem;
+          &:hover {
+            letter-spacing: 2px;
+          }
+        `
+      : css`
+          &:hover {
+            color: var(--point);
+          }
+        `}
 `;
 
 const MobileBottomNav = styled.nav<{ $activeSection: string | null }>`
