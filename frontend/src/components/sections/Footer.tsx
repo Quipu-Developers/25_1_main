@@ -35,7 +35,10 @@ export default function Footer() {
 
           <div className="text-sm space-y-1 text-end">
             <p className="underline">
-              <a href="" target="_blank">
+              <a
+                href="https://quipu-developers.github.io/24_2_main/"
+                target="_blank"
+              >
                 QUIPU Main Website 2024 ver.
               </a>
             </p>
