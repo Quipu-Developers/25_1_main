@@ -302,7 +302,7 @@ export default function Technique() {
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
     };
-  }, []);
+  }, [handleMouseMove]);
 
   return (
     <div className="grow flex flex-col items-center justify-center">
