@@ -3,7 +3,7 @@ const nextConfig = {
     styledComponents: true,
   },
   images: {
-    domains: ["zippy.b-cdn.net"],
+    domains: ["zippy.b-cdn.net", "cdn.jsdelivr.net"],
   },
 };
 

@@ -40,10 +40,7 @@ export default function RecruitForm() {
     motivation_external: "",
   });
 
-  const activityOptions: {
-    label: string;
-    value: "semina" | "dev" | "study" | "external";
-  }[] = [
+  const activityOptions: ActivityOption[] = [
     { label: "세미나", value: "semina" },
     { label: "개발", value: "dev" },
     { label: "스터디", value: "study" },
@@ -73,7 +70,7 @@ export default function RecruitForm() {
       setIsRecruiting(response.data.is_enabled);
     } catch (error) {
       console.error(error);
-      // setIsRecruiting(false);
+      setIsRecruiting(false);
     }
   };
 
@@ -682,7 +679,7 @@ function InputField({
   placeholder = "",
   disabled = false,
   VariantsDirection = "left",
-}: InputFieldProps) {
+}: InputField) {
   return (
     <motion.div
       className="flex flex-col mb-5"

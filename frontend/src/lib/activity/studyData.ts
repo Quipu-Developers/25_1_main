@@ -24,7 +24,11 @@ const studyItems: ActivityItem[] = [
       "기본적인 알고리즘과 자료구조를 배우고, 실전 문제 풀이를 통해 알고리즘 사고력을 향상시킨다.",
     date: "24.02.06",
     images: ["https://zippy.b-cdn.net/luxo_img1.png"],
-    tools: ["react", "python", "java"],
+    tools: [
+      "react-original-wordmark",
+      "python-original-wordmark",
+      "java-original-wordmark",
+    ],
   },
   {
     topic: "HTML, CSS, JavaScript 기본 학습",
@@ -35,7 +39,11 @@ const studyItems: ActivityItem[] = [
       "https://zippy.b-cdn.net/hand_img2.jpeg",
       "https://zippy.b-cdn.net/mailper_img1.jpeg",
     ],
-    tools: ["html5", "css3", "javascript"],
+    tools: [
+      "html5-original-wordmark",
+      "css3-original-wordmark",
+      "javascript-original",
+    ],
   },
 ];
 

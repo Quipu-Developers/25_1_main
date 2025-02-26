@@ -1,56 +1,51 @@
-import { toast, ToastOptions } from "react-toastify";
+/**
+ * useToast - React Toast 메시지 및 확인 대화 상자를 제공하는 커스텀 훅
+ *
+ * 이 훅은 `react-toastify`를 활용하여 알림 메시지(toast)와
+ * 확인 대화 상자(confirm toast)를 간편하게 사용할 수 있도록 합니다.
+ *
+ * 기능:
+ * - `showToast` : 일반 알림 메시지를 표시
+ * - `confirmToast` : 사용자의 확인/취소 입력을 받는 대화 상자 표시
+ * - `\n`이 포함된 메시지에 대해 자동으로 줄바꿈 처리
+ * - `toast.dismiss()`를 호출하여 기존 토스트를 제거 후 새 토스트 표시
+ */
+
+"use client";
+
+import { toast } from "react-toastify";
 import styled from "styled-components";
 import React, { useRef } from "react";
 
-export type ToastType = "info" | "warn" | "success" | "error";
+const toastMethodMap: Record<ToastState, typeof toast.info> = {
+  success: toast.success,
+  warn: toast.warn,
+  info: toast.info,
+  error: toast.error,
+};
 
-export interface UseToast {
-  showToast: (type: ToastType, message: string, options?: ToastOptions) => void;
-  confirmToast: (
-    type: ToastType,
-    message: string,
-    onConfirm: () => void | Promise<void>,
-    onCancel?: () => void,
-    confirmText?: string,
-    cancelText?: string
-  ) => void;
-}
-
-const useToast = (): UseToast => {
+const useToast = (): ToastType => {
   const toastIdRef = useRef<string | number | null>(null);
 
-  const showToast = (type: ToastType, message: string) => {
+  // 일반 토스트
+  const showToast: ToastType["showToast"] = (type, message, options) => {
     toast.dismiss();
-    toastIdRef.current = toast[type](message);
+    toastIdRef.current = toastMethodMap[type](message, options);
   };
 
-  const confirmToast = (
-    type: ToastType,
-    message: string,
-    onConfirm: () => void | Promise<void>,
-    onCancel?: () => void,
-    confirmText = "네",
-    cancelText = "아니요"
+  // confirm 토스트
+  const confirmToast: ToastType["confirmToast"] = (
+    type,
+    message,
+    onConfirm,
+    onCancel,
+    confirmText = "확인",
+    cancelText = "취소"
   ) => {
     toast.dismiss();
 
-    let toastType;
-    switch (type) {
-      case "success":
-        toastType = toast.success;
-        break;
-      case "warn":
-        toastType = toast.warn;
-        break;
-      case "info":
-        toastType = toast.info;
-        break;
-      default:
-        toastType = toast.error;
-    }
-
-    toastIdRef.current = toastType(
-      ({ closeToast }) => (
+    toastIdRef.current = toastMethodMap[type](
+      ({ closeToast }: { closeToast: () => void }) => (
         <ConfirmToast>
           <p>
             {message.split("\n").map((line, idx) => (

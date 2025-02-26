@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
@@ -5,6 +7,7 @@ import useActivityFetchData from "@/hooks/useActivityFetchData";
 import Image from "next/image";
 import { useAnimatedInView } from "@/hooks/useAnimatedInView";
 import { containerVariants, textLineVariants } from "@/hooks/useAnimations";
+import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 
 const fetchParams: Record<
   string,
@@ -124,7 +127,7 @@ const TypeSection = ({ type, expanded }: ActivityTypeSectionProps) => {
         <div>
           {/* 타입 설명 */}
           <div className="">
-            <p className="text-[#686868] text-1xl my-4">
+            <p className="text-[#686868] text-1xl my-4 break-keep">
               {data.titleData?.description}
             </p>
           </div>
@@ -214,8 +217,8 @@ const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
             <div className="flex space-x-2">
               {item.tools.map((imgUrl: string, index: number) => (
                 <Image
-                  width={22}
-                  height={22}
+                  width={30}
+                  height={30}
                   key={index}
                   src={imgUrl}
                   alt="Tool"
@@ -266,19 +269,14 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
 
   return (
     <div className="relative mt-4 mx-auto md:mx-6 w-[80%] md:w-[400px] h-[150px] md:h-[250px] flex items-center justify-center">
-      <button
+      <SlArrowLeft
         onClick={prevImage}
-        className="absolute left-[-24px] top-1/2 -translate-y-1/2 text-lg text-gray-500"
-      >
-        &lt;
-      </button>
-      <button
+        className="absolute left-[-24px] top-1/2 -translate-y-1/2 text-lg text-gray-500 cursor-pointer"
+      />
+      <SlArrowRight
         onClick={nextImage}
-        className="absolute right-[-24px] top-1/2 -translate-y-1/2 text-lg text-gray-500"
-      >
-        &gt;
-      </button>
-
+        className="absolute right-[-24px] top-1/2 -translate-y-1/2 text-lg text-gray-500 cursor-pointer"
+      />
       <Image
         width={350}
         height={250}
