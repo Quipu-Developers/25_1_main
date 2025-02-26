@@ -16,47 +16,28 @@ declare interface RecruitFormData {
   motivation_external: string;
 }
 
-declare interface ModalProps {
-  message: string;
-  onClose?: () => void;
-  persistent?: boolean;
-}
-
-declare interface InputFieldProps {
+declare interface InputField {
   label: string;
   name: string;
   value: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   type?: string;
-}
-
-declare interface SubmissionModalState {
-  visible: boolean;
-  message: string;
+  placeholder?: string;
+  disabled: boolean;
+  VariantsDirection?: "left" | "right";
 }
 
 declare interface ActivityOption {
-  label: string;
-  value: string;
+  label: "세미나" | "개발" | "스터디" | "대외 활동";
+  value: "semina" | "dev" | "study" | "external";
 }
 
 declare interface RecruitmentStatusResponse {
   is_enabled: boolean;
 }
 
-declare interface FaqItemProps {
+declare interface FaqItem {
   question: string;
   answer: string;
   index?: number;
-}
-
-declare interface InputFieldProps {
-  label: string;
-  name: string;
-  value: string | number;
-  onChange: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement>;
-  type?: string;
-  placeholder?: string;
-  disabled?: boolean;
-  VariantsDirection?: "left" | "right";
 }

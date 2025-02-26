@@ -1,12 +1,16 @@
+declare type ToastState = "info" | "warn" | "success" | "error";
+
 declare interface ToastType {
-  success: (message: string, duration?: number) => void;
-  error: (message: string, duration?: number) => void;
-  message: (message: string, duration?: number) => void;
-  confirm: (
-    type?: "success" | "error",
+  showToast: (
+    type: ToastState,
     message: string,
-    onConfirm: () => Promise<void> | void,
-    onCancel: () => void,
+    options?: ToastOptions
+  ) => void;
+  confirmToast: (
+    type: ToastState,
+    message: string,
+    onConfirm: () => void | Promise<void>,
+    onCancel?: () => void,
     confirmText?: string,
     cancelText?: string
   ) => void;

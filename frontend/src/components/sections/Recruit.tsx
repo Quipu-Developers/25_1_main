@@ -1,4 +1,5 @@
 "use client";
+
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import styled from "styled-components";
@@ -60,7 +61,7 @@ function FaqSection() {
   );
 }
 
-function FaqItem({ question, answer, index }: FaqItemProps) {
+function FaqItem({ question, answer, index }: FaqItem) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => setIsOpen((prev) => !prev);
@@ -77,7 +78,9 @@ function FaqItem({ question, answer, index }: FaqItemProps) {
         className="flex w-full justify-between items-center focus:outline-none"
         onClick={toggleOpen}
       >
-        <span className="text-left text-gray-800 font-medium">{question}</span>
+        <span className="text-left text-gray-800 font-medium break-keep">
+          {question}
+        </span>
         <svg
           className={`h-5 w-5 transform transition-transform duration-300 ${
             isOpen ? "rotate-180" : ""
@@ -106,5 +109,6 @@ function FaqItem({ question, answer, index }: FaqItemProps) {
 const AnswerContainer = styled.div<{ $isOpen: boolean }>`
   overflow: hidden;
   transition: max-height 0.3s ease-in-out;
+  word-break: keep-all;
   max-height: ${({ $isOpen }) => ($isOpen ? "200px" : "0")};
 `;

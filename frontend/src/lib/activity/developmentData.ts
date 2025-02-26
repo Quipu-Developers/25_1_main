@@ -30,7 +30,11 @@ const developmentItems: ActivityItem[] = [
       "https://zippy.b-cdn.net/룰렛24_img1.jpeg",
       "https://zippy.b-cdn.net/룰렛24_img5.jpeg",
     ],
-    tools: ["threejs", "react", "nodejs"],
+    tools: [
+      "threejs-original-wordmark",
+      "react-original-wordmark",
+      "nodejs-original-wordmark",
+    ],
   },
   {
     topic: "퀴푸 백오피스 웹사이트",
@@ -41,7 +45,7 @@ const developmentItems: ActivityItem[] = [
       "https://zippy.b-cdn.net/backoffice_img1.png",
       "https://zippy.b-cdn.net/backoffice_img2.png",
     ],
-    tools: ["react", "nodejs"],
+    tools: ["react-original-wordmark", "nodejs-original-wordmark"],
   },
   {
     topic: "배틀글라운드",
@@ -56,7 +60,12 @@ const developmentItems: ActivityItem[] = [
       "https://zippy.b-cdn.net/_배틀글라운드_img1.jpeg",
       "https://zippy.b-cdn.net/_배틀글라운드_img2.jpeg",
     ],
-    tools: ["socketio", "typescript", "react", "nodejs"],
+    tools: [
+      "socketio-original",
+      "typescript-original",
+      "react-original-wordmark",
+      "nodejs-original-wordmark",
+    ],
   },
   {
     topic: "Articket",
@@ -69,7 +78,11 @@ const developmentItems: ActivityItem[] = [
       "https://zippy.b-cdn.net/articket_img4.jpeg",
       "https://zippy.b-cdn.net/articket_img6.jpeg",
     ],
-    tools: ["socketio", "react", "flask"],
+    tools: [
+      "socketio-original",
+      "react-original-wordmark",
+      "flask-original-wordmark",
+    ],
   },
 ];
 

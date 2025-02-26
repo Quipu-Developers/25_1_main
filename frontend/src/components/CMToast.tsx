@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect } from "react";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import styled from "styled-components";

@@ -1,3 +1,5 @@
+"use client";
+
 import { useRouter } from "next/navigation";
 import { AiFillInstagram, AiFillMail, AiFillGithub } from "react-icons/ai";
 
@@ -42,7 +44,7 @@ export default function Footer() {
                 QUIPU Main Website 2025 ver.
               </a>
             </p>
-            <p>동아리방 서울특별시 전농제2동, 서울시립대학교 학생회관 342호</p>
+            <p>동아리방 | 서울시립대학교 학생회관 342호</p>
           </div>
         </div>
 
