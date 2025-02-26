@@ -75,7 +75,7 @@ const developmentItems: ActivityItem[] = [
     images: [
       "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/main24_img1.png",
       "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/main24_img2.png",
-      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.devt/main24_img3.png",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/main24_img3.png",
       "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/룰렛24_img1.jpeg",
       "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/룰렛24_img5.jpeg",
     ],

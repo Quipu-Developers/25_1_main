@@ -23,11 +23,11 @@ const extraItems: ActivityItem[] = [
       "대구 EXCO에서 3박 4일 동안 통신 기술을 활용한 서비스로 부스를 운영하고, 발표를 통해 심사를 거쳤습니다. 사용자의 사진을 화가의 스타일로 변환하여 티켓으로 출력하는 서비스를 개발하였으며, 협의회장상을 수상하였습니다.",
     date: "24.11.19",
     images: [
-      "https://zippy.b-cdn.net/_articket_img3.jpeg",
-      "https://zippy.b-cdn.net/_articket_img4.jpeg",
-      "https://zippy.b-cdn.net/_articket_img2.jpeg",
-      "https://zippy.b-cdn.net/_articket_img5.jpeg",
-      "https://zippy.b-cdn.net/_articket_img6.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/_articket_img3.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/_articket_img4.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/_articket_img2.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/_articket_img5.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/_articket_img6.jpeg",
     ],
   },
   {
@@ -36,10 +36,10 @@ const extraItems: ActivityItem[] = [
       "2박 3일 동안 서울특별시와 편의를 주제로 한 해커톤에 참가하였습니다. 서울의 대규모 행사에서 실시간 행사 정보와 혼잡도를 제공하는 서비스를 개발하였으며, 장려상을 수상하였습니다.",
     date: "24.11.08",
     images: [
-      "https://zippy.b-cdn.net/와글와글_img10.png",
-      "https://zippy.b-cdn.net/와글와글_img1.jpeg",
-      "https://zippy.b-cdn.net/와글와글_img7.jpeg",
-      "https://zippy.b-cdn.net/_와글와글_img1.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/와글와글_img10.png",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/와글와글_img1.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/와글와글_img7.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/_와글와글_img1.jpeg",
     ],
   },
   {
@@ -49,10 +49,10 @@ const extraItems: ActivityItem[] = [
     date: "24.07.12",
     images: [
       "https://pub-e688831beea1479f8b217d983b99b523.r2.dev/extra5.jpeg",
-      "https://zippy.b-cdn.net/링고커넥트_img10.png",
-      "https://zippy.b-cdn.net/링고커넥트_img6.jpeg",
-      "https://zippy.b-cdn.net/링고커넥트_img9.jpeg",
-      "https://zippy.b-cdn.net/링고커넥트_img5.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/링고커넥트_img10.png",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/링고커넥트_img6.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/링고커넥트_img9.jpeg",
+      "https://pub-80a42cc7d41749078071917a4265d3ca.r2.dev/링고커넥트_img5.jpeg",
     ],
   },
 ];
