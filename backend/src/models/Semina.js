@@ -20,6 +20,10 @@ class Semina extends Sequelize.Model {
                 type: DataTypes.TEXT,
                 allowNull: false
             }, // 내용
+            resources: {
+                type: DataTypes.STRING,
+                allowNull: true
+            }, // 카드뉴스 url
             presentation_date: {
                 type: DataTypes.DATE,
                 allowNULL: false

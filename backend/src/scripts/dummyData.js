@@ -17,11 +17,13 @@ const insertDummyData = async () => {
                 speaker: "이제민 | 전자전기컴퓨터공학부 | 2020440102",
                 topic: "백엔드 개발의 핵심 원리",
                 detail: "NestJS와 Express의 차이점을 비교하고, 효율적인 서버 아키텍처를 설계하는 방법을 설명합니다.",
+                resources: "https://example.com",
                 presentation_date: new Date("2025-02-20")
             }, {
                 speaker: "이예나 | 전자전기컴퓨터공학부 | 2020440000",
                 topic: "모던 프론트엔드 트렌드",
                 detail: "React 19의 주요 변화와 최신 웹 기술(WebAssembly, Web Components)을 활용한 최적화 기법을 다룹니다.",
+                resources: "https://example.com",
                 presentation_date: new Date("2025-02-22")
             }, {
                 speaker: "김예영 | 전자전기컴퓨터공학부 | 2020440001",
@@ -37,6 +39,7 @@ const insertDummyData = async () => {
                 speaker: "차준섭 | 전자전기컴퓨터공학부 | 2020440003",
                 topic: "웹 보안과 해킹 대응",
                 detail: "XSS, CSRF, SQL Injection 같은 보안 취약점을 알아보고, 실제 웹 서비스에서 어떻게 방어할 수 있는지 설명합니다.",
+                resources: "https://example.com",
                 presentation_date: new Date("2025-02-25")
             }, {
                 speaker: "정민욱 | 전자전기컴퓨터공학부 | 2020440004",
@@ -48,6 +51,7 @@ const insertDummyData = async () => {
                 topic: "인터랙티브 UI/UX 디자인",
                 detail: "Framer Motion, Tailwind CSS, Three.js 등을 활용하여 사용자 경험을 극대화하는 인터랙티브 웹사이트를 만드는 방법" +
                         "을 다룹니다.",
+                resources: "https://example.com",        
                 presentation_date: new Date("2025-02-27")
             }
         ]);
