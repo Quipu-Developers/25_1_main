@@ -39,7 +39,7 @@ export default function Interview() {
                 key={item.id}
                 layoutId={`circle-${item.id}`}
                 className={`
-                  w-40 h-40 lg:w-60 lg:h-60 rounded-full overflow-hidden cursor-pointer shadow-lg 
+                  w-40 h-40 lg:w-60 lg:h-60 rounded-full overflow-hidden cursor-pointer shadow-[0_4px_10px_rgba(0,0,0,0.2)]
                   bg-white ${circlePositions[index] || ""}
                 `}
                 onClick={() => setSelectedId(item.id)}
@@ -71,7 +71,7 @@ export default function Interview() {
             {/* 동그라미(왼쪽 아래로 이동) */}
             <motion.div
               layoutId={`circle-${selectedMember.id}`}
-              className="absolute bottom-[10%] left-[12%] w-40 h-40 lg:w-60 lg:h-60 rounded-full overflow-hidden cursor-pointer shadow-lg bg-white z-50"
+              className="absolute bottom-[10%] left-[12%] w-40 h-40 lg:w-60 lg:h-60 rounded-full overflow-hidden cursor-pointer shadow-[0_4px_10px_rgba(0,0,0,0.2)] bg-white z-50"
             >
               <Image
                 width={400}

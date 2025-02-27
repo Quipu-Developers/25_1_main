@@ -13,10 +13,10 @@ const fetchParams: Record<
   string,
   { useHardcoded: boolean; itemsPerPage: number }
 > = {
-  study: { useHardcoded: true, itemsPerPage: 4 },
-  semina: { useHardcoded: true, itemsPerPage: 4 },
-  development: { useHardcoded: true, itemsPerPage: 4 },
-  extra: { useHardcoded: true, itemsPerPage: 4 },
+  study: { useHardcoded: true, itemsPerPage: 2 },
+  semina: { useHardcoded: true, itemsPerPage: 2 },
+  development: { useHardcoded: true, itemsPerPage: 2 },
+  extra: { useHardcoded: true, itemsPerPage: 2 },
 };
 
 export default function Activity() {

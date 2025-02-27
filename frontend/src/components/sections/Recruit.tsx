@@ -18,7 +18,7 @@ export default function Recruit() {
       </h2>
 
       <button
-        className="flex items-center mb-8 space-x-2 transition-all duration-200 ease-in-out hover:tracking-widest"
+        className="flex items-center mb-8 space-x-2"
         onClick={() => router.push("/recruit")}
       >
         <span className="text-3xl font-bold">{"{"}</span>

@@ -10,6 +10,7 @@ import { majors } from "@/lib/recruitData";
 import { SlArrowLeft } from "react-icons/sl";
 import { useAnimatedInView } from "@/hooks/useAnimatedInView";
 import { containerVariants, textLineVariants } from "@/hooks/useAnimations";
+import Footer from "@/components/sections/Footer";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -20,7 +21,7 @@ export default function RecruitForm() {
 
   const [isRecruiting, setIsRecruiting] = useState<boolean | null>(true);
 
-  const [containerRef, isInView] = useAnimatedInView({ once: false });
+  const [containerRef, isInView] = useAnimatedInView({ once: true });
 
   const [formData, setFormData] = useState<RecruitFormData>({
     name: "",
@@ -79,7 +80,7 @@ export default function RecruitForm() {
   }, []);
 
   useEffect(() => {
-    if (isRecruiting === false) {
+    if (!isRecruiting) {
       /* ✅ 모집 공고가 없을 때 사용 */
       // confirmToast(
       //   "info",
@@ -407,7 +408,24 @@ export default function RecruitForm() {
   };
 
   return (
-    <>
+    <div
+      className="p-8"
+      onClick={() => {
+        if (!isRecruiting)
+          confirmToast(
+            "info",
+            "지금은 모집 기간이 아니에요. 다음에 만나요!",
+            () => {
+              window.open("https://everytime.kr/418769/v/369933630", "_blank");
+            },
+            () => {
+              router.push("/");
+            },
+            "모집공고 보러가기",
+            "홈으로 가기"
+          );
+      }}
+    >
       <CMToast />
       <h2 className="font-firaCode p-6 w-full text-5xl md:text-6xl lg:text-7xl text-center relative cursor-pointer">
         <SlArrowLeft
@@ -475,7 +493,7 @@ export default function RecruitForm() {
                 value={formData.grade}
                 onChange={handleChange}
                 disabled={!isRecruiting}
-                className="p-2 rounded-lg bg-[#F1F1F1]"
+                className="p-2 rounded-lg bg-[#F1F1F1] disabled:cursor-not-allowed"
               >
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -508,18 +526,20 @@ export default function RecruitForm() {
             <h3 className="font-semibold mb-2">
               하고 싶은 활동을 선택하세요 (복수 선택 가능)
             </h3>
-            <div className="flex flex-wrap gap-3">
+            <div
+              className="flex flex-wrap gap-3"
+              onClick={(e) => e.stopPropagation()}
+            >
               {activityOptions.map(({ label, value }) => (
                 <button
                   type="button"
                   key={value}
                   onClick={() => handleCheckboxChange(value)}
-                  disabled={!isRecruiting}
                   className={`py-2 px-5 rounded-lg ${
                     formData[value as keyof RecruitFormData]
                       ? "bg-[#6666ff] text-[#ffffff]"
                       : "bg-[#F1F1F1] text-black"
-                  } ${!isRecruiting ? "opacity-50 cursor-not-allowed" : ""}`}
+                  }`}
                 >
                   {label}
                 </button>
@@ -559,9 +579,7 @@ export default function RecruitForm() {
                         formData.field_dev === field
                           ? "bg-[#6666ff] text-[#ffffff]"
                           : "bg-[#F1F1F1] text-black"
-                      } ${
-                        !isRecruiting ? "opacity-50 cursor-not-allowed" : ""
-                      }`}
+                      } ${!isRecruiting ? "cursor-not-allowed" : ""}`}
                     >
                       {field}
                     </button>
@@ -646,7 +664,7 @@ export default function RecruitForm() {
                 checked={checked1}
                 onChange={(e) => setChecked1(e.target.checked)}
                 disabled={!isRecruiting}
-                className="mr-2"
+                className="mr-2 disabled:cursor-not-allowed"
               />
               <span>제출 후 수정이 되지 않습니다</span>
             </label>
@@ -656,7 +674,7 @@ export default function RecruitForm() {
                 checked={checked2}
                 onChange={(e) => setChecked2(e.target.checked)}
                 disabled={!isRecruiting}
-                className="mr-2"
+                className="mr-2 disabled:cursor-not-allowed"
               />
               <span>입력하신 정보가 정확한지 다시 한 번 확인해주세요</span>
             </label>
@@ -671,7 +689,7 @@ export default function RecruitForm() {
           variants={textLineVariants("right")}
           type="submit"
           disabled={!isRecruiting || !bothChecked}
-          className={`mt-6 px-10 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed ${
+          className={`mt-6 px-10 py-2 rounded-lg disabled:cursor-not-allowed ${
             bothChecked
               ? "bg-[#6666ff] text-[#ffffff]"
               : "bg-[#F1F1F1] text-black"
@@ -680,7 +698,9 @@ export default function RecruitForm() {
           제출하기
         </motion.button>
       </motion.div>
-    </>
+
+      <Footer />
+    </div>
   );
 }
 
@@ -707,7 +727,7 @@ function InputField({
         onChange={onChange}
         placeholder={placeholder}
         disabled={disabled}
-        className="p-2 rounded-lg bg-[#F1F1F1] disabled:opacity-50 disabled:cursor-not-allowed 
+        className="p-2 rounded-lg bg-[#F1F1F1] disabled:cursor-not-allowed 
                    focus:outline-none focus:ring-2 focus:ring-point"
       />
     </motion.div>

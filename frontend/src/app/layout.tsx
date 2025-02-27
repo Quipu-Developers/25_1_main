@@ -4,6 +4,8 @@ import "@/styles/globals.css";
 export const metadata: Metadata = {
   title: "QUIPU | UOS 컴퓨터 학술 중앙동아리",
   description: "서울시립대 컴퓨터 학술 중앙동아리 QUIPU",
+  viewport:
+    "width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1",
   openGraph: {
     title: "QUIPU | UOS 컴퓨터 학술 중앙동아리",
     description: "서울시립대 컴퓨터 학술 중앙동아리 QUIPU",
