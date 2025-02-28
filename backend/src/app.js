@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 3001; // 포트 설정
 const app = express();
 const config = require(__dirname + "/config/config");
 app.use(express.json());
-if (process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === 'test') {
   app.use(
     cors({
       origin: process.env.CLIENT_ORIGIN_DEV, // 클라이언트의 Origin
