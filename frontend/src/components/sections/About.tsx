@@ -22,7 +22,7 @@ export default function About() {
       animate={isInView ? "visible" : "hidden"}
     >
       <motion.h1
-        className="font-firaCode mb-[120px] text-6xl md:text-7xl lg:text-8xl"
+        className="font-firaCode mb-[120px] text-center text-5xl md:text-7xl lg:text-8xl"
         variants={textLineVariants("left")}
       >
         &quot;Hello quipu!&quot;
