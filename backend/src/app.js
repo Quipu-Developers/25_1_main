@@ -42,7 +42,7 @@ if (process.env.NODE_ENV === 'development') {
     app.use(helmet({
         contentSecurityPolicy: {
             directives: {
-                defaultSrc: ["'none'"], // 기본적으로 모든 리소스 차단
+                defaultSrc: ["'none'"], // 기본적으로 모든 리소스 차단ㅌㅈ
                 connectSrc: [
                     "'self'", process.env.CLIENT_ORIGIN_TEST, process.env.CLIENT_ORIGIN_PROD
                 ], // FE → BE 요청 허용
@@ -53,7 +53,6 @@ if (process.env.NODE_ENV === 'development') {
         }
     }));
     app.use(helmet.referrerPolicy({policy: "strict-origin-when-cross-origin"}));
-    app.use(helmet.expectCt({enforce: true, maxAge: 30}));
     app.use(helmet.frameguard({action: "deny"}));
     app.use(helmet.noSniff());
 }
@@ -91,7 +90,7 @@ async function setupPortfolioDir() {
 function runMigrations() {
     return new Promise((resolve, reject) => {
         exec(
-            'npx sequelize-cli db:migrate --config ./src/config/config.js',
+            'npx sequelize-cli db:migrate --config ./config/config.js --migrations-path ../migrations',
             (err, stderr) => {
                 if (err) {
                     console.error(`[ERROR] 마이그레이션 실행 실패: ${stderr}`);
@@ -172,7 +171,7 @@ app.use('/semina', seminainfoRouter);
 app.use('/feature', featureRouter);
 
 //{url}/api-docs 개발시에만
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 }
 
@@ -190,7 +189,7 @@ const logger = winston.createLogger({
 });
 
 app.use((err, req, res, next) => {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
         console.log("[ERROR] error handler 동작")
         console.error(err.stack || err);
     } else {
