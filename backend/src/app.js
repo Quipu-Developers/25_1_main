@@ -30,37 +30,32 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
   app.use(express.urlencoded({ extended: false }));
 } else {
-  app.use(
-    cors({
-      origin: [process.env.CLIENT_ORIGIN_TEST, process.env.CLIENT_ORIGIN_PROD], // 클라이언트의 Origin
-      methods: ["GET", "POST", "OPTIONS"],
-    })
-  );
-  app.enable("trust proxy");
-  app.use(morgan("combined"));
-  app.use(hpp());
-  app.use(express.urlencoded({ extended: false }));
-  app.use(
-    helmet({
-      contentSecurityPolicy: {
-        directives: {
-          defaultSrc: ["'none'"], // 기본적으로 모든 리소스 차단
-          connectSrc: [
-            "'self'",
-            process.env.CLIENT_ORIGIN_TEST,
-            process.env.CLIENT_ORIGIN_PROD,
-          ], // FE → BE 요청 허용
-          frameAncestors: ["'none'"], // iframe 포함 금지
-          scriptSrc: ["'none'"], // 악성 스크립트 차단 (XSS 방지 강화)
-          styleSrc: ["'none'"], // 외부 스타일 차단
-        },
-      },
-    })
-  );
-  app.use(helmet.referrerPolicy({ policy: "strict-origin-when-cross-origin" }));
-  app.use(helmet.expectCt({ enforce: true, maxAge: 30 }));
-  app.use(helmet.frameguard({ action: "deny" }));
-  app.use(helmet.noSniff());
+    app.use(cors({
+        origin: [
+            process.env.CLIENT_ORIGIN_TEST, process.env.CLIENT_ORIGIN_PROD
+        ], // 클라이언트의 Origin
+        methods: ['GET', 'POST', 'OPTIONS']
+    }));
+    app.enable('trust proxy');
+    app.use(morgan("combined"));
+    app.use(hpp());
+    app.use(express.urlencoded({extended: false}));
+    app.use(helmet({
+        contentSecurityPolicy: {
+            directives: {
+                defaultSrc: ["'none'"], // 기본적으로 모든 리소스 차단ㅌㅈ
+                connectSrc: [
+                    "'self'", process.env.CLIENT_ORIGIN_TEST, process.env.CLIENT_ORIGIN_PROD
+                ], // FE → BE 요청 허용
+                frameAncestors: ["'none'"], // iframe 포함 금지
+                scriptSrc: ["'none'"], // 악성 스크립트 차단 (XSS 방지 강화)
+                styleSrc: ["'none'"], // 외부 스타일 차단
+            }
+        }
+    }));
+    app.use(helmet.referrerPolicy({policy: "strict-origin-when-cross-origin"}));
+    app.use(helmet.frameguard({action: "deny"}));
+    app.use(helmet.noSniff());
 }
 
 // swagger 관련 세팅
@@ -94,20 +89,21 @@ async function setupPortfolioDir() {
 */
 
 function runMigrations() {
-  return new Promise((resolve, reject) => {
-    exec(
-      "npx sequelize-cli db:migrate --config ./src/config/config.js",
-      (err, stderr) => {
-        if (err) {
-          console.error(`[ERROR] 마이그레이션 실행 실패: ${stderr}`);
-          reject(err);
-        } else {
-          console.log("[LOG] 마이그레이션 완료");
-          resolve();
-        }
-      }
-    );
-  });
+
+    return new Promise((resolve, reject) => {
+        exec(
+            'npx sequelize-cli db:migrate --config ./config/config.js --migrations-path ../migrations',
+            (err, stderr) => {
+                if (err) {
+                    console.error(`[ERROR] 마이그레이션 실행 실패: ${stderr}`);
+                    reject(err);
+                } else {
+                    console.log('[LOG] 마이그레이션 완료');
+                    resolve();
+                }
+            }
+        );
+    });
 }
 
 async function startServer() {
@@ -180,8 +176,8 @@ app.use("/semina", seminainfoRouter);
 app.use("/feature", featureRouter);
 
 //{url}/api-docs 개발시에만
-if (process.env.NODE_ENV === "development") {
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 }
 
 //error handler
@@ -192,12 +188,12 @@ const logger = winston.createLogger({
 });
 
 app.use((err, req, res, next) => {
-  if (process.env.NODE_ENV === "development") {
-    console.log("[ERROR] error handler 동작");
-    console.error(err.stack || err);
-  } else {
-    logger.error(err.message || "Unexpected error"); // 운영 환경에서는 로그 파일에 저장
-  }
+    if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
+        console.log("[ERROR] error handler 동작")
+        console.error(err.stack || err);
+    } else {
+        logger.error(err.message || 'Unexpected error'); // 운영 환경에서는 로그 파일에 저장
+    }
 
   res.status(err.status || 500).json({
     error: {

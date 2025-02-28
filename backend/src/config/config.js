@@ -19,7 +19,7 @@ const config = {
         database: process.env.TEST_DB_NAME,
         host: process.env.TEST_DB_HOST,
         dialect: "mysql",
-        port: process.env.TESt_DB_PORT || 3306,
+        port: process.env.TEST_DB_PORT || 3306,
         logging: false
     },
     production: {
