@@ -427,7 +427,7 @@ export default function RecruitForm() {
       }}
     >
       <CMToast />
-      <h2 className="font-firaCode p-6 w-full text-5xl md:text-6xl lg:text-7xl text-center relative cursor-pointer">
+      <h2 className="font-firaCode p-0 md:p-6 w-full text-5xl md:text-6xl lg:text-7xl text-center relative cursor-pointer">
         <SlArrowLeft
           onClick={() => router.push("/")}
           className="absolute top-1/2 -translate-y-1/2  left-7 text-2xl"
@@ -435,7 +435,7 @@ export default function RecruitForm() {
         Welcome!
       </h2>
       <motion.div
-        className="min-h-screen max-w-[600px] mx-auto p-6 flex flex-col items-center justify-around gap-10"
+        className="min-h-screen max-w-[600px] mx-auto p-0 pt-6 md:p-6 flex flex-col items-center justify-around gap-10"
         ref={containerRef}
         variants={containerVariants}
         initial="hidden"
@@ -506,7 +506,7 @@ export default function RecruitForm() {
               name="student_id"
               value={formData.student_id}
               onChange={handleChange}
-              placeholder="2025000000"
+              placeholder="2025440000"
               disabled={!isRecruiting}
               type="tel"
               VariantsDirection="right"
@@ -557,7 +557,7 @@ export default function RecruitForm() {
                   name="motivation_semina"
                   value={formData.motivation_semina}
                   onChange={handleChange}
-                  placeholder="주제 입력"
+                  placeholder="네트워크 관련 주제를 듣고 싶어요!"
                   disabled={!isRecruiting}
                 />
               </div>
@@ -618,7 +618,7 @@ export default function RecruitForm() {
                   name="github_profile"
                   value={formData.github_profile}
                   onChange={handleChange}
-                  placeholder="example@domain.com"
+                  placeholder="https://github.com/Quipu-Developers"
                   disabled={!isRecruiting}
                 />
               </div>
@@ -632,7 +632,7 @@ export default function RecruitForm() {
                   name="motivation_study"
                   value={formData.motivation_study}
                   onChange={handleChange}
-                  placeholder="스터디 참여 내용"
+                  placeholder="파이썬 스터디에 참여하고 싶어요!"
                   disabled={!isRecruiting}
                 />
               </div>
@@ -642,11 +642,11 @@ export default function RecruitForm() {
               <div className="border-b border-gray-300 p-4 rounded">
                 <h3 className="mb-2 font-semibold">대외 활동</h3>
                 <InputField
-                  label="참여하고 싶은 대외 활동 분야"
+                  label="참여하고 싶은 대외 활동"
                   name="motivation_external"
                   value={formData.motivation_external}
                   onChange={handleChange}
-                  placeholder="대외활동 분야 입력"
+                  placeholder="해커톤에 나가고 싶어요!"
                   disabled={!isRecruiting}
                 />
               </div>
