@@ -21,12 +21,13 @@ const s3 = new S3Client({
 
 // 파일 업로드 함수 (AWS SDK v3 방식)
 async function uploadToR2(fileBuffer, fileName, mimeType) {
-  const params = {
-    Bucket: "quipu-recruit-portfolio", // Cloudflare R2 버킷 이름
-    Key: fileName,
-    Body: fileBuffer,
-    ContentType: mimeType,
-  };
+
+    const params = {
+        Bucket: "quipu-recruit-portfolio", // Cloudflare R2 버킷 이름
+        Key: fileName,
+        Body: fileBuffer,
+        ContentType: mimeType
+    };
 
   try {
     await s3.send(new PutObjectCommand(params)); // v3 방식으로 변경
