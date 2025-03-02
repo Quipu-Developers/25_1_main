@@ -17,32 +17,118 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": { "type": "string", "description": "이름", "example": "이제민" },
-                  "grade": { "type": "integer", "description": "학년", "example": 4 },
-                  "student_id": { "type": "string", "description": "학번", "example": "2020440102" },
-                  "major": { "type": "string", "description": "전공", "example": "전자전기컴퓨터공학부" },
-                  "phone_number": { "type": "string", "description": "전화번호", "example": "01096761452" },
-                  "semina": { "type": "boolean", "description": "세미나 신청 여부", "example": true },
-                  "dev": { "type": "boolean", "description": "개발 신청 여부", "example": false },
-                  "study": { "type": "boolean", "description": "스터디 신청 여부", "example": true },
-                  "external": { "type": "boolean", "description": "대외활동 신청 여부", "example": false },
-                  "motivation_semina": { "type": "string", "description": "세미나 동기", "example": "세미나에 참여하고 싶습니다." },
-                  "field_dev": { "type": "string", "description": "개발 분야", "example": "웹 개발" },
-                  "motivation_study": { "type": "string", "description": "스터디 동기", "example": "스터디를 통해 배움을 얻고 싶습니다." },
-                  "motivation_external": { "type": "string", "description": "대외활동 동기", "example": "다양한 활동을 경험하고 싶습니다." },
-                  "portfolio_pdf": { "type": "string", "format": "binary", "description": "포트폴리오 PDF 파일" },
-                  "github_profile": { "type": "string", "description": "GitHub 프로필 URL", "example": "https://github.com/username" }
+                  "name": {
+                    "type": "string",
+                    "description": "이름",
+                    "example": "이제민"
+                  },
+                  "grade": {
+                    "type": "integer",
+                    "description": "학년",
+                    "example": 4
+                  },
+                  "student_id": {
+                    "type": "string",
+                    "description": "학번",
+                    "example": "2020440102"
+                  },
+                  "major": {
+                    "type": "string",
+                    "description": "전공",
+                    "example": "전자전기컴퓨터공학부"
+                  },
+                  "phone_number": {
+                    "type": "string",
+                    "description": "전화번호",
+                    "example": "01096761452"
+                  },
+                  "semina": {
+                    "type": "boolean",
+                    "description": "세미나 신청 여부",
+                    "example": true
+                  },
+                  "dev": {
+                    "type": "boolean",
+                    "description": "개발 신청 여부",
+                    "example": false
+                  },
+                  "study": {
+                    "type": "boolean",
+                    "description": "스터디 신청 여부",
+                    "example": true
+                  },
+                  "external": {
+                    "type": "boolean",
+                    "description": "대외활동 신청 여부",
+                    "example": false
+                  },
+                  "motivation_semina": {
+                    "type": "string",
+                    "description": "세미나 동기",
+                    "example": "세미나에 참여하고 싶습니다."
+                  },
+                  "field_dev": {
+                    "type": "string",
+                    "description": "개발 분야",
+                    "example": "웹 개발"
+                  },
+                  "motivation_study": {
+                    "type": "string",
+                    "description": "스터디 동기",
+                    "example": "스터디를 통해 배움을 얻고 싶습니다."
+                  },
+                  "motivation_external": {
+                    "type": "string",
+                    "description": "대외활동 동기",
+                    "example": "다양한 활동을 경험하고 싶습니다."
+                  },
+                  "portfolio_pdf": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "포트폴리오 PDF 파일"
+                  },
+                  "github_profile": {
+                    "type": "string",
+                    "description": "GitHub 프로필 URL",
+                    "example": "https://github.com/username"
+                  }
                 },
-                "required": ["name", "grade", "student_id", "major", "phone_number", "semina", "dev", "study", "external"]
+                "required": [
+                  "name",
+                  "grade",
+                  "student_id",
+                  "major",
+                  "phone_number",
+                  "semina",
+                  "dev",
+                  "study",
+                  "external"
+                ]
               }
             }
           }
         },
         "responses": {
-          "201": { "description": "저장 완료", "content": { "application/json": { "example": "저장 완료" } } },
-          "400": { "description": "잘못된 요청 (필수 값 누락 또는 형식 오류)", "content": { "application/json": { "example": "필수 요소 누락: {필드명}" } } },
-          "409": { "description": "이미 신청한 지원자", "content": { "application/json": { "example": "이미 신청하셨습니다" } } },
-          "500": { "description": "서버 내부 오류", "content": { "application/json": { "example": "서버 에러" } } }
+          "201": {
+            "description": "저장 완료",
+            "content": { "application/json": { "example": "저장 완료" } }
+          },
+          "400": {
+            "description": "잘못된 요청 (필수 값 누락 또는 형식 오류)",
+            "content": {
+              "application/json": { "example": "필수 요소 누락: {필드명}" }
+            }
+          },
+          "409": {
+            "description": "이미 신청한 지원자",
+            "content": {
+              "application/json": { "example": "이미 신청하셨습니다" }
+            }
+          },
+          "500": {
+            "description": "서버 내부 오류",
+            "content": { "application/json": { "example": "서버 에러" } }
+          }
         }
       }
     },
@@ -94,8 +180,20 @@
               }
             }
           },
-          "400": { "description": "잘못된 요청", "content": { "application/json": { "example": { "error": "유효하지 않은 요청 값" } } } },
-          "500": { "description": "서버 내부 오류", "content": { "application/json": { "example": { "error": "서버 오류 발생" } } } }
+          "400": {
+            "description": "잘못된 요청",
+            "content": {
+              "application/json": {
+                "example": { "error": "유효하지 않은 요청 값" }
+              }
+            }
+          },
+          "500": {
+            "description": "서버 내부 오류",
+            "content": {
+              "application/json": { "example": { "error": "서버 오류 발생" } }
+            }
+          }
         }
       }
     },

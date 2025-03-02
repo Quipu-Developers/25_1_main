@@ -48,8 +48,6 @@ export default function RecruitForm() {
     { label: "대외 활동", value: "external" },
   ];
 
-  const devFields: string[] = ["기획", "디자인", "프론트엔드", "백엔드"];
-
   const handleCopyAccount = (): void => {
     const accountInfo = "카카오뱅크 3333311276288 (예금주: 김예영)";
     navigator.clipboard
@@ -202,8 +200,31 @@ export default function RecruitForm() {
     const { name, value } = e.target;
 
     setFormData((prev) => {
+      if (name === "name") {
+        return { ...prev, name: value };
+      }
+
+      if (name === "student_id") {
+        return { ...prev, student_id: value };
+      }
+
       if (name === "grade") {
         return { ...prev, grade: Number(value) };
+      }
+
+      if (name === "major") {
+        let newValue = value;
+
+        // 학과 두 글자 이상 입력했을 때만 자동 완성 실행
+        if (newValue.length >= formData.major.length && newValue.length >= 2) {
+          const match = majors.find((major) => major.startsWith(newValue));
+
+          if (match) {
+            newValue = match;
+          }
+        }
+
+        setFormData((prev) => ({ ...prev, major: newValue }));
       }
 
       if (name === "phone_number") {
@@ -225,14 +246,20 @@ export default function RecruitForm() {
         return { ...prev, phone_number: formattedValue };
       }
 
-      if (name === "major") {
-        // 학과 자동완성
-        const match = majors.find((major) => major.startsWith(value));
-        return { ...prev, major: match || value };
+      if (name === "motivation_semina") {
+        return { ...prev, motivation_semina: value };
+      }
+
+      if (name === "motivation_study") {
+        return { ...prev, motivation_study: value };
+      }
+
+      if (name === "motivation_external") {
+        return { ...prev, motivation_external: value };
       }
 
       if (name === "github_profile") {
-        return { ...prev, github_profile: value.trim() };
+        return { ...prev, github_profile: value };
       }
 
       return { ...prev, [name]: value };
@@ -338,8 +365,6 @@ export default function RecruitForm() {
       return;
     }
 
-    console.log(formData);
-
     const fd = new FormData();
     // 필수 정보
     fd.append("name", formData.name);
@@ -373,8 +398,6 @@ export default function RecruitForm() {
     if (formData.external) {
       fd.append("motivation_external", formData.motivation_external);
     }
-
-    console.log(fd);
 
     try {
       const response = await axios.post(`${BASE_URL}/recruit`, fd, {
@@ -585,7 +608,7 @@ export default function RecruitForm() {
               <div className="border-b border-gray-300 p-4 rounded">
                 <h3 className="mb-2 font-semibold">개발 활동</h3>
                 <div className="flex flex-wrap gap-3">
-                  {devFields.map((field) => (
+                  {["기획", "디자인", "프론트엔드", "백엔드"].map((field) => (
                     <button
                       type="button"
                       key={field}
