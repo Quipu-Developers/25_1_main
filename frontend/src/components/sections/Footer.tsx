@@ -80,7 +80,7 @@ export default function Footer() {
           </div>
 
           <p className="text-xs md:text-sm text-gray-500">
-            Copyright 2025.QUIPU. All rights reserved.
+            Copyright {new Date().getFullYear()}.QUIPU. All rights reserved.
           </p>
         </div>
       </div>
