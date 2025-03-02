@@ -90,7 +90,7 @@ async function setupPortfolioDir() {
 function runMigrations() {
     return new Promise((resolve, reject) => {
         exec(
-            'npx sequelize-cli db:migrate --config ./config/config.js --migrations-path ../migrations',
+            'npx sequelize-cli db:migrate --config src/config/config.js --migrations-path ../migrations',
             (err, stderr) => {
                 if (err) {
                     console.error(`[ERROR] 마이그레이션 실행 실패: ${stderr}`);
