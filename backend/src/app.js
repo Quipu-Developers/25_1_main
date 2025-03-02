@@ -1,5 +1,3 @@
-// Todo production 신경 쓰기 -> 보안 옵션 전부 켜기
-
 const express = require("express"); // 웹 프레임워크
 const path = require("path"); // 파일, 디렉토리 다루기 위한 유틸리티 패키지
 const cors = require("cors"); // CORS 설정용 미들웨어
