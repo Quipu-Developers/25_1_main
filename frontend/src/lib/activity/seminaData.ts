@@ -70,7 +70,9 @@ const items: ActivityItem[] = [
     details:
       "클라우드 기반 배포 방식과 온프레미스 배포의 장단점을 분석하여 앞으로의 퀴푸 메인 웹의 배포 전략을 공유합니다.",
     date: "25.01.09",
-    pdf: "https://pub-880f96b9aa254fce88011c97e585d2bd.r2.dev/250109-%E1%84%8B%E1%85%B5%E1%84%8B%E1%85%A8%E1%84%82%E1%85%A1.pdf",
+    pdf: [
+      "https://pub-880f96b9aa254fce88011c97e585d2bd.r2.dev/250109-%E1%84%8B%E1%85%B5%E1%84%8B%E1%85%A8%E1%84%82%E1%85%A1.pdf",
+    ],
     resources:
       "https://www.instagram.com/p/DEohaHezAAn/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
     images: [
