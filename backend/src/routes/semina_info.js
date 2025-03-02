@@ -5,32 +5,32 @@ const { File, Semina } = require("../models");
 
 // {url}}/semina?current_page=${currentPage}&items_per_page=${itemsPerPage} ex)
 router.get("/", async (req, res) => {
-  try {
-    console.log("[LOG] semina_info api 실행");
-    const currentPage = parseInt(req.query.current_page, 10) || 1; // current_page
-    const itemsPerPage = parseInt(req.query.items_per_page, 10) || 5; // items_per_page
-    const limit = Math.max(itemsPerPage, 1);
-    const offset = Math.max((currentPage - 1) * limit, 0);
-    const total_items = await Semina.count();
-    const total_pages = Math.ceil(total_items / limit);
-    const seminas = await Semina.findAll({
-      attributes: [
-        "speaker",
-        "topic",
-        "detail",
-        "resources",
-        "presentation_date",
-      ],
-      limit: limit,
-      offset: offset,
-      order: [["presentation_date", "DESC"]], // 날짜 기준 최신순 정렬
-      include: [
-        {
-          model: File,
-          attributes: ["file_name"],
-        },
-      ],
-    });
+    try {
+      console.log("[LOG] semina_info api 실행");
+      const currentPage = parseInt(req.query.current_page, 10) || 1; // current_page
+      const itemsPerPage = parseInt(req.query.items_per_page, 10) || 5; // items_per_page
+      const limit = Math.max(itemsPerPage, 1);
+      const offset = Math.max((currentPage - 1) * limit, 0);
+      const total_items = await Semina.count();
+      const total_pages = Math.ceil(total_items / limit);
+      const seminas = await Semina.findAll({
+        attributes: [
+          "speaker",
+          "topic",
+          "detail",
+          "resources",
+          "presentation_date",
+        ],
+        limit: limit,
+        offset: offset,
+        order: [["presentation_date", "DESC"]], // 날짜 기준 최신순 정렬
+        include: [
+          {
+            model: File,
+            attributes: ["file_name"],
+          },
+        ],
+      });
 
     const BASE_URL = "https://pub-880f96b9aa254fce88011c97e585d2bd.r2.dev"; // R2.dev 기본 URL
     // https://pub-880f96b9aa254fce88011c97e585d2bd.r2.dev/example1.png
@@ -49,16 +49,18 @@ router.get("/", async (req, res) => {
         }
       });
 
-      return {
-        speaker: semina.speaker,
-        topic: semina.topic,
-        details: semina.detail,
-        resources: semina.resources,
-        date: semina.presentation_date.toISOString().split("T")[0], // YYYY-MM-DD 변환
-        pdf: pdfs, // PDF 리스트
-        images: images, // 이미지 리스트
-      };
-    });
+            return {
+                speaker: semina.speaker,
+                topic: semina.topic,
+                details: semina.detail,
+                date: semina
+                    .presentation_date
+                    .toISOString()
+                    .split("T")[0], // YYYY-MM-DD 변환
+                pdf: pdfs, // PDF 리스트
+                images: images, // 이미지 리스트
+            };
+        });
 
     console.log("[LOG] semina_info api 응답 완료");
 
