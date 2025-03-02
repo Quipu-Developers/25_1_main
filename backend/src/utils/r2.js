@@ -19,7 +19,7 @@ async function uploadToR2(fileBuffer, fileName, mimeType) {
 
     const params = {
         Bucket: "quipu-recruit-portfolio", // Cloudflare R2 버킷 이름
-        Key: safeFileName,
+        Key: fileName,
         Body: fileBuffer,
         ContentType: mimeType
     };
