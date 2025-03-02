@@ -201,39 +201,42 @@ export default function RecruitForm() {
   ): void => {
     const { name, value } = e.target;
 
-    if (name === "grade") {
-      setFormData((prev) => ({ ...prev, [name]: Number(value) }));
-    } else if (name === "phone_number") {
-      // "-" 자동 추가
-      const numericValue = value.replace(/\D/g, "").slice(0, 11);
-      let formattedValue = numericValue;
-      if (numericValue.length > 3) {
-        formattedValue = `${numericValue.slice(0, 3)}-${numericValue.slice(3)}`;
-      }
-      if (numericValue.length > 7) {
-        formattedValue = `${numericValue.slice(0, 3)}-${numericValue.slice(
-          3,
-          7
-        )}-${numericValue.slice(7)}`;
+    setFormData((prev) => {
+      if (name === "grade") {
+        return { ...prev, grade: Number(value) };
       }
 
-      setFormData((prev) => ({ ...prev, phone_number: formattedValue }));
-    } else if (name === "major") {
-      let newValue = value;
-
-      // 학과 두 글자 이상 입력했을 때만 자동 완성 실행
-      if (newValue.length >= formData.major.length && newValue.length >= 2) {
-        const match = majors.find((major) => major.startsWith(newValue));
-
-        if (match) {
-          newValue = match;
+      if (name === "phone_number") {
+        // "-" 자동 추가
+        const numericValue = value.replace(/\D/g, "").slice(0, 11);
+        let formattedValue = numericValue;
+        if (numericValue.length > 3) {
+          formattedValue = `${numericValue.slice(0, 3)}-${numericValue.slice(
+            3
+          )}`;
         }
+        if (numericValue.length > 7) {
+          formattedValue = `${numericValue.slice(0, 3)}-${numericValue.slice(
+            3,
+            7
+          )}-${numericValue.slice(7)}`;
+        }
+
+        return { ...prev, phone_number: formattedValue };
       }
 
-      setFormData((prev) => ({ ...prev, major: newValue }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+      if (name === "major") {
+        // 학과 자동완성
+        const match = majors.find((major) => major.startsWith(value));
+        return { ...prev, major: match || value };
+      }
+
+      if (name === "github_profile") {
+        return { ...prev, github_profile: value.trim() };
+      }
+
+      return { ...prev, [name]: value };
+    });
   };
 
   // 포트폴리오 파일 업로드 (5MB 제한)
@@ -291,13 +294,13 @@ export default function RecruitForm() {
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    // (1) 체크박스 동의 여부 등 간단한 유효성 검사
+    // (1) 체크박스(안내사항 동의) 확인
     if (!bothChecked) {
       showToast("error", "안내 사항을 모두 확인 및 동의해주세요.");
       return;
     }
 
-    // (2) 필수값이나 형식 검사
+    // (2) 필수값과 형식 검사
     if (!validateRequiredFields() || !validatePatterns()) return;
 
     // (3) 최소 하나의 활동을 선택했는지 확인
@@ -311,7 +314,7 @@ export default function RecruitForm() {
       return;
     }
 
-    // (4) 선택된 활동별 추가 유효성 검사
+    // (4) 활동별 추가 유효성 검사
     if (formData.semina && !formData.motivation_semina.trim()) {
       showToast("error", "세미나 활동 내용을 입력해주세요.");
       return;
@@ -335,36 +338,52 @@ export default function RecruitForm() {
       return;
     }
 
+    console.log(formData);
+
+    const fd = new FormData();
+    // 필수 정보
+    fd.append("name", formData.name);
+    fd.append("student_id", formData.student_id);
+    fd.append("grade", String(formData.grade));
+    fd.append("major", formData.major);
+    fd.append("phone_number", formData.phone_number);
+
+    fd.append("semina", String(formData.semina));
+    fd.append("dev", String(formData.dev));
+    fd.append("study", String(formData.study));
+    fd.append("external", String(formData.external));
+
+    if (formData.semina) {
+      fd.append("motivation_semina", formData.motivation_semina);
+    }
+
+    if (formData.dev) {
+      fd.append("field_dev", formData.field_dev);
+      // 파일 전송
+      if (formData.portfolio_pdf) {
+        fd.append("portfolio_pdf", formData.portfolio_pdf);
+      }
+      fd.append("github_profile", formData.github_profile);
+    }
+
+    if (formData.study) {
+      fd.append("motivation_study", formData.motivation_study);
+    }
+
+    if (formData.external) {
+      fd.append("motivation_external", formData.motivation_external);
+    }
+
+    console.log(fd);
+
     try {
-      const payload = {
-        // 1) 공통 정보
-        name: formData.name,
-        student_id: formData.student_id,
-        grade: formData.grade,
-        major: formData.major,
-        phone_number: formData.phone_number,
-        // 2) 활동 boolean 플래그
-        semina: formData.semina,
-        dev: formData.dev,
-        study: formData.study,
-        external: formData.external,
-        // 3) 각 활동별 추가 정보 (선택된 활동에 대해서만 값 할당)
-        motivation_semina: formData.semina ? formData.motivation_semina : "",
-        field_dev: formData.dev ? formData.field_dev : "",
-        portfolio_pdf: formData.dev ? formData.portfolio_pdf : null,
-        github_profile: formData.dev ? formData.github_profile : "",
-        motivation_study: formData.study ? formData.motivation_study : "",
-        motivation_external: formData.external
-          ? formData.motivation_external
-          : "",
-      };
-
-      // --- 실제 API 호출 (JSON 방식으로 전송) ---
-      const response = await axios.post(`${BASE_URL}/recruit`, payload, {
-        headers: { "Content-Type": "application/json" },
+      const response = await axios.post(`${BASE_URL}/recruit`, fd, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
-      console.log(response);
 
+      // 서버가 201 Created 등으로 성공 응답 시
       if (response.status === 201) {
         showToast("success", "신청이 완료되었습니다!");
         // 제출 후 폼 초기화
@@ -374,7 +393,7 @@ export default function RecruitForm() {
         //   grade: 1,
         //   major: "",
         //   phone_number: "",
-        //   semina: false,
+        //   semina: true,
         //   dev: false,
         //   study: false,
         //   external: false,
@@ -390,7 +409,7 @@ export default function RecruitForm() {
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        // 서버로부터의 에러 응답 처리
+        // 서버에서 오는 에러에 대한 처리
         if (err.response?.status === 400) {
           showToast("error", "하나 이상의 활동을 선택해주세요.");
         } else if (err.response?.status === 422) {
@@ -406,7 +425,6 @@ export default function RecruitForm() {
       }
     }
   };
-
   return (
     <div
       className="p-8"

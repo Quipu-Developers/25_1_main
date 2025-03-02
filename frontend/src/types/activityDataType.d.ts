@@ -4,7 +4,7 @@ declare interface ActivityItem {
   date: string; // "YYYY-MM-DD" 형식
   images: string[]; // 이미지 URL 리스트
   speaker?: string;
-  pdf?: string;
+  pdf?: string[];
   resources?: string;
   link?: string;
   tools?: string[];
