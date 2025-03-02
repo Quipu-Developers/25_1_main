@@ -227,9 +227,9 @@ const SelectedItemDetail = ({ item }: { item: ActivityItem }) => {
             </div>
           </div>
         )}
-        {item.pdf && (
+        {item.pdf?.[0] && (
           <a
-            href={`${item.pdf}`}
+            href={`${item.pdf[0]}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-point underline inline ml-auto"
