@@ -81,6 +81,7 @@
                       "speaker": "이제민",
                       "topic": "백엔드",
                       "details": "백엔드백엔드백엔드",
+                      "resources": "http://example.com",
                       "date": "2025-02-20",
                       "pdf": "https://example.com/file.pdf",
                       "images": [
