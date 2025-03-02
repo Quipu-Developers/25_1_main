@@ -53,6 +53,7 @@ router.get("/", async (req, res) => {
                 speaker: semina.speaker,
                 topic: semina.topic,
                 details: semina.detail,
+                resources: semina.resources,
                 date: semina
                     .presentation_date
                     .toISOString()
