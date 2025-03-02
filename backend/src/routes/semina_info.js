@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
         const total_pages = Math.ceil(total_items / limit);
         const seminas = await Semina.findAll({
             attributes: [
-                "speaker", "topic", "detail", "presentation_date"
+                "speaker", "topic", "detail", "resources", "presentation_date"
             ],
             limit: limit,
             offset: offset,
@@ -57,6 +57,7 @@ router.get('/', async (req, res) => {
                 speaker: semina.speaker,
                 topic: semina.topic,
                 details: semina.detail,
+                resources: semina.resources,
                 date: semina
                     .presentation_date
                     .toISOString()
@@ -83,6 +84,7 @@ router.get('/', async (req, res) => {
           "speaker": string,
           "topic": string,
           "details": string,
+          "resources": string,
           "date": string,  // "YYYY-MM-DD" 형식
           "pdf": string,  // PDF URL
           "images": string[]  // 이미지 URL 리스트
