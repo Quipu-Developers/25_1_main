@@ -51,6 +51,18 @@ export default function About() {
             {line}
           </motion.p>
         ))}
+        <motion.p
+          className="cursor-pointer underline text-point space-y-5"
+          variants={textLineVariants("right")}
+        >
+          <a
+            href="https://everytime.kr/418769/v/369933630"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            25년도 1학기 모집 공고 보러가기
+          </a>
+        </motion.p>
       </motion.div>
     </motion.div>
   );
