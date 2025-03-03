@@ -68,7 +68,7 @@ class Member extends Sequelize.Model {
             }, // pdf 이름
             github_profile: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: true
             }, // 깃허브 프로필 주소
         }, {
             sequelize,
