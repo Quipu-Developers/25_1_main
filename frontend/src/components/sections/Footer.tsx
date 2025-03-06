@@ -2,9 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import { AiFillInstagram, AiFillMail, AiFillGithub } from "react-icons/ai";
+import { useDarkMode } from "@/hooks/useDarkMode";
 
 export default function Footer() {
   const router = useRouter();
+  const isDark = useDarkMode();
+
   return (
     <footer className="justify-end w-full text-[#898989] pt-[200px]">
       <div>
@@ -24,8 +27,14 @@ export default function Footer() {
                 router.push("/");
               }}
             >
-              <use href={`/assets/logo.svg#left-part`} />
-              <use href={`/assets/logo.svg#right-part`} />
+              <use
+                href={`/assets/logo.svg#left-part`}
+                fill={isDark ? "#EFEFEF" : "black"}
+              />
+              <use
+                href={`/assets/logo.svg#right-part`}
+                fill={isDark ? "#EFEFEF" : "black"}
+              />
               <use href={`/assets/logo.svg#bottom-part`} fill="#6666FF" />
             </svg>
             <h2 className="font-medium">

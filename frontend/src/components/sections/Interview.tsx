@@ -92,7 +92,7 @@ export default function Interview() {
               -translate-y-[35%] lg:-translate-y-[52%]
               -rotate-2 lg:-rotate-1
               max-w-[650px] w-[80%] max-h-[500px] h-[350px] lg:h-[500px] 
-              bg-white shadow-[0_4px_10px_rgba(0,0,0,0.2)] rounded-3xl rounded-bl-none p-6 flex flex-col"
+              bg-[#EFEFEF] shadow-[0_4px_10px_rgba(0,0,0,0.2)] rounded-3xl rounded-bl-none p-6 flex flex-col"
               onClick={(e) => e.stopPropagation()} // 말풍선 닫히지 않도록
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -100,8 +100,8 @@ export default function Interview() {
               transition={{ duration: 0.5 }}
             >
               {/* 말풍선 내용 */}
-              <div className="border-b flex gap-4 items-center justify-between pb-3">
-                <h2 className="text-2xl font-semibold flex flex-col items-start gap-1 lg:gap-5 lg:flex-row lg:items-center">
+              <div className="border-b flex gap-4 items-center justify-between pb-3 ">
+                <h2 className="text-2xl font-semibold flex flex-col items-start gap-1 lg:gap-5 lg:flex-row lg:items-center text-black">
                   {selectedMember.name}
                   <span className="text-point text-lg font-normal">
                     {selectedMember.shortLine}
@@ -128,7 +128,7 @@ export default function Interview() {
                 </button>
               </div>
 
-              <div className="space-y-11 flex-1 py-5 text-sm overflow-scroll">
+              <div className="space-y-11 flex-1 py-5 text-sm overflow-scroll text-black">
                 {/* 1번 질문 */}
                 <div>
                   <h3 className="font-bold text-lg mb-1 break-keep">

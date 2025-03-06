@@ -534,7 +534,7 @@ export default function RecruitForm() {
                 value={formData.grade}
                 onChange={handleChange}
                 disabled={!isRecruiting}
-                className="p-2 rounded-lg bg-[#F1F1F1] disabled:cursor-not-allowed"
+                className="p-2 rounded-lg bg-[#F1F1F1] text-black disabled:cursor-not-allowed"
               >
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -768,7 +768,7 @@ function InputField({
         onChange={onChange}
         placeholder={placeholder}
         disabled={disabled}
-        className="p-2 rounded-lg bg-[#F1F1F1] disabled:cursor-not-allowed 
+        className="p-2 rounded-lg bg-[#F1F1F1] text-black disabled:cursor-not-allowed 
                    focus:outline-none focus:ring-2 focus:ring-point"
       />
     </motion.div>

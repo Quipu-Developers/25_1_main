@@ -78,9 +78,7 @@ function FaqItem({ question, answer, index }: FaqItem) {
         className="flex w-full justify-between items-center focus:outline-none"
         onClick={toggleOpen}
       >
-        <span className="text-left text-gray-800 font-medium break-keep">
-          {question}
-        </span>
+        <span className="text-lef font-medium break-keep">{question}</span>
         <svg
           className={`h-5 w-5 transform transition-transform duration-300 ${
             isOpen ? "rotate-180" : ""

@@ -62,7 +62,7 @@ export default function Activity() {
         >
           <button
             onClick={() => toggleType(type)}
-            className="w-full flex items-center justify-between text-left uppercase tracking-wide border-b-[0.5px] border-black"
+            className="w-full flex items-center justify-between text-left uppercase tracking-wide border-b-[0.5px] border-foreground"
           >
             <span className="text-4xl">{type}</span>
             <svg
@@ -314,6 +314,6 @@ const PageButton = styled.button<{ $active: boolean }>`
   padding: 0.5rem 0.75rem;
   border: none;
   cursor: pointer;
-  color: ${(props) => (props.$active ? "black" : "#686868")};
+  color: ${(props) => (props.$active ? "" : "#686868")};
   font-weight: ${(props) => (props.$active ? "700" : "400")};
 `;

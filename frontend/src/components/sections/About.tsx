@@ -3,9 +3,11 @@
 import { motion } from "framer-motion";
 import { useAnimatedInView } from "@/hooks/useAnimatedInView";
 import { containerVariants, textLineVariants } from "@/hooks/useAnimations";
+import { useDarkMode } from "@/hooks/useDarkMode";
 
 export default function About() {
   const [containerRef, isInView] = useAnimatedInView({ once: false });
+  const isDark = useDarkMode();
 
   const lines = [
     "IT를 사랑하는 서울시립대 학생들이 모인 퀴푸는",
@@ -34,9 +36,18 @@ export default function About() {
         className="mb-5 overflow-visible"
         variants={textLineVariants("right")}
       >
-        <use href={`/assets/logo.svg#left-part`} />
-        <use href={`/assets/logo.svg#right-part`} />
-        <use href={`/assets/logo.svg#bottom-part`} fill="black" />
+        <use
+          href={`/assets/logo.svg#left-part`}
+          fill={isDark ? "#EFEFEF" : "black"}
+        />
+        <use
+          href={`/assets/logo.svg#right-part`}
+          fill={isDark ? "#EFEFEF" : "black"}
+        />
+        <use
+          href={`/assets/logo.svg#bottom-part`}
+          fill={isDark ? "#EFEFEF" : "black"}
+        />
       </motion.svg>
 
       <motion.div

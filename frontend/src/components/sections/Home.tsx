@@ -2,9 +2,11 @@
 
 import { motion } from "framer-motion";
 import { useAnimatedInView } from "@/hooks/useAnimatedInView";
+import { useDarkMode } from "@/hooks/useDarkMode";
 
 export default function Home() {
   const [containerRef, isInView] = useAnimatedInView({ once: false });
+  const isDark = useDarkMode();
 
   return (
     <div
@@ -35,6 +37,7 @@ export default function Home() {
             visible: { opacity: 1, x: [0, -70, 0], scaleX: [1, 1.05, 1] },
           }}
           transition={{ duration: 0.7, ease: "easeInOut" }}
+          fill={isDark ? "#EFEFEF" : "black"}
         />
 
         {/* 오른쪽 괄호 애니메이션 */}
@@ -45,6 +48,7 @@ export default function Home() {
             visible: { opacity: 1, x: [0, 70, 0], scaleX: [1, 1.05, 1] },
           }}
           transition={{ duration: 0.7, ease: "easeInOut" }}
+          fill={isDark ? "#EFEFEF" : "black"}
         />
 
         {/* 가운데 파란색 선 애니메이션 */}
